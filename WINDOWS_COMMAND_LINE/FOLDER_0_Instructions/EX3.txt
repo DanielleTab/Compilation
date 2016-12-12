@@ -1,0 +1,9 @@
+[1] Implement a CUP based parser for the (modified) language ic.
+[2] All source files should be inside USER/COMPILATION/EX3/src
+[3] BuildMe file inside USER/COMPILATION/EX3
+[4] The output jar file should be called PARSER
+[5] PARSER <input-filename> <output-filename>
+[6] The output file should contain a single word:
+[6a] OK (if the program has correct syntx)
+[6b] FAIL (otherwise)
+[7]
