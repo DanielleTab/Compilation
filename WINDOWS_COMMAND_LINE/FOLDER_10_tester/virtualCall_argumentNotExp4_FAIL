@@ -1,0 +1,7 @@
+class MyClass{
+	
+	void callingFunc()
+	{
+		x.funcToCall(MyClass);
+	}
+}

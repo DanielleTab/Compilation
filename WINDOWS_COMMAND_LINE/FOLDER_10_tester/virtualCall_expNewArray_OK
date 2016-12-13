@@ -1,0 +1,11 @@
+class MyClass{
+	
+	void funcToCall()
+	{
+	}
+	
+	void callingFunc()
+	{
+		new int[3].funcToCall();
+	}
+}

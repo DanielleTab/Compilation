@@ -8,6 +8,8 @@ public class AST_CALL extends AST_Node
 	
 	public AST_CALL(AST_EXP exp, String funcName, AST_EXPS_LIST args)
 	{
+		//TODO: delete print
+		System.out.println("AST_CALL: "+funcName);
 		this.exp = exp;
 		this.funcName = funcName;
 		this.args = args;
