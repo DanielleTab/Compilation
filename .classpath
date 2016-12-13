@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/*.cup|**/*.lex" kind="src" path="WINDOWS_COMMAND_LINE/FOLDER_3_src"/>
+	<classpathentry excluding="**/*.cup|**/*.lex" kind="src" path="WINDOWS_COMMAND_LINE/FOLDER_10_tester"/>
+	<classpathentry kind="lib" path="WINDOWS_COMMAND_LINE/FOLDER_5_CUP_JARS/java-cup-11b-runtime.jar" sourcepath="WINDOWS_COMMAND_LINE/FOLDER_5_CUP_JARS/java-cup-11b-runtime.jar"/>
+	<classpathentry kind="lib" path="WINDOWS_COMMAND_LINE/FOLDER_5_CUP_JARS/java-cup-11b.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="CUP_RUNTIME_JAR"/>
+	<classpathentry kind="output" path="WINDOWS_COMMAND_LINE/FOLDER_4_bin"/>
+</classpath>
