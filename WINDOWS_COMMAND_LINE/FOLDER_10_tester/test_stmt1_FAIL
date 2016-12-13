@@ -1,0 +1,119 @@
+class ClassObj{
+	string str1;
+	int num1;
+	
+	void objFunc(){
+		string s = "as if it's a non-static func";
+	}
+}
+
+class ClassToExtend{
+	string s;
+}
+
+class ClassNoFieldOrMethod{
+
+}
+
+
+
+class IlanaClassExtends extends ClassToExtend{
+	
+	ClassObj funcName(ClassObj obj){
+		return obj;
+	}
+	
+	int func1(ClassObj obj){
+	
+		obj2 = funcName(obj1);
+		obj1.str1 = "tuna";
+		
+		arr1 = new int[10];
+		arr2 = new int[40];
+		arr1[0] = 5+6;
+		arr1[2*2+1] = null;
+		arr1[2*(2+1)] = null;
+		arr2[arr1[0]] = 9;
+		
+		int x = return;
+		
+		
+		
+		if(2 < x <= 20)
+			return 5;
+		
+		if(2 == x > 20 > 10 == 10 != arr1[0])
+		/* TODO: this was originally -5 and not 5. */
+			return 5;
+			
+		if((2 == x) == (20 > 10) == (10 != arr1[0]))
+			x = 3;
+
+		
+		if(arr1[0] < x)
+		{
+			if(10 <= 5)
+				return 0;
+			
+			/* TODO: this was originally -1 and not 1. */	
+			return 1;
+		}
+		return 1;
+	}
+	
+	int funcVirtualCall(ClassObj obj){
+		3.x();
+		"str".x();
+		new ClassObj().x();
+		(new ClassObj()).x();
+		(3<x).x();
+		
+		3.obj(obj,x,y,z,"str");
+		/* TODO: Uncomment this. */
+		//("str").obj(obj,x,y,z,"str");
+		
+	}
+	
+	ClassObj obj0;
+	ClassObj obj1 , obj2;
+	ClassObj[] arr0;
+	int[] arr1, arr2;
+	string s1, s2, s3;
+	int i,j,k;
+	
+	
+	void funcVoid(){
+		int x = 3;
+		int y = x*2;
+		if(x==y)
+			int z = 0/5;
+	}
+	
+	void funcManyArgs(int i, string s, ClassObj obj){
+		ClassObj obj0;
+		
+		ClassObj obj3 = new ClassObj();
+		ClassObj[] arr1 = new ClassObj[5];
+		string s = "test";
+		int y = func1(obj1);
+	}
+	
+	int whileFunc(int x){
+		string[] arr = new string[x];
+		int y = 0;
+		
+		while(y < x){
+			y = y+1;
+			arr[y] = "someString";
+		}
+			
+		while(y > 5)
+			y = y/x;
+			
+	}
+	
+	class stupidClass extends anotherStupid{
+		
+	}
+
+}
