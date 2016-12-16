@@ -80,3 +80,10 @@
 /location_simple2_FAIL
 /location_simple_FAIL
 /ICTypeInfo.class
+/SymbolTable.class
+/SymbolInfo.class
+/SymbolInfo$SymbolType.class
+/SymbolInfoNode.class
+/VariableSymbolInfo.class
+/FunctionSymbolInfo.class
+/ClassSymbolInfo.class

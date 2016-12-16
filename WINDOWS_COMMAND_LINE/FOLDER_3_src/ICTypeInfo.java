@@ -1,4 +1,4 @@
-package AST;
+
 
 public class ICTypeInfo {
 	public String ICType; //"int" for int and "string" for string

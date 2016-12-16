@@ -15,7 +15,7 @@ parser code
 :}
 
 /************************/
-/* CUSTOMIZE CUP PARSER */
+/* CUSTOMIZE CUP PARSER */ 
 /************************/
 scan with
 {:
