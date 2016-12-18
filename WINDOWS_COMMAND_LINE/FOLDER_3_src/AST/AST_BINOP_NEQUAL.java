@@ -1,5 +1,10 @@
 package AST;
 
-public class AST_BINOP_NEQUAL extends AST_BINOP{
+import SemanticAnalysis.ICTypeInfo;
 
+public class AST_BINOP_NEQUAL extends AST_BINOP{
+	public ICTypeInfo validate(String className)
+	{
+		return new ICTypeInfo();
+	}
 }

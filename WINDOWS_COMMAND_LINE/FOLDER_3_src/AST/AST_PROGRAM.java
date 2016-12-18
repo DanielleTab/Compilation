@@ -1,6 +1,7 @@
 package AST;
 
-//import ICTypeInfo;
+import SemanticAnalysis.ICTypeInfo;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_PROGRAM extends AST_Node 
 {
@@ -12,17 +13,18 @@ public class AST_PROGRAM extends AST_Node
 	
 	
 	// returns ICTypeInfo = null if the program is not validated
-	/*public ICTypeInfo validate()
+	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
 		AST_CLASS_DECLARATION_LIST iterator=l;
 		while(iterator!=null)
 		{
-			if(iterator.head.validate()==null)
+			if(iterator.head.validate(className)==null)
 			{
 				return null;
 			}
 			iterator=l.tail;
 		}
+		
 		return new ICTypeInfo();
-	}*/
+	}
 }

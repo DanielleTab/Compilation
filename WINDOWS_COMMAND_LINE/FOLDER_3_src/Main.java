@@ -35,7 +35,6 @@ public class Main
 			p = new CUP_FILECup(l);
 
 			p.parse();
-			
 			// Writing output
 			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
 			outputWriter.write(OK_STRING);

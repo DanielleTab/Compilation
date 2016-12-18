@@ -1,3 +1,6 @@
+package SemanticAnalysis;
+
+import SemanticAnalysis.SymbolInfo.SymbolType;
 
 public abstract class SymbolInfo {
 	public String symbolName;
@@ -9,7 +12,7 @@ public abstract class SymbolInfo {
 	}
 	public SymbolInfo(String symbolName)
 	{
-		this.symbolName=symbolName;;
+		this.symbolName=symbolName;
 	}
-	
+	public abstract SymbolType getSymbolType();
 }

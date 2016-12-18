@@ -1,5 +1,7 @@
+package SemanticAnalysis;
 
-public class SymbolInfoNode {
+public class SymbolInfoNode 
+{
 	
 	public SymbolInfo symbolInfo;
 	public SymbolInfoNode hiddenSymbol; //the same name symbol

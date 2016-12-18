@@ -1,4 +1,4 @@
-
+package SemanticAnalysis;
 public class FunctionSymbolInfo extends SymbolInfo{
 
 	public ICTypeInfo returnType;

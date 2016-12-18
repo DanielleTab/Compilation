@@ -1,3 +1,4 @@
+package SemanticAnalysis;
 
 public class VariableSymbolInfo extends SymbolInfo{
 
@@ -14,4 +15,8 @@ public class VariableSymbolInfo extends SymbolInfo{
 	{
 		return SymbolType.SYMBOL_TYPE_VARIABLE;
 	}
+
+	
+
+	
 }
