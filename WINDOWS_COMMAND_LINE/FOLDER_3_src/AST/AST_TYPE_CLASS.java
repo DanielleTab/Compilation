@@ -13,7 +13,14 @@ public class AST_TYPE_CLASS extends AST_TYPE
 	
 	public ICTypeInfo validate(String receivedClassName)
 	{
-		return new ICTypeInfo(className, 0);
+		// TODO: Danielle check this
+	
+		// do we know this className?
+		if(SemanticAnalysis.SymbolTable.doesClassExist(className))
+			return new ICTypeInfo(className, 0);
+		else
+			return null;
+
 	}
 	
 }

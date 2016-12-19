@@ -1,5 +1,8 @@
 package AST;
 
+import SemanticAnalysis.ICTypeInfo;
+import SemanticAnalysis.SemanticAnalysisException;
+
 public class AST_EXP_BINOP extends AST_EXP
 {
 	public AST_BINOP op;
@@ -14,5 +17,59 @@ public class AST_EXP_BINOP extends AST_EXP
 		this.left = left;
 		this.right = right;
 		this.op = op;
+	}
+	
+
+	public ICTypeInfo validate(String className) throws SemanticAnalysisException
+	{
+		ICTypeInfo leftInfo  = left.validate(className);
+		ICTypeInfo rightInfo = right.validate(className);
+		
+		if(op instanceof AST_BINOP_PLUS)
+		{
+			// two ints
+			if(leftInfo.ICType==ICTypeInfo.IC_TYPE_INT && rightInfo.ICType==ICTypeInfo.IC_TYPE_INT)
+				return new ICTypeInfo(ICTypeInfo.IC_TYPE_INT,0);
+			
+			// two strings
+			if(leftInfo.ICType==ICTypeInfo.IC_TYPE_STRING && rightInfo.ICType==ICTypeInfo.IC_TYPE_STRING)
+				return new ICTypeInfo(ICTypeInfo.IC_TYPE_STRING,0);
+			
+			// illegal
+			return null;
+		}
+		else if(op instanceof AST_BINOP_MINUS || op instanceof AST_BINOP_TIMES || op instanceof AST_BINOP_DIVIDE)
+		{
+			// two ints
+			if(leftInfo.ICType==ICTypeInfo.IC_TYPE_INT && rightInfo.ICType==ICTypeInfo.IC_TYPE_INT)
+				return new ICTypeInfo(ICTypeInfo.IC_TYPE_INT,0);
+			
+			// illegal
+			return null;			
+		}
+		
+		// boolean cases:
+		
+		else if(op instanceof AST_BINOP_GT || op instanceof AST_BINOP_GTE || op instanceof AST_BINOP_LT || op instanceof AST_BINOP_LTE)
+		{
+			// two ints
+			if(leftInfo.ICType==ICTypeInfo.IC_TYPE_INT && rightInfo.ICType==ICTypeInfo.IC_TYPE_INT)
+				return new ICTypeInfo(ICTypeInfo.IC_TYPE_INT,0);
+			
+			// illegal
+			return null;					
+		}
+		else if(op instanceof AST_BINOP_EQUAL || op instanceof AST_BINOP_NEQUAL)
+		{
+			// same type
+			if(leftInfo.ICType == rightInfo.ICType)
+				return new ICTypeInfo(ICTypeInfo.IC_TYPE_INT,0);
+			
+			// illegal
+			return null;			
+		}
+		
+		// shouldn't get here
+		return null;
 	}
 }
