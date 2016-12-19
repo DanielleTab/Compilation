@@ -2,6 +2,7 @@
 /* IMPORT(S) */
 /*************/
 import java_cup.runtime.*;
+import AST.*;
 
 parser code 
 {:
