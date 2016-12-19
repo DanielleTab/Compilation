@@ -32,7 +32,7 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 			// This fieldName already exists in the current class or in its predeccessors. so add new field with the same name is prohibited.
 			return null;
 		}
-		
+		// TODO: Set fieldInfo.isInitialize to true (since fields are automatically initialized).
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, fieldType);
 		if(SymbolTable.insertNewSymbol(fieldInfo))
 		{
