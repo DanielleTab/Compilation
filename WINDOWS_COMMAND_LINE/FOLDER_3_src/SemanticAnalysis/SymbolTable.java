@@ -8,11 +8,38 @@ public class SymbolTable {
 	public static Hashtable<String,SymbolInfoNode> hashTable;
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
 	
-	public static boolean insertNewSymbol(SymbolInfo symbolInfo)
+
+	/*
+	 *  The caller responsibility is to check whether the symbol name does exist
+	 *  in the predeccessors or locally in the hash table. 
+	 */
+	public static void insertNewSymbol(SymbolInfo symbolInfo)
 	{
-		//TODO: implement
-		return true;
+		SymbolInfoNode sameNamePointer=hashTable.get(symbolInfo.symbolName);
+		SymbolInfoNode iteratorForScope=hashTable.get(SCOPE_SYMBOL_NAME);
+		while(iteratorForScope.nextSymbolInScope!=null)
+		{
+			iteratorForScope=iteratorForScope.nextSymbolInScope;
+		}
+		SymbolInfoNode insertedSymbolInfo=new SymbolInfoNode(symbolInfo,sameNamePointer,null);
+		iteratorForScope.nextSymbolInScope=insertedSymbolInfo;
+		hashTable.put(symbolInfo.symbolName,insertedSymbolInfo);
 	}
+	
+	public static boolean doesSymbolInfoExistInCurrentScope(String symbolName)
+	{
+		SymbolInfoNode iterator=hashTable.get(SCOPE_SYMBOL_NAME);
+		while(iterator!=null)
+		{
+			if(iterator.symbolInfo.symbolName.equals(symbolName))
+			{
+				return true;
+			}
+			iterator=iterator.nextSymbolInScope;
+		}
+		return false;
+	}
+	
 	public static void createNewScope()
 	{
 		SymbolInfoNode node=SymbolTable.hashTable.get(SCOPE_SYMBOL_NAME);
@@ -43,9 +70,8 @@ public class SymbolTable {
 	// check if class with the received className does exist in the table.
 	public static boolean doesClassExist(String className)
 	{
-		SymbolInfo s = getSymbolInfo(className);
-		
-		if((s!=null)&&(s.getSymbolType()==SymbolType.SYMBOL_TYPE_CLASS))
+		SymbolInfo temp=searchSymbolInfoLocallyOrInCurrentClassAndUp(className, className);
+		if((temp!=null)&&(temp instanceof ClassSymbolInfo))
 		{
 			return true;
 		}
@@ -54,27 +80,16 @@ public class SymbolTable {
 	}
 	
 	// search in the current class and its' predeccessors.
-	public static SymbolInfo searchSymbolInfoInClass(String className, String symbolName)
+	// does not search in the hash table.
+	public static SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName)
 	{
 		// TODO: implement
 		return null;
 	}
 	
-	
-	public static SymbolInfo searchSymbolInfoLocallyOrInCurrentClass(String currenClassName,String symbolName)
-	{
-		// TODO: implement
-		return null;
-	}
-	
-	public static SymbolInfo searchSymbolInfoInCurrentScope(String symbolName)
-	{
-		// TODO: implement
-		return null;
-	}
-	
-	// should return null if the symbol does not exist
-	private static SymbolInfo getSymbolInfo(String symbolName)
+	// search in the current class and its' predeccessors.
+	// does search in the hash table.
+	public static SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName)
 	{
 		// TODO: implement
 		return null;
@@ -83,14 +98,14 @@ public class SymbolTable {
 	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal)
 	{
 		// returns true if everything is ok
-		if(SymbolTable.searchSymbolInfoInCurrentScope(formal.symbolName)!=null)
+		if(SymbolTable.doesSymbolInfoExistInCurrentScope(formal.symbolName)==true)
 		{
 			// The symbol name is already exist in the current scope.
 			return false;
 		}
 		else
 		{
-			SymbolInfo currentSymbolInfo=SymbolTable.searchSymbolInfoInClass(className, functionName);
+			SymbolInfo currentSymbolInfo=SymbolTable.searchSymbolInfoInClassAndUp(className, functionName);
 			if(currentSymbolInfo instanceof FunctionSymbolInfo)
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
@@ -141,6 +156,10 @@ public class SymbolTable {
 			{
 				((ClassSymbolInfo) symbolInfo).addField(fieldInfo);
 			}
+			else
+			{
+				throw new ClassIsNotInSymbolTableException();
+			}
 		}
 		else
 		{
@@ -153,6 +172,17 @@ public class SymbolTable {
 	 */
 	public static boolean validatePredeccessor(ICTypeInfo predeccessor, ICTypeInfo descendent)
 	{
+		if(descendent.ICType==ICTypeInfo.IC_TYPE_NULL)
+		{
+			if((predeccessor.ICType==ICTypeInfo.IC_TYPE_INT) ||(predeccessor.ICType==ICTypeInfo.IC_TYPE_STRING))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
 		if((predeccessor.pointerDepth!=descendent.pointerDepth) || (doesClassExist(predeccessor.ICType)==false) || (doesClassExist(descendent.ICType)==false))
 		{
 			return false;
@@ -183,5 +213,35 @@ public class SymbolTable {
 			
 		}
 		return false;
+	}
+	
+	public static boolean doesOneMainExistInProgram() throws ClassIsNotInSymbolTableException
+	{
+		int count=0;
+		
+		SymbolInfoNode node=hashTable.get(SCOPE_SYMBOL_NAME);
+		
+		node=node.nextSymbolInScope;
+		// iterate over the current scope. it should contains only classes!
+		while(node!=null)
+		{
+			if(!(node.nextSymbolInScope.symbolInfo instanceof ClassSymbolInfo))
+			{
+				throw new ClassIsNotInSymbolTableException();
+			}
+			
+			ClassSymbolInfo temp=(ClassSymbolInfo)node.nextSymbolInScope.symbolInfo;
+			int currClassMainCount=temp.getMainFunctionsCount();
+			if(currClassMainCount>1)
+			{
+				return false;
+			}
+			else
+			{
+				count++;
+			}
+			node=node.nextSymbolInScope;
+		}
+		return (count==1);
 	}
 }

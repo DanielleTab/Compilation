@@ -27,22 +27,15 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 			return null;
 		}
 		
-		if(SymbolTable.searchSymbolInfoInClass(className,fieldName) != null)
+		if(SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,fieldName) != null)
 		{
 			// This fieldName already exists in the current class or in its predeccessors. so add new field with the same name is prohibited.
 			return null;
 		}
-		// TODO: Set fieldInfo.isInitialize to true (since fields are automatically initialized).
+		
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, fieldType);
-		if(SymbolTable.insertNewSymbol(fieldInfo))
-		{
-			SymbolTable.addFieldToClass(className, fieldInfo);
-		}
-		else
-		{			
-			// we can't insert this new symbol, probably this symbol name is already in the symbol table.
-			return null;
-		}
+		SymbolTable.insertNewSymbol(fieldInfo);
+		SymbolTable.addFieldToClass(className, fieldInfo);
 		
 		if(idsList != null)
 		{

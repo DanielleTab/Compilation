@@ -2,6 +2,7 @@ package AST;
 
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.SymbolTable;
 
 public class AST_PROGRAM extends AST_Node 
 {
@@ -24,7 +25,11 @@ public class AST_PROGRAM extends AST_Node
 			}
 			iterator=l.tail;
 		}
-		
+		if(!SymbolTable.doesOneMainExistInProgram())
+		{
+			return null;
+		}
 		return new ICTypeInfo();
 	}
+	
 }

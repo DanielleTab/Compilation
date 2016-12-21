@@ -27,10 +27,11 @@ public class AST_CLASS_DECLARATION extends AST_Node
 		
 		// inserts into hash table
 		ClassSymbolInfo classSymbolInfo=new ClassSymbolInfo(this.className, this.extendsClassName, null, null);
-		if(SymbolTable.insertNewSymbol(classSymbolInfo) == false)
+		if(SymbolTable.doesSymbolInfoExistInCurrentScope(className))
 		{
 			return null;
 		}
+		SymbolTable.insertNewSymbol(classSymbolInfo);
 		SymbolTable.createNewScope();
 		// validates body
 		if(this.fieldsOrMethods!=null)
@@ -54,6 +55,15 @@ public class AST_CLASS_DECLARATION extends AST_Node
 					if(methodValidation == null)
 					{
 						// something went wrong in the method validation.
+						return null;
+					}
+					
+					// signature validation
+					FunctionSymbolInfo newInsertedMethod=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,((AST_METHOD) currObj).methodName) ;
+					FunctionSymbolInfo methodWithTheSameNameInPredesseccor=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(extendsClassName,((AST_METHOD) currObj).methodName) ;
+					
+					if(!newInsertedMethod.equals(methodWithTheSameNameInPredesseccor))
+					{
 						return null;
 					}
 				}

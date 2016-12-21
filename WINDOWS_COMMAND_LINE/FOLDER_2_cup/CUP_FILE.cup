@@ -13,7 +13,7 @@ parser code
 		super(lexer);
 		this.lexer = lexer;
 	}
-:}
+:} 
 
 /************************/
 /* CUSTOMIZE CUP PARSER */ 

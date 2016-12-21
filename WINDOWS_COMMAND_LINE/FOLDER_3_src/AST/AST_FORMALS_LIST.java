@@ -1,6 +1,6 @@
 package AST;
 
-import SemanticAnalysis.FunctionNameInFormalsListIsNotInitialized;
+import SemanticAnalysis.FunctionNameInFormalsListIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
@@ -25,7 +25,7 @@ public class AST_FORMALS_LIST extends AST_Node
 	{
 		if(this.functionName==null)
 		{
-			throw new FunctionNameInFormalsListIsNotInitialized();
+			throw new FunctionNameInFormalsListIsNotInitializedException();
 		}
 		else
 		{
@@ -33,14 +33,17 @@ public class AST_FORMALS_LIST extends AST_Node
 			// iterate over the list
 			if(formalICType!=null)
 			{
+				if(SymbolTable.doesSymbolInfoExistInCurrentScope(formal_name))
+				{
+					return null;
+				}
 				if(SymbolTable.addFormalToMethod(className,functionName, new VariableSymbolInfo(formal_name, formalICType))==false)
 				{
 					return null;
 				}
-				if(SymbolTable.insertNewSymbol(new VariableSymbolInfo(formal_name, formalICType)) == false)
-				{
-					return null;
-				}
+				
+				SymbolTable.insertNewSymbol(new VariableSymbolInfo(formal_name, formalICType));
+				
 			}
 		}
 		return new ICTypeInfo();

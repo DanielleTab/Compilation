@@ -22,4 +22,19 @@ public class ICTypeInfo {
 		this.ICType=ICType;
 		this.pointerDepth=pointerDepth;
 	}
+	
+	public boolean equals(Object obj)
+	{
+		ICTypeInfo compared=(ICTypeInfo)obj;
+		if(this.pointerDepth!=compared.pointerDepth)
+		{
+			return false;
+			
+		}
+		if(!this.ICType.equals(compared.ICType))
+		{
+			return false;
+		}
+		return true;
+	}
 }

@@ -4,6 +4,7 @@ import SemanticAnalysis.ClassSymbolInfo;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.SymbolInfo;
 import SemanticAnalysis.SymbolTable;
 
 public class AST_METHOD extends AST_FIELD_OR_METHOD
@@ -43,11 +44,16 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 			
 		}
 		
-		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
-		if(SymbolTable.insertNewSymbol(new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null))==false)
+		if(SymbolTable.doesSymbolInfoExistInCurrentScope(methodName))
 		{
 			return null;
 		}
+		
+		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		
+		// note: the signature validation is executed in the end of the function, 
+		// because we have to compare two functionSymbolInfo - and we build the current one in that function.
+		SymbolTable.insertNewSymbol(new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
 		if(this.formalsList!=null)
 		{
 			this.formalsList.functionName=methodName;
@@ -66,6 +72,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}		
 		
 		SymbolTable.closeCurrentScope();
+		
 		return new ICTypeInfo();
 	}
 

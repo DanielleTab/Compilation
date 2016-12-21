@@ -10,7 +10,7 @@
 /* USER CODE */
 /*************/
    
-import java_cup.runtime.*; 
+import java_cup.runtime.*;  
 
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
