@@ -157,6 +157,18 @@ public class SymbolTable {
 		{
 			return false;
 		}
+		if((predeccessor.pointerDepth==descendent.pointerDepth)&&(descendent.pointerDepth>0))
+		{
+			// array does not have subtype
+			if(predeccessor.ICType!=descendent.ICType)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
 		if(predeccessor.ICType==descendent.ICType)
 		{
 			return true;

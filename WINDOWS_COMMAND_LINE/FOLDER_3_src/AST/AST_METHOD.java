@@ -44,6 +44,10 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		
 		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		if(SymbolTable.insertNewSymbol(new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null))==false)
+		{
+			return null;
+		}
 		if(this.formalsList!=null)
 		{
 			this.formalsList.functionName=methodName;
@@ -53,7 +57,6 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		{
 			return null;
 		}
-		
 
 		// body validation
 		if(this.body.validate(className)==null)

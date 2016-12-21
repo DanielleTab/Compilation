@@ -10,7 +10,6 @@ public class SymbolInfoNode
 	public SymbolInfoNode(SymbolInfo symbolInfo)
 	{
 		this.symbolInfo=symbolInfo;
-		
 	}
 	
 	public SymbolInfoNode(SymbolInfo symbolInfo,SymbolInfoNode hiddenSymbol,SymbolInfoNode nextSymbolInScope)
