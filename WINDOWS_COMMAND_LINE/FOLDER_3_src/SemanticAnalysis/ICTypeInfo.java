@@ -7,6 +7,7 @@ public class ICTypeInfo {
 	
 	public static final String IC_TYPE_INT = "int";
 	public static final String IC_TYPE_STRING = "string";
+	public static final String IC_TYPE_NULL = "null";
 	public static final String IC_TYPE_VOID = "void";
 	
 	// usage: for validate function, when we want to say "everything is ok" but we don't have certain ICTypeInfo to return.
