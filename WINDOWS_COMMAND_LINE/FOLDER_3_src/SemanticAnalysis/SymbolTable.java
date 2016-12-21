@@ -15,11 +15,29 @@ public class SymbolTable {
 	}
 	public static void createNewScope()
 	{
-		//TODO: implement
+		SymbolInfoNode node=SymbolTable.hashTable.get(SCOPE_SYMBOL_NAME);
+		SymbolInfoNode newNode=new SymbolInfoNode(null,null,null);
+		if(node!=null)
+		{
+			newNode.hiddenSymbol=node;
+		}
+		
+		SymbolTable.hashTable.put(SCOPE_SYMBOL_NAME,newNode);
 	}
 	public static void closeCurrentScope()
 	{
-		// TODO: implement
+		SymbolInfoNode node=SymbolTable.hashTable.get(SCOPE_SYMBOL_NAME);
+		
+		// temp is the first scope element
+		SymbolInfoNode temp=node.nextSymbolInScope;
+		while(temp!=null)
+		{
+			SymbolInfoNode entry=SymbolTable.hashTable.get(temp.symbolInfo.symbolName);
+			SymbolTable.hashTable.put(temp.symbolInfo.symbolName,entry.hiddenSymbol);
+			temp=temp.nextSymbolInScope;
+		}
+		
+		SymbolTable.hashTable.put(SCOPE_SYMBOL_NAME, node.hiddenSymbol);
 	}
 	
 	// check if class with the received className does exist in the table.
@@ -49,6 +67,12 @@ public class SymbolTable {
 		return null;
 	}
 	
+	public static SymbolInfo searchSymbolInfoInCurrentScope(String symbolName)
+	{
+		// TODO: implement
+		return null;
+	}
+	
 	// should return null if the symbol does not exist
 	private static SymbolInfo getSymbolInfo(String symbolName)
 	{
@@ -56,16 +80,34 @@ public class SymbolTable {
 		return null;
 	}
 	
-	public static boolean addFormalToMethod(String functionName, VariableSymbolInfo formal)
+	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal)
 	{
-		// TODO: implement
 		// returns true if everything is ok
-		
-		return false;
+		if(SymbolTable.searchSymbolInfoInCurrentScope(formal.symbolName)!=null)
+		{
+			// The symbol name is already exist in the current scope.
+			return false;
+		}
+		else
+		{
+			SymbolInfo currentSymbolInfo=SymbolTable.searchSymbolInfoInClass(className, functionName);
+			if(currentSymbolInfo instanceof FunctionSymbolInfo)
+			{
+				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
+				currentMethod.addFormal(formal.variableType);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
 		
 	}
 	
-	public static void addMethodToClass(String className, FunctionSymbolInfo methodInfo)
+	// the assumption: the class is already in the table.
+	// this exception is for us, the developers: it means we didn't insert the class to the table before calling that function.
+	public static void addMethodToClass(String className, FunctionSymbolInfo methodInfo) throws ClassIsNotInSymbolTableException
 	{
 		SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
 		if(classSymbolInfoNode!=null)
@@ -77,16 +119,19 @@ public class SymbolTable {
 			}
 			else
 			{
-				// TODO: fill it
+				throw new ClassIsNotInSymbolTableException();
 			}
 		}
-		//TODO: what if className does not exist in the table?
+		else
+		{
+			throw new ClassIsNotInSymbolTableException();
+		}
 	}
 	
 	/*
 	 * Adds the field info to the class info of the given className.
 	 */
-	public static void addFieldToClass(String className, VariableSymbolInfo fieldInfo)
+	public static void addFieldToClass(String className, VariableSymbolInfo fieldInfo) throws ClassIsNotInSymbolTableException
 	{
 		SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
 		if(classSymbolInfoNode!=null)
@@ -96,6 +141,10 @@ public class SymbolTable {
 			{
 				((ClassSymbolInfo) symbolInfo).addField(fieldInfo);
 			}
+		}
+		else
+		{
+			throw new ClassIsNotInSymbolTableException();
 		}
 	}
 	

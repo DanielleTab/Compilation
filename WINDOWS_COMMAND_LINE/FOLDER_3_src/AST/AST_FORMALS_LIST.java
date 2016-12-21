@@ -33,7 +33,7 @@ public class AST_FORMALS_LIST extends AST_Node
 			// iterate over the list
 			if(formalICType!=null)
 			{
-				if(SymbolTable.addFormalToMethod(functionName, new VariableSymbolInfo(formal_name, formalICType))==false)
+				if(SymbolTable.addFormalToMethod(className,functionName, new VariableSymbolInfo(formal_name, formalICType))==false)
 				{
 					return null;
 				}
