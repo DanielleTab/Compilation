@@ -12,6 +12,6 @@ public class AST_LITERAL_QUOTE  extends AST_LITERAL
 	
 	public ICTypeInfo validate(String className)
 	{
-		return new ICTypeInfo("string",0);
+		return new ICTypeInfo(ICTypeInfo.IC_TYPE_STRING,0);
 	}
 }

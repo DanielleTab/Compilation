@@ -57,10 +57,7 @@ public class AST_CLASS_DECLARATION extends AST_Node
 						return null;
 					}
 				}
-				else
-				{
-					// TODO: implement
-				}
+				
 				iterator=iterator.tail;
 			}
 		}

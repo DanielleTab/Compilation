@@ -12,6 +12,6 @@ public class AST_LITERAL_INTEGER extends AST_LITERAL
 	
 	public ICTypeInfo validate(String className)
 	{
-		return new ICTypeInfo("int",0);
+		return new ICTypeInfo(ICTypeInfo.IC_TYPE_INT,0);
 	}
 }

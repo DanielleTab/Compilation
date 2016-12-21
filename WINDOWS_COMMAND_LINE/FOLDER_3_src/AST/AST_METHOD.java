@@ -25,41 +25,44 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	}
 	
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
-	{
-		ICTypeInfo returnedType;
-		// validate returned type.
+	{		
+		// the void case - and body validation
 		if(returnArgumentType==null)
 		{
-			returnedType=null;
-			// TODO: check return stmts do return nothing.
+			this.body.expectedReturnType=new ICTypeInfo(ICTypeInfo.IC_TYPE_VOID,0);
 		}
+		// the other cases
 		else
 		{
-			returnedType=returnArgumentType.validate(null);
-			if(returnedType==null)
+			this.body.expectedReturnType=this.returnArgumentType.validate(className);
+			if(this.body.expectedReturnType==null)
 			{
+				// it means the return type is not validated
 				return null;
 			}
 			
-			if((returnedType.ICType!="int")&&(returnedType.ICType!="string")&&
-					(SymbolTable.doesClassExist(returnedType.ICType) == false))
-			{
-				return null;
-			}
 		}
 		
-		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,returnedType,null));
-		this.formalsList.functionName=methodName;
+		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		if(this.formalsList!=null)
+		{
+			this.formalsList.functionName=methodName;
+		}
 		SymbolTable.createNewScope(); // !!the formals list are like local variables of the method.
 		if((this.formalsList!=null)&&(this.formalsList.validate(className)==null))
 		{
 			return null;
 		}
 		
-		// validates body
+
+		// body validation
+		if(this.body.validate(className)==null)
+		{
+			// it means that the stmt_list does return something that is not compatible with the void declaration.
+			return null;
+		}		
 		
-		// TODO: check the return value in each path!
-		// TODO: implement.
+		SymbolTable.closeCurrentScope();
 		return new ICTypeInfo();
 	}
 

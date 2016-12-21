@@ -1,5 +1,7 @@
 package AST;
 
+import SemanticAnalysis.ICTypeInfo;
+
 public class AST_STMT_LIST extends AST_Node
 {
 	/****************/
@@ -7,7 +9,8 @@ public class AST_STMT_LIST extends AST_Node
 	/****************/
 	public AST_STMT head;
 	public AST_STMT_LIST tail;
-
+	public ICTypeInfo expectedReturnType;
+	
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
