@@ -1,7 +1,9 @@
 package AST;
 
+import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.TailWithNoHeadException;
 import Utils.DebugPrint;
 
 public class AST_STMT_LIST extends AST_STMT
@@ -9,8 +11,8 @@ public class AST_STMT_LIST extends AST_STMT
 	/****************/
 	/* DATA MEMBERS */
 	/****************/
-	public AST_STMT head;
-	public AST_STMT_LIST tail;
+	public AST_STMT head;		// can be null in case of an empty list
+	public AST_STMT_LIST tail;	// can be null 
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -28,6 +30,40 @@ public class AST_STMT_LIST extends AST_STMT
 		this.tail = other.tail;
 	}
 	
+	/** 
+	 * @brief	Validates the list, assuming it has no head.
+	 */
+	private ICTypeInfo validateListWithNoHead() throws TailWithNoHeadException
+	{
+		if (tail == null)
+		{
+			// Empty list - nothing to check.
+			return new ICTypeInfo();
+		}
+		else
+		{
+			throw new TailWithNoHeadException();
+		}
+	}
+	
+	/**
+	 * @brief	Checks if always returning a value, according to the head 
+	 * 			and the tail of the list.
+	 * 
+	 * @note	Assumes head isn't null.
+	 */
+	private void markIfAlwaysReturnValue()
+	{
+		if (tail == null)
+		{
+			doesAlwaysReturnValue = head.doesAlwaysReturnValue;	
+		}
+		else
+		{
+			doesAlwaysReturnValue = head.doesAlwaysReturnValue || tail.doesAlwaysReturnValue;	
+		}
+	}
+	
 	/**
 	 * @brief 	Validates the node by validating its sons.  
 	 * 			In addition, sets the doesAlwaysReturnValue field, according to the sons, 
@@ -38,20 +74,37 @@ public class AST_STMT_LIST extends AST_STMT
 	@Override
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		// Validating sons
-		head.expectedReturnType = this.expectedReturnType;
-		tail.expectedReturnType = this.expectedReturnType;
-		if ((head.validate(className) == null) ||
-			(tail.validate(className) == null))
+		if (head == null)
 		{
-			DebugPrint.print("AST_STMT_LIST.validate: One of the sons isn't valid");
+			return validateListWithNoHead();
+		}
+		
+		if (this.expectedReturnType == null)
+		{
+			throw new ExpectedReturnTypeIsNotInitializedException();
+		}
+		
+		// Validating the head
+		head.expectedReturnType = this.expectedReturnType;
+		if (head.validate(className) == null)
+		{
+			DebugPrint.print("AST_STMT_LIST.validate: The head isn't valid.");
 			return null;
 		}
 		
-		// Checking if always returning a value (to notify whoever called this method)
-		this.doesAlwaysReturnValue = head.doesAlwaysReturnValue || tail.doesAlwaysReturnValue;
+		// Validating the tail if exists
+		if (tail != null)
+		{
+			tail.expectedReturnType = this.expectedReturnType;
+			if (tail.validate(className) == null)
+			{
+				DebugPrint.print("AST_STMT_LIST.validate: The tail isn't valid.");
+				return null;
+			}
+		}
 		
 		// This node is valid
+		markIfAlwaysReturnValue();
 		return new ICTypeInfo();
 	}
 }
