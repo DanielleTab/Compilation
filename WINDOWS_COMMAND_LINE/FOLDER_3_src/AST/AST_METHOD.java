@@ -6,6 +6,7 @@ import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
 import SemanticAnalysis.SymbolTable;
+import Utils.DebugPrint;
 
 public class AST_METHOD extends AST_FIELD_OR_METHOD
 {
@@ -67,9 +68,18 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		// body validation
 		if(this.body.validate(className)==null)
 		{
-			// it means that the stmt_list does return something that is not compatible with the void declaration.
+			// The body isn't valid (returns an incompatible type, or invalid in itself)
+			DebugPrint.print("AST_METHOD.validate: The body isn't valid (returns an incompatible type, or invalid in itself)");
 			return null;
-		}		
+		}	
+		if ((this.body.expectedReturnType.ICType != ICTypeInfo.IC_TYPE_VOID) &&
+			(!this.body.doesAlwaysReturnValue))
+		{
+			// The body doesn't always return a value though it should
+			DebugPrint.print("AST_METHOD.validate: The body doesn't always return a value though it should");
+			return null;
+		}
+		
 		
 		SymbolTable.closeCurrentScope();
 		

@@ -37,4 +37,16 @@ public class ICTypeInfo {
 		}
 		return true;
 	}
+	
+	/**
+	 * @brief	Checks if this ICTypeInfo has the same ICType as the given one,
+	 * 			and it is flat (meaning, it's not an array).
+	 * @param 	otherICType
+	 * @return	true if the ICTypes match and this is not an array, false otherwise.
+	 */
+	public boolean isFlatICType(String otherICType)
+	{
+		return (ICType.equals(otherICType) &&
+				pointerDepth == 0);
+	}
 }
