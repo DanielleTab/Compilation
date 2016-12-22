@@ -9,8 +9,13 @@ public class AST_STMT_CALL extends AST_STMT
 {
 	public AST_CALL call;
 	
-	public AST_STMT_CALL(AST_CALL call)
+	public AST_STMT_CALL(AST_CALL call) throws NullFieldException
 	{
+		if (call == null)
+		{
+			throw new NullFieldException("AST_STMT_CALL.call");
+		}
+		
 		this.call = call;
 	}
 	
@@ -24,11 +29,6 @@ public class AST_STMT_CALL extends AST_STMT
 	@Override
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		if (call == null)
-		{
-			throw new NullFieldException("AST_STMT_CALL.call");
-		}
-		
 		// Validating the call
 		if (call.validate(className) == null)
 		{
