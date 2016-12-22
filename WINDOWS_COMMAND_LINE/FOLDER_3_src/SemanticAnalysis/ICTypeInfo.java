@@ -49,4 +49,19 @@ public class ICTypeInfo {
 		return (ICType.equals(otherICType) &&
 				pointerDepth == 0);
 	}
+	
+	@Override
+	public String toString()
+	{
+		String rep = ICType;
+		
+		int i = pointerDepth;
+		while (i > 0)
+		{
+			rep += "[]";
+			i--;
+		}
+		
+		return rep;
+	}
 }
