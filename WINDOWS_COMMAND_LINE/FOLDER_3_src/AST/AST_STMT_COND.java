@@ -2,6 +2,7 @@ package AST;
 
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.SymbolTable;
 import Utils.DebugPrint;
 
 public class AST_STMT_COND extends AST_STMT
@@ -41,9 +42,12 @@ public class AST_STMT_COND extends AST_STMT
 			return null;
 		}
 		
-		// Validating the body
+		// Validating the body, which is in a new scope
+		SymbolTable.createNewScope();
 		body.expectedReturnType = expectedReturnType;
-		if (body.validate(className) == null)
+		ICTypeInfo bodyTypeInfo = body.validate(className);
+		SymbolTable.closeCurrentScope();
+		if (bodyTypeInfo == null)
 		{
 			DebugPrint.print("AST_STMT_COND.validate: The body isn't valid");
 			return null;
