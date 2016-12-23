@@ -26,7 +26,7 @@ public class SymbolTable {
 		hashTable.put(symbolInfo.symbolName,insertedSymbolInfo);
 	}
 	
-	public static boolean doesSymbolInfoExistInCurrentScope(String symbolName)
+	public static boolean doesSymbolExistInCurrentScope(String symbolName)
 	{
 		SymbolInfoNode iterator=hashTable.get(SCOPE_SYMBOL_NAME);
 		while(iterator!=null)
@@ -98,7 +98,7 @@ public class SymbolTable {
 	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal)
 	{
 		// returns true if everything is ok
-		if(SymbolTable.doesSymbolInfoExistInCurrentScope(formal.symbolName)==true)
+		if(SymbolTable.doesSymbolExistInCurrentScope(formal.symbolName)==true)
 		{
 			// The symbol name is already exist in the current scope.
 			return false;

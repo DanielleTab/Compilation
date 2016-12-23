@@ -45,7 +45,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 			
 		}
 		
-		if(SymbolTable.doesSymbolInfoExistInCurrentScope(methodName))
+		if(SymbolTable.doesSymbolExistInCurrentScope(methodName))
 		{
 			return null;
 		}

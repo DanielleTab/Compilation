@@ -27,7 +27,7 @@ public class AST_CLASS_DECLARATION extends AST_Node
 		
 		// inserts into hash table
 		ClassSymbolInfo classSymbolInfo=new ClassSymbolInfo(this.className, this.extendsClassName, null, null);
-		if(SymbolTable.doesSymbolInfoExistInCurrentScope(className))
+		if(SymbolTable.doesSymbolExistInCurrentScope(className))
 		{
 			return null;
 		}

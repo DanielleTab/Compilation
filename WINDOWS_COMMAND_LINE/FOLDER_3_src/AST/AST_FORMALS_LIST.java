@@ -33,7 +33,7 @@ public class AST_FORMALS_LIST extends AST_Node
 			// iterate over the list
 			if(formalICType!=null)
 			{
-				if(SymbolTable.doesSymbolInfoExistInCurrentScope(formal_name))
+				if(SymbolTable.doesSymbolExistInCurrentScope(formal_name))
 				{
 					return null;
 				}
