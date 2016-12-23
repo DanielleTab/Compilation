@@ -79,16 +79,18 @@ public class SymbolTable {
 		return false;
 	}
 	
-	// search in the current class and its' predeccessors.
+	// search in the given class and its predecessors.
 	// does not search in the hash table.
+	// Returns null if the symbol doesn't exist.
 	public static SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName)
 	{
 		// TODO: implement
 		return null;
 	}
 	
-	// search in the current class and its' predeccessors.
+	// search in the current class and its predecessors.
 	// does search in the hash table.
+	// Returns null if the symbol doesn't exist.
 	public static SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName)
 	{
 		// TODO: implement

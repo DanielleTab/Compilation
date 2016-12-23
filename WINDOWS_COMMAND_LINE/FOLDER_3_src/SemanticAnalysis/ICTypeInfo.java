@@ -50,6 +50,17 @@ public class ICTypeInfo {
 				pointerDepth == 0);
 	}
 	
+	public boolean isICClass()
+	{
+		boolean isSpecialICType = (ICType.equals(IC_TYPE_INT)) 		||
+								  (ICType.equals(IC_TYPE_STRING))	||
+								  (ICType.equals(IC_TYPE_VOID)) 	||
+							      (ICType.equals(IC_TYPE_NULL));
+		
+		return ((!isSpecialICType) &&
+				(pointerDepth == 0));
+	}
+	
 	@Override
 	public String toString()
 	{
