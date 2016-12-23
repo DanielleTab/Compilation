@@ -1,5 +1,7 @@
 package AST;
 
+import java.util.List;
+
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -107,20 +109,85 @@ public class AST_CALL extends AST_Node
 		return (FunctionSymbolInfo)functionSymbolInfo;		
 	}
 	
-	// TODO: Implement.
 	/**
-	 * @brief 	Validates the actual arguments by matching them with the formal arguments. 
+	 * @brief 	Validates a single actual argument by validating the expression in itself,
+	 * 			and then matching it with the type of the formal argument.
 	 * 
-	 * @param	funcSymbolInfo - info regarding the function, including the type
-	 * 			of its formal arguments and its return value.
+	 * @param	formalArgumentType
+	 * @param	actualArgument - an expression which was passed as actual argument.
 	 * 
-	 * @return 	the ICTypeInfo of the call's return value if the arguments are valid,
-	 * 			null otherwise.
+	 * @return 	true if the actual argument is valid, false otherwise.
+	 * @throws SemanticAnalysisException 
 	 */
-	private ICTypeInfo validateActualArguments(FunctionSymbolInfo funcSymbolInfo)
+	private boolean validateSingleActualArgument(ICTypeInfo formalArgumentType, 
+			AST_EXP actualArgument, String className) throws SemanticAnalysisException
 	{
-		// TODO: Delete
-		return null;
+		// Validating the expression
+		ICTypeInfo actualArgumentType = actualArgument.validate(className);
+		if (actualArgumentType == null)
+		{
+			DebugPrint.print("AST_CALL.validateSingleActualArgument: The expression is invalid.");
+			return false;
+		}
+		
+		// Matching types
+		if (!SymbolTable.validatePredeccessor(formalArgumentType, actualArgumentType))
+		{
+			String debugMessage = String.format("AST_CALL.validateSingleActualArgument: Formal/actual type mismatch, formal : %s, actual : %s", 
+												formalArgumentType, actualArgumentType);
+			DebugPrint.print(debugMessage);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @brief 	Validates the actual arguments by matching them with the formal arguments,
+	 * 			recursively. Also makes sure that the number of formal arguments
+	 * 			is the same as the number of actual arguments. 
+	 * 
+	 * @param	formalArgumentTypes - a list which holds the types of the formal arguments.
+	 * 			Since this method is recursive, this list might be partial.
+	 * @param	actualArguments - a list which holds the expressions that were passed
+	 * 			as actual arguments. This list might be partial as well.
+	 * 
+	 * @return 	true if the actual arguments are valid, false otherwise.
+	 * @throws SemanticAnalysisException 
+	 */
+	private boolean validateActualArguments(List<ICTypeInfo> formalArgumentTypes, 
+			AST_EXPS_LIST actualArguments, String className) throws SemanticAnalysisException
+	{
+		// Base case - at least one of the lists is empty 
+		if (formalArgumentTypes.size() == 0)
+		{
+			if ((actualArguments == null) || (actualArguments.head == null))
+			{
+				// All of the arguments were successfully validated and the number of 
+				// formal arguments is the same as the one of actual arguments
+				return true;
+			}
+			
+			DebugPrint.print("AST_CALL.validateActualArguments: Too many actual arguments.");
+			return false;
+		}
+		if ((actualArguments == null) || (actualArguments.head == null))
+		{
+			String debugMessage = String.format("AST_CALL.validateActualArguments: Missing %d actual argument(s).",
+												formalArgumentTypes.size());
+			DebugPrint.print(debugMessage);
+			return false;
+		}
+		
+		// Validating the first argument
+		if (!validateSingleActualArgument(formalArgumentTypes.get(0), actualArguments.head, className))
+		{
+			return false;
+		}
+		
+		// Recursively validating the rest of the arguments
+		List<ICTypeInfo> formalArgumentsTail = formalArgumentTypes.subList(1, formalArgumentTypes.size());
+		return validateActualArguments(formalArgumentsTail, actualArguments.tail, className);
 	}
 	
 	/**
@@ -143,7 +210,11 @@ public class AST_CALL extends AST_Node
 		}
 		
 		// Validating the arguments
-		return validateActualArguments(functionSymbolInfo);
+		if (!validateActualArguments(functionSymbolInfo.argumentsTypes, args, className))
+		{
+			return null;
+		}
+		return functionSymbolInfo.returnType;
 	}
 	
 }
