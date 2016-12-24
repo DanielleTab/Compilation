@@ -30,6 +30,10 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 		if(subscriptInfo.ICType==ICTypeInfo.IC_TYPE_INT)
 			return null;
 		
+		// var must be array
+		if(varInfo.pointerDepth<1)
+			return null;
+		
 		return new ICTypeInfo(varInfo.ICType,varInfo.pointerDepth -1);
 	}
 	

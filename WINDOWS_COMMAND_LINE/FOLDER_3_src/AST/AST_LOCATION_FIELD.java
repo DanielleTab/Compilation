@@ -23,15 +23,29 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 	// TODO: finish this (Ilana)
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		// TODO: or should I take the class of var? (and how?)
-		ICTypeInfo varInfo = var.validate(className);
-		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,fieldName);
-
-		// illegal field
-		if(fieldFound==null)
+		ICTypeInfo varInfo = var.validate(className);// TODO: is it ok?
+		if(varInfo==null)
 			return null;
 		
-		// TODO
-		return new ICTypeInfo();
+		SymbolInfo varFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,fieldName);
+		
+		// var must be found in current class or in extended classes + var must be a variable
+		if(varFound==null  &&  varFound.getSymbolType() != SymbolInfo.SymbolType.SYMBOL_TYPE_VARIABLE)
+			return null;
+		
+		// var must be ICClass
+		if(! ((VariableSymbolInfo) varFound).isICClass())
+			return null;
+		
+		// field must be found in the class of var or in extended classes
+		String varClass = ((VariableSymbolInfo) varFound).variableType.ICType; // we already know that class name is not a regular class name
+		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
+
+		// field must exist + must be a variable
+		if(fieldFound==null  &&  fieldFound.getSymbolType() != SymbolInfo.SymbolType.SYMBOL_TYPE_VARIABLE)
+			return null;
+		
+		//everything is good :)
+		return ((VariableSymbolInfo) fieldFound).variableType;
 	}
 }
