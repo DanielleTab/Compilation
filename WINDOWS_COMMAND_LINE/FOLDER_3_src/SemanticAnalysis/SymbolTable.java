@@ -106,7 +106,15 @@ public class SymbolTable {
 					else
 					{
 						// symbolName wasn't found in this class
-						return searchSymbolInfoInClassAndUp(((ClassSymbolInfo) symbolInfo).extendedClassName ,symbolName); // go up in heritage
+						String extendedClassName  = ((ClassSymbolInfo) symbolInfo).extendedClassName;
+						if(extendedClassName!=null)
+						{
+							return searchSymbolInfoInClassAndUp(extendedClassName,symbolName); // go up in heritage
+						}
+						else
+						{
+							return null; // this is the highest class in heritage, and symbolName hasn'd been found
+						}
 					}
 				}
 			}
