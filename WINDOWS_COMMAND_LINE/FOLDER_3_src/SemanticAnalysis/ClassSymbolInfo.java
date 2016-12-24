@@ -53,4 +53,26 @@ public class ClassSymbolInfo extends SymbolInfo{
 	public SymbolType getSymbolType() {
 		return SymbolType.SYMBOL_TYPE_CLASS;
 	}
+	
+	public VariableSymbolInfo searchField(String symbolName){
+		//VariableSymbolInfo searchThis = new VariableSymbolInfo(symbolName,ICTypeInfo variableType)
+		for(int i=0;i<this.fields.size();i++)
+		{
+			if(this.fields.get(i).symbolName == symbolName)
+				return this.fields.get(i);
+		}
+		
+		return null;
+	}
+	
+	public FunctionSymbolInfo searchMethod(String symbolName){
+		for(int i=0;i<this.methods.size();i++)
+		{
+			if(this.fields.get(i).symbolName == symbolName)
+				return this.methods.get(i);
+		}
+		
+		return null;
+	}
+	
 }

@@ -82,19 +82,62 @@ public class SymbolTable {
 	// search in the given class and its predecessors.
 	// does not search in the hash table.
 	// Returns null if the symbol doesn't exist.
-	public static SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName)
+	public static SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName) throws ClassIsNotInSymbolTableException
 	{
-		// TODO: implement
-		return null;
+		SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
+		if(classSymbolInfoNode!=null)
+		{
+			SymbolInfo symbolInfo=classSymbolInfoNode.symbolInfo;
+			if(symbolInfo instanceof ClassSymbolInfo)
+			{
+				// search inside class
+				VariableSymbolInfo fieldFound = ((ClassSymbolInfo) symbolInfo).searchField(symbolName);
+				if(fieldFound!=null)
+				{
+					return fieldFound; // found
+				}
+				else
+				{
+					FunctionSymbolInfo methodFound = ((ClassSymbolInfo) symbolInfo).searchMethod(symbolName);
+					if(methodFound!=null)
+					{
+						return methodFound; // found
+					}
+					else
+					{
+						// symbolName wasn't found in this class
+						return searchSymbolInfoInClassAndUp(((ClassSymbolInfo) symbolInfo).extendedClassName ,symbolName); // go up in heritage
+					}
+				}
+			}
+			else
+			{
+				throw new ClassIsNotInSymbolTableException();
+			}
+			
+		}
+		else
+		{
+			throw new ClassIsNotInSymbolTableException();
+		}
 	}
 	
 	// search in the current class and its predecessors.
 	// does search in the hash table.
 	// Returns null if the symbol doesn't exist.
-	public static SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName)
+	public static SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName) throws ClassIsNotInSymbolTableException
 	{
-		// TODO: implement
-		return null;
+		SymbolInfoNode classSymbolInfoNode = hashTable.get(symbolName);
+		if(classSymbolInfoNode!=null)
+		{
+			// found it in scopes symbols
+			return classSymbolInfoNode.symbolInfo;
+		}
+		else
+		{
+			// search in classes heritage
+			return searchSymbolInfoInClassAndUp(currenClassName, symbolName);
+		}
 	}
 	
 	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal)
