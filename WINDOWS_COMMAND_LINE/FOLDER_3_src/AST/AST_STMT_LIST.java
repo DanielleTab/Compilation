@@ -19,8 +19,23 @@ public class AST_STMT_LIST extends AST_STMT
 	/******************/
 	public AST_STMT_LIST(AST_STMT head,AST_STMT_LIST tail)
 	{
-		this.head = head;
-		this.tail = tail;
+		AST_STMT_LIST iterator=tail;
+		if((iterator!=null)&&(!iterator.isEmpty()))
+		{
+			this.head=tail.head;
+			// iterate up to the end of the list
+			while(iterator.tail!=null)
+			{
+				iterator=iterator.tail;
+			}
+			iterator.tail=new AST_STMT_LIST(head, null);
+			this.tail=tail.tail;
+		}
+		else
+		{
+			this.head=head;
+			this.tail=null;
+		}
 	}
 	
 	/** Copy Constructor **/
@@ -28,6 +43,11 @@ public class AST_STMT_LIST extends AST_STMT
 	{
 		this.head = other.head;
 		this.tail = other.tail;
+	}
+	
+	public boolean isEmpty()
+	{
+		return ((this.tail==null)&&(this.head==null));
 	}
 	
 	/** 

@@ -3,6 +3,7 @@
 import java.io.*;
 
 import AST.*;
+import java_cup.runtime.Symbol;
 
 public class Main
 {
@@ -34,11 +35,21 @@ public class Main
 			/*******************************/
 			p = new CUP_FILECup(l);
 
-			p.parse();
+			Symbol temp=p.parse();
+			if(((AST_PROGRAM)temp.value).validate(null)!=null)
+			{
+				// Writing output
+				BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
+				outputWriter.write(OK_STRING);
+				outputWriter.close();
+			}
+			else
+			{
 			// Writing output
 			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
-			outputWriter.write(OK_STRING);
+			outputWriter.write(FAIL_STRING);
 			outputWriter.close();
+			}
 			
     	}
 			     

@@ -15,9 +15,25 @@ public class AST_ID_LIST extends AST_Node
 	public ICTypeInfo type;
 	public AST_ID_LIST(String head, AST_ID_LIST tail)
 	{
-		this.head = head;
-		this.tail = tail;
-		this.type=null;
+		AST_ID_LIST iterator=tail;
+		if((iterator!=null)&&(!iterator.isEmpty()))
+		{
+			this.head=tail.head;
+			this.type=tail.type;
+			// iterate up to the end of the list
+			while(iterator.tail!=null)
+			{
+				iterator=iterator.tail;
+			}
+			iterator.tail=new AST_ID_LIST(head, null);
+			this.tail=tail.tail;
+		}
+		else
+		{
+			this.head=head;
+			this.tail=null;
+			this.type=null;
+		}
 	}
 	
 	// returns null if one or more of the names in the list are reserved word.
@@ -53,5 +69,9 @@ public class AST_ID_LIST extends AST_Node
 			return null;
 		}
 		return new ICTypeInfo();
+	}
+	public boolean isEmpty()
+	{
+		return ((this.tail==null)&&(this.head==null));
 	}
 }

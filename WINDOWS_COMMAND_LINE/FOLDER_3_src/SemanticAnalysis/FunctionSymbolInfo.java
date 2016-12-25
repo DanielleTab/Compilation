@@ -1,5 +1,6 @@
 package SemanticAnalysis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionSymbolInfo extends SymbolInfo{
@@ -19,20 +20,24 @@ public class FunctionSymbolInfo extends SymbolInfo{
 	
 	public void addFormal(ICTypeInfo formal)
 	{
+		if(this.argumentsTypes==null)
+		{
+			this.argumentsTypes=new ArrayList<ICTypeInfo>();
+		}
 		this.argumentsTypes.add(formal);
 	}
 	public boolean equals(Object obj)
 	{
 		FunctionSymbolInfo comparedSymbol=(FunctionSymbolInfo)obj;
-		if(!returnType.equals(comparedSymbol.returnType))
+		if((returnType!=null)&&(comparedSymbol.returnType!=null)&&(!returnType.equals(comparedSymbol.returnType)))
 		{
 			return false;
 		}
-		if(!argumentsTypes.equals(comparedSymbol.argumentsTypes))
+		if((argumentsTypes!=null)&&(comparedSymbol.argumentsTypes!=null)&&(!argumentsTypes.equals(comparedSymbol.argumentsTypes)))
 		{
 			return false;
 		}
-		if(!symbolName.equals(comparedSymbol.symbolName))
+		if((symbolName!=null)&&(comparedSymbol.symbolName!=null)&&(!symbolName.equals(comparedSymbol.symbolName)))
 		{
 			return false;
 		}

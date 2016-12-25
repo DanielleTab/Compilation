@@ -1,7 +1,0 @@
-class MyClass{
-	
-	void callingFunc()
-	{
-		x.funcToCall(arg1, arg2;
-	}
-}

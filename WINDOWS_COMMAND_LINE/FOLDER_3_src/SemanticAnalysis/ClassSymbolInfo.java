@@ -1,5 +1,6 @@
 package SemanticAnalysis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassSymbolInfo extends SymbolInfo{
@@ -29,10 +30,18 @@ public class ClassSymbolInfo extends SymbolInfo{
 	
 	public void addMethod(FunctionSymbolInfo method)
 	{
+		if(this.methods==null)
+		{
+			this.methods=new ArrayList<FunctionSymbolInfo>();
+		}
 		this.methods.add(method);
 	}
 	public void addField(VariableSymbolInfo field)
 	{
+		if(this.fields==null)
+		{
+			this.fields=new ArrayList<VariableSymbolInfo>();
+		}
 		this.fields.add(field);
 	}
 
@@ -55,23 +64,27 @@ public class ClassSymbolInfo extends SymbolInfo{
 	}
 	
 	public VariableSymbolInfo searchField(String symbolName){
+		if(this.fields!=null)
+		{
 		//VariableSymbolInfo searchThis = new VariableSymbolInfo(symbolName,ICTypeInfo variableType)
 		for(int i=0;i<this.fields.size();i++)
 		{
 			if(this.fields.get(i).symbolName == symbolName)
 				return this.fields.get(i);
 		}
-		
+		}
 		return null;
 	}
 	
 	public FunctionSymbolInfo searchMethod(String symbolName){
+		if(this.methods!=null)
+		{
 		for(int i=0;i<this.methods.size();i++)
 		{
-			if(this.fields.get(i).symbolName == symbolName)
+			if(this.methods.get(i).symbolName == symbolName)
 				return this.methods.get(i);
 		}
-		
+		}
 		return null;
 	}
 	

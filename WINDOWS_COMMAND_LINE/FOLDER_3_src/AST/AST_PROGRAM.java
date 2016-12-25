@@ -16,6 +16,7 @@ public class AST_PROGRAM extends AST_Node
 	// returns ICTypeInfo = null if the program is not validated
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
+		SymbolTable.createNewScope();
 		AST_CLASS_DECLARATION_LIST iterator=l;
 		while(iterator!=null)
 		{
@@ -25,10 +26,12 @@ public class AST_PROGRAM extends AST_Node
 			}
 			iterator=l.tail;
 		}
+
 		if(!SymbolTable.doesOneMainExistInProgram())
 		{
 			return null;
 		}
+		SymbolTable.closeCurrentScope();
 		return new ICTypeInfo();
 	}
 	

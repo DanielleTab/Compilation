@@ -16,6 +16,29 @@ public class AST_FORMALS_LIST extends AST_Node
 	public AST_FORMALS_LIST(AST_TYPE formal_type,String formal_name,AST_FORMALS_LIST tail)
 	{
 		this.functionName=null;
+		AST_FORMALS_LIST iterator=tail;
+		if((iterator!=null)&&(!iterator.isEmpty()))
+		{
+			this.formal_name=tail.formal_name;
+			this.formal_type=tail.formal_type;
+			// iterate up to the end of the list
+			while(iterator.tail!=null)
+			{
+				iterator=iterator.tail;
+			}
+			iterator.tail=new AST_FORMALS_LIST(formal_type, formal_name, null);
+			this.tail=tail.tail;
+		}
+		else
+		{
+			this.formal_name=formal_name;
+			this.formal_type=formal_type;
+			this.tail=null;
+		}
+		
+		
+		
+		
 		this.tail=tail;
 		this.formal_type=formal_type;
 		this.formal_name=formal_name;
@@ -47,5 +70,9 @@ public class AST_FORMALS_LIST extends AST_Node
 			}
 		}
 		return new ICTypeInfo();
+	}
+	public boolean isEmpty()
+	{
+		return ((this.tail==null)&&(this.formal_name==null));
 	}
 }

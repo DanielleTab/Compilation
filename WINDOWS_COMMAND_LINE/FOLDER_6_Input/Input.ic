@@ -1,1 +1,10 @@
-class Hi{}
+class Hi{
+int func()
+{
+}
+
+int func2()
+{
+func();
+}
+}

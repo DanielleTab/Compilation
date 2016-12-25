@@ -37,7 +37,7 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 		SymbolTable.insertNewSymbol(fieldInfo);
 		SymbolTable.addFieldToClass(className, fieldInfo);
 		
-		if(idsList != null)
+		if((idsList != null)&&(!idsList.isEmpty()))
 		{
 			this.idsList.type=fieldType;
 			if(this.idsList.validate(className)==null)

@@ -5,7 +5,7 @@ import SemanticAnalysis.SymbolInfo.SymbolType;
 
 public class SymbolTable {
 
-	public static Hashtable<String,SymbolInfoNode> hashTable;
+	public static Hashtable<String,SymbolInfoNode> hashTable=new Hashtable<String,SymbolInfoNode>();
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
 	
 
@@ -17,12 +17,15 @@ public class SymbolTable {
 	{
 		SymbolInfoNode sameNamePointer=hashTable.get(symbolInfo.symbolName);
 		SymbolInfoNode iteratorForScope=hashTable.get(SCOPE_SYMBOL_NAME);
-		while(iteratorForScope.nextSymbolInScope!=null)
+		while((iteratorForScope!=null)&&(iteratorForScope.nextSymbolInScope!=null))
 		{
 			iteratorForScope=iteratorForScope.nextSymbolInScope;
 		}
 		SymbolInfoNode insertedSymbolInfo=new SymbolInfoNode(symbolInfo,sameNamePointer,null);
-		iteratorForScope.nextSymbolInScope=insertedSymbolInfo;
+		if(iteratorForScope!=null)
+		{
+			iteratorForScope.nextSymbolInScope=insertedSymbolInfo;
+		}
 		hashTable.put(symbolInfo.symbolName,insertedSymbolInfo);
 	}
 	
@@ -31,7 +34,8 @@ public class SymbolTable {
 		SymbolInfoNode iterator=hashTable.get(SCOPE_SYMBOL_NAME);
 		while(iterator!=null)
 		{
-			if(iterator.symbolInfo.symbolName.equals(symbolName))
+			
+			if((iterator.symbolInfo!=null)&&(iterator.symbolInfo.symbolName.equals(symbolName)))
 			{
 				return true;
 			}
@@ -60,11 +64,25 @@ public class SymbolTable {
 		while(temp!=null)
 		{
 			SymbolInfoNode entry=SymbolTable.hashTable.get(temp.symbolInfo.symbolName);
-			SymbolTable.hashTable.put(temp.symbolInfo.symbolName,entry.hiddenSymbol);
+			if(entry.hiddenSymbol!=null)
+			{
+				SymbolTable.hashTable.put(temp.symbolInfo.symbolName,entry.hiddenSymbol);
+			}
+			else
+			{
+				SymbolTable.hashTable.remove(temp.symbolInfo.symbolName);
+			}
 			temp=temp.nextSymbolInScope;
 		}
-		
-		SymbolTable.hashTable.put(SCOPE_SYMBOL_NAME, node.hiddenSymbol);
+		if(node.hiddenSymbol!=null)
+		{
+			SymbolTable.hashTable.put(SCOPE_SYMBOL_NAME, node.hiddenSymbol);
+		}
+		else
+		{
+			SymbolTable.hashTable.remove(SCOPE_SYMBOL_NAME);
+
+		}
 	}
 	
 	// check if class with the received className does exist in the table.
@@ -278,12 +296,12 @@ public class SymbolTable {
 		// iterate over the current scope. it should contains only classes!
 		while(node!=null)
 		{
-			if(!(node.nextSymbolInScope.symbolInfo instanceof ClassSymbolInfo))
+			if(!(node.symbolInfo instanceof ClassSymbolInfo))
 			{
 				throw new ClassIsNotInSymbolTableException();
 			}
 			
-			ClassSymbolInfo temp=(ClassSymbolInfo)node.nextSymbolInScope.symbolInfo;
+			ClassSymbolInfo temp=(ClassSymbolInfo)node.symbolInfo;
 			int currClassMainCount=temp.getMainFunctionsCount();
 			if(currClassMainCount>1)
 			{
@@ -291,7 +309,7 @@ public class SymbolTable {
 			}
 			else
 			{
-				count++;
+				count=count+currClassMainCount;
 			}
 			node=node.nextSymbolInScope;
 		}
