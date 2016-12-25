@@ -85,13 +85,18 @@ public class SymbolTable {
 		}
 	}
 	
+	// TODO: Pay attention to this fix.
 	// check if class with the received className does exist in the table.
-	public static boolean doesClassExist(String className) throws SemanticAnalysisException
+	public static boolean doesClassExist(String className)
 	{
-		SymbolInfo temp=searchSymbolInfoLocallyOrInCurrentClassAndUp(className, className);
-		if((temp!=null)&&(temp instanceof ClassSymbolInfo))
+		SymbolInfoNode symbolInfoNode = hashTable.get(className);
+		if (symbolInfoNode != null)
 		{
-			return true;
+			SymbolInfo symbolInfo = symbolInfoNode.symbolInfo;
+			if ((symbolInfo != null) && (symbolInfo instanceof ClassSymbolInfo))
+			{
+				return true;
+			} 
 		}
 		
 		return false;
@@ -243,9 +248,9 @@ public class SymbolTable {
 	 */
 	public static boolean validatePredeccessor(ICTypeInfo predeccessor, ICTypeInfo descendent) throws SemanticAnalysisException
 	{
-		if(descendent.ICType==ICTypeInfo.IC_TYPE_NULL)
+		if(descendent.ICType.equals(ICTypeInfo.IC_TYPE_NULL))
 		{
-			if((predeccessor.ICType==ICTypeInfo.IC_TYPE_INT) ||(predeccessor.ICType==ICTypeInfo.IC_TYPE_STRING))
+			if((predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_INT)) ||(predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_STRING)))
 			{
 				return false;
 			}
@@ -259,18 +264,18 @@ public class SymbolTable {
 			return false;
 		}
 		
-		if((predeccessor.ICType!=ICTypeInfo.IC_TYPE_INT) && (predeccessor.ICType!=ICTypeInfo.IC_TYPE_STRING)&&(doesClassExist(predeccessor.ICType)==false))
+		if((!predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_INT)) && (!predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_STRING))&&(doesClassExist(predeccessor.ICType)==false))
 		{
 			return false;
 		}
-		if((descendent.ICType!=ICTypeInfo.IC_TYPE_INT) && (descendent.ICType!=ICTypeInfo.IC_TYPE_STRING)&&(doesClassExist(descendent.ICType)==false))
+		if((!descendent.ICType.equals(ICTypeInfo.IC_TYPE_INT)) && (!descendent.ICType.equals(ICTypeInfo.IC_TYPE_STRING))&&(doesClassExist(descendent.ICType)==false))
 		{
 			return false;
 		}
 		if(descendent.pointerDepth>0)
 		{
 			// array does not have subtype
-			if(predeccessor.ICType!=descendent.ICType)
+			if(!predeccessor.ICType.equals(descendent.ICType))
 			{
 				return false;
 			}
@@ -282,6 +287,10 @@ public class SymbolTable {
 		if(predeccessor.ICType.equals(descendent.ICType))
 		{
 			return true;
+		}
+		if ((!predeccessor.isICClass()) || (!descendent.isICClass()))
+		{
+			return false;
 		}
 		SymbolInfoNode descendentClassNode= hashTable.get(predeccessor.ICType);
 		ClassSymbolInfo descendentClass=(ClassSymbolInfo) descendentClassNode.symbolInfo;
