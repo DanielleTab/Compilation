@@ -34,7 +34,7 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 			return null;
 		
 		// var must be ICClass
-		if(! ((VariableSymbolInfo) varFound).isICClass())
+		if(! ((VariableSymbolInfo) varFound).variableType.isICClass())
 			return null;
 		
 		// field must be found in the class of var or in extended classes
