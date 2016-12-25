@@ -1,6 +1,6 @@
 class OtherClassExtends{
 	
-	classObj funcName(classObj obj){
+	ClassObj funcName(ClassObj obj){
 		return obj;
 	}
 	
@@ -10,7 +10,7 @@ class OtherClassExtends{
 
 }
 
-class classObj{
+class ClassObj{
 	string str1;
 	int num1;
 	

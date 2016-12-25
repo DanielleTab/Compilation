@@ -1,4 +1,4 @@
-class classObj{
+class ClassObj{
 	string str1;
 	int num1;
 	
@@ -10,8 +10,8 @@ class classObj{
 
 class OtherClassExtends{
 	
-	void funcName(classObj obj){
-		return new classObj();
+	void funcName(ClassObj obj){
+		return new ClassObj();
 	}
 	
 	void main(string[] args){

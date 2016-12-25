@@ -12,7 +12,7 @@ class ClassObj{
 class OtherClassExtends{
 	int num2;
 
-	classObj main(string[] args){
+	ClassObj main(string[] args){
 		string str3;
 	}	
 	

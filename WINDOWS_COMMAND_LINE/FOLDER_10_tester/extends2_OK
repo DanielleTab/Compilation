@@ -1,4 +1,4 @@
-class classObj{
+class ClassObj{
 	string str1;
 	int num1;
 	
@@ -10,7 +10,7 @@ class classObj{
 
 class OtherClassExtends{
 	
-	classObj funcName(classObj obj){
+	ClassObj funcName(ClassObj obj){
 		return obj;
 	}
 	

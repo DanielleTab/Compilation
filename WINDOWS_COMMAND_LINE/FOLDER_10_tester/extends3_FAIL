@@ -11,7 +11,7 @@ class ClassToExtend{
 class ExtendingClass{
 	
 	ClassToExtend funcName(ClassToExtend obj){
-		int s = str1;
+		int s = num1;
 		return obj;
 	}
 	
