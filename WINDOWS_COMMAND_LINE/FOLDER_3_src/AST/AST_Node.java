@@ -12,8 +12,4 @@ public abstract class AST_Node
 		return null;
 	}
 	
-	public int PrintMe()
-	{
-		return 700;
-	}
 }
