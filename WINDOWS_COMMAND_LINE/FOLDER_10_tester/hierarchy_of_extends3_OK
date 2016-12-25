@@ -9,9 +9,14 @@ class ClassA{
 
 
 class ClassB extends ClassA{
-	ClassA obj1 = new ClassA();
+	ClassA obj1;
 	string str2;
 	int num2;
+	
+	void assignerB()
+	{
+		obj1 = new ClassA();
+	}
 }
 
 class ClassC extends ClassB{
@@ -19,9 +24,14 @@ class ClassC extends ClassB{
 }
 
 class ClassD extends ClassC{
-	ClassA obj4 = new ClassA();
-	int str4 = obj4.num1;
+	ClassA obj4;
+	int str4;
 	
+	void assignerD()
+	{
+		obj4 = new ClassA();
+		str4 = obj4.num1;
+	}
 	
 	void main(string[] args){
 		int i = 1;

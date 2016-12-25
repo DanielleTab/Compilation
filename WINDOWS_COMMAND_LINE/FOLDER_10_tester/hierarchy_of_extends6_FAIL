@@ -9,17 +9,32 @@ class ClassA{
 
 
 class ClassB extends ClassA{
-	ClassA obj1 = new ClassA();
+	ClassA obj1;
 	string str2;
 	int num2;
+	
+	void assignerB()
+	{
+		obj1 = new ClassA();
+	}
 }
 
 class ClassC extends ClassB{
-	ClassA obj2 = new ClassB();
+	ClassA obj2;
+	
+	void assignerC()
+	{
+		obj2 = new ClassB();
+	}
 }
 
 class ClassD extends ClassC{
-	ClassA str4 = obj4.obj2;
+	ClassA str4;
+	
+	void assignerD()
+	{
+		str4 = obj4.obj2;
+	}
 	
 	void main(string[] args){
 		int i = 1;

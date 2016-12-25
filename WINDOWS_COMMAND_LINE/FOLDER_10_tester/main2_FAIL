@@ -13,7 +13,7 @@ class classObj{
 
 
 class OtherClassExtends{
-	int num2 = 5;
+	int num2;
 
 	void main(string[] args){
 		string str3;
