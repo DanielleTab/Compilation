@@ -279,18 +279,18 @@ public class SymbolTable {
 				return true;
 			}
 		}
-		if(predeccessor.ICType==descendent.ICType)
+		if(predeccessor.ICType.equals(descendent.ICType))
 		{
 			return true;
 		}
 		SymbolInfoNode descendentClassNode= hashTable.get(predeccessor.ICType);
 		ClassSymbolInfo descendentClass=(ClassSymbolInfo) descendentClassNode.symbolInfo;
-		
-		if(validatePredeccessor(predeccessor, new ICTypeInfo(descendentClass.extendedClassName,0)))
+		if(descendentClass.extendedClassName!=null)
 		{
-			return true;
-			
-			
+			if(validatePredeccessor(predeccessor, new ICTypeInfo(descendentClass.extendedClassName,0)))
+			{
+				return true;	
+			}
 		}
 		return false;
 	}
