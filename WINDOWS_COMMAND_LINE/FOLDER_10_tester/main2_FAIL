@@ -1,4 +1,4 @@
-class classObj{
+class ClassObj{
 	string str1;
 	int num1;
 	
