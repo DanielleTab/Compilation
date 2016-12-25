@@ -68,7 +68,7 @@ public class SymbolTable {
 	}
 	
 	// check if class with the received className does exist in the table.
-	public static boolean doesClassExist(String className)
+	public static boolean doesClassExist(String className) throws SemanticAnalysisException
 	{
 		SymbolInfo temp=searchSymbolInfoLocallyOrInCurrentClassAndUp(className, className);
 		if((temp!=null)&&(temp instanceof ClassSymbolInfo))
@@ -148,7 +148,7 @@ public class SymbolTable {
 		}
 	}
 	
-	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal)
+	public static boolean addFormalToMethod(String className,String functionName, VariableSymbolInfo formal) throws SemanticAnalysisException
 	{
 		// returns true if everything is ok
 		if(SymbolTable.doesSymbolExistInCurrentScope(formal.symbolName)==true)
@@ -223,7 +223,7 @@ public class SymbolTable {
 	/*
 	 * Validates the given predeccessor is really a predeccessor of the given descendent. 
 	 */
-	public static boolean validatePredeccessor(ICTypeInfo predeccessor, ICTypeInfo descendent)
+	public static boolean validatePredeccessor(ICTypeInfo predeccessor, ICTypeInfo descendent) throws SemanticAnalysisException
 	{
 		if(descendent.ICType==ICTypeInfo.IC_TYPE_NULL)
 		{

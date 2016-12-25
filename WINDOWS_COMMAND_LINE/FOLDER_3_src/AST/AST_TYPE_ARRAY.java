@@ -1,6 +1,7 @@
 package AST;
 
 import SemanticAnalysis.ICTypeInfo;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_TYPE_ARRAY extends AST_TYPE
 {
@@ -12,7 +13,7 @@ public class AST_TYPE_ARRAY extends AST_TYPE
 		this.type = type;
 	}
 	
-	public ICTypeInfo validate(String className)
+	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
 		ICTypeInfo temp =type.validate(className);
 		if(temp!=null)

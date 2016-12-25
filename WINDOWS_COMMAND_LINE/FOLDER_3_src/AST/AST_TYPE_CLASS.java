@@ -1,6 +1,7 @@
 package AST;
 
 import SemanticAnalysis.ICTypeInfo;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_TYPE_CLASS extends AST_TYPE 
 {
@@ -11,13 +12,13 @@ public class AST_TYPE_CLASS extends AST_TYPE
 		this.className = className;
 	}
 	
-	public ICTypeInfo validate(String receivedClassName)
+	public ICTypeInfo validate(String receivedClassName) throws SemanticAnalysisException
 	{
 		// TODO: Danielle check this
 	
 		// do we know this className?
-		if(SemanticAnalysis.SymbolTable.doesClassExist(className))
-			return new ICTypeInfo(className, 0);
+		if(SemanticAnalysis.SymbolTable.doesClassExist(receivedClassName))
+			return new ICTypeInfo(receivedClassName, 0);
 		else
 			return null;
 
