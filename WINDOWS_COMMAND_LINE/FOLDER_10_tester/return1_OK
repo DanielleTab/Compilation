@@ -1,0 +1,13 @@
+class ClassToExtend{
+	string str1;
+	int num1;
+	
+	string func1(){
+		string s = "as if it's a non-static func";
+		return "good return";
+	}
+	
+	void main(string[] args){
+		func1();
+	}
+}

@@ -17,16 +17,6 @@ public class ClassSymbolInfo extends SymbolInfo{
 		this.methods=methods;
 	}
 	
-	public ICTypeInfo getFieldICType(String fieldName)
-	{
-		//TODO: implenent
-		return null;
-	}
-	public ICTypeInfo getMethodReturnType(String methodName, ICTypeInfo[] arguments)
-	{
-		//TODO: implement
-		return null;
-	}
 	
 	public void addMethod(FunctionSymbolInfo method)
 	{
@@ -48,6 +38,13 @@ public class ClassSymbolInfo extends SymbolInfo{
 	public int getMainFunctionsCount()
 	{
 		int count=0;
+		
+		if (this.methods == null)
+		{
+			// No methods at all, in particular no main
+			return 0;
+		}
+		
 		for(int i=0;i<this.methods.size();i++)
 		{
 			if(this.methods.get(i).isMain())

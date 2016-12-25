@@ -1,0 +1,21 @@
+class ClassToExtend{
+	string str1;
+	int num1;
+	
+	void func1(){
+		string s = "as if it's a non-static func";
+	}
+}
+
+
+class ExtendingClass extends ClassToExtend{
+	
+	ClassToExtend funcName(ClassToExtend obj){
+		int s = str1;
+		return obj;
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

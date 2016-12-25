@@ -34,7 +34,7 @@ public class Tester
 		}
 	}
 	
-	static public void testSpecificFile(String inputFilePath, String expectedOutput) throws IOException
+	static public void testSpecificFile(String inputFilePath, String expectedOutput) throws Exception
 	{
 		System.out.println("Running " + inputFilePath + " :");
 		String[] args = new String[3];

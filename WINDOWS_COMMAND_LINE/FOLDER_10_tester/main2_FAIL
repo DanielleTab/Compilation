@@ -1,0 +1,22 @@
+class classObj{
+	string str1;
+	int num1;
+	
+	void objFunc(){
+		string s = "as if it's a non-static func";
+	}
+	
+	void main(string[] args){
+		string str2;
+	}
+}
+
+
+class OtherClassExtends{
+	int num2 = 5;
+
+	void main(string[] args){
+		string str3;
+	}	
+	
+}
