@@ -1,0 +1,51 @@
+class ClassA{
+	string str1;
+	int num1;
+	
+	void func1(){
+		string s = "as if it's a non-static func";
+	}
+}
+
+
+class ClassB extends ClassA{
+	ClassA obj1 = new ClassA();
+	string str2;
+	int num2;
+	
+}
+
+class ClassC{
+	ClassA obj2 = new ClassA();
+	ClassA obj3 = new ClassB();
+	string str3;
+	int num3;
+
+}
+
+class ClassD extends ClassC{
+	ClassA obj4 = new ClassA();
+	ClassA obj5 = new ClassB();
+	ClassA obj6 = new ClassC();
+	
+	void main(string[] args){
+		int i = 1;
+		
+		int newnum1 = num1;
+		int newnum2 = num2;
+		int newnum3 = num3;
+		
+		string newStr1 = str1;
+		string newStr1 = str2;
+		string newStr1 = str3;
+
+		ClassA newObj1 = obj1;
+		ClassA newObj2 = obj2;
+		ClassA newObj3 = obj3;
+		ClassA newObj4 = obj4;
+		ClassA newObj5 = obj5;
+		ClassA newObj6 = obj6;
+		
+		func1();
+	}
+}

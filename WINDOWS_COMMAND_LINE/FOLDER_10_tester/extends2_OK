@@ -1,0 +1,21 @@
+class classObj{
+	string str1;
+	int num1;
+	
+	void objFunc(){
+		string s = "as if it's a non-static func";
+	}
+}
+
+
+class OtherClassExtends{
+	
+	classObj funcName(classObj obj){
+		return obj;
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+
+}
