@@ -159,7 +159,7 @@ public class AST_CALL extends AST_Node
 			AST_EXPS_LIST actualArguments, String className) throws SemanticAnalysisException
 	{
 		// Base case - at least one of the lists is empty 
-		if (formalArgumentTypes.size() == 0)
+		if ((formalArgumentTypes == null) || (formalArgumentTypes.size() == 0))
 		{
 			if ((actualArguments == null) || (actualArguments.head == null))
 			{
