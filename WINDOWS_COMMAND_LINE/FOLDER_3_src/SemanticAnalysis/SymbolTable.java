@@ -254,11 +254,20 @@ public class SymbolTable {
 				return true;
 			}
 		}
-		if((predeccessor.pointerDepth!=descendent.pointerDepth) || (doesClassExist(predeccessor.ICType)==false) || (doesClassExist(descendent.ICType)==false))
+		if(predeccessor.pointerDepth!=descendent.pointerDepth)
 		{
 			return false;
 		}
-		if((predeccessor.pointerDepth==descendent.pointerDepth)&&(descendent.pointerDepth>0))
+		
+		if((predeccessor.ICType!=ICTypeInfo.IC_TYPE_INT) && (predeccessor.ICType!=ICTypeInfo.IC_TYPE_STRING)&&(doesClassExist(predeccessor.ICType)==false))
+		{
+			return false;
+		}
+		if((descendent.ICType!=ICTypeInfo.IC_TYPE_INT) && (descendent.ICType!=ICTypeInfo.IC_TYPE_STRING)&&(doesClassExist(descendent.ICType)==false))
+		{
+			return false;
+		}
+		if(descendent.pointerDepth>0)
 		{
 			// array does not have subtype
 			if(predeccessor.ICType!=descendent.ICType)

@@ -25,10 +25,14 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 			return null;
 		
 		// found
-		// confirm that it is indeed a variable
-		if(symbolFound.getSymbolType() == SymbolInfo.SymbolType.SYMBOL_TYPE_VARIABLE)
-			return null;
 		
+		if(symbolFound instanceof VariableSymbolInfo)
+		{
 		return ((VariableSymbolInfo) symbolFound).variableType;
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

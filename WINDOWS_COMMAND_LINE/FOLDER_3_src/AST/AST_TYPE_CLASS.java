@@ -17,8 +17,8 @@ public class AST_TYPE_CLASS extends AST_TYPE
 		// TODO: Danielle check this
 	
 		// do we know this className?
-		if(SemanticAnalysis.SymbolTable.doesClassExist(receivedClassName))
-			return new ICTypeInfo(receivedClassName, 0);
+		if(SemanticAnalysis.SymbolTable.doesClassExist(className))
+			return new ICTypeInfo(className, 0);
 		else
 			return null;
 

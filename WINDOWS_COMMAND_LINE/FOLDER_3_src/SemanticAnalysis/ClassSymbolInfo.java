@@ -69,7 +69,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 		//VariableSymbolInfo searchThis = new VariableSymbolInfo(symbolName,ICTypeInfo variableType)
 		for(int i=0;i<this.fields.size();i++)
 		{
-			if(this.fields.get(i).symbolName == symbolName)
+			if(this.fields.get(i).symbolName.equals( symbolName))
 				return this.fields.get(i);
 		}
 		}
@@ -81,7 +81,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 		{
 		for(int i=0;i<this.methods.size();i++)
 		{
-			if(this.methods.get(i).symbolName == symbolName)
+			if(this.methods.get(i).symbolName.equals(symbolName))
 				return this.methods.get(i);
 		}
 		}
