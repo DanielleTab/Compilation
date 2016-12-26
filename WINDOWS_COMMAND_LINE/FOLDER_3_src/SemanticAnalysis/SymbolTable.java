@@ -181,6 +181,7 @@ public class SymbolTable {
 		}
 		else
 		{
+			// add to the class info-> method info
 			SymbolInfo currentSymbolInfo=SymbolTable.searchSymbolInfoInClassAndUp(className, functionName);
 			if(currentSymbolInfo instanceof FunctionSymbolInfo)
 			{
@@ -191,6 +192,15 @@ public class SymbolTable {
 			{
 				return false;
 			}
+			// add to the method info in the hash
+			currentSymbolInfo=SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, functionName);
+			if(currentSymbolInfo instanceof FunctionSymbolInfo)
+			{
+				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
+				currentMethod.addFormal(formal.variableType);
+			}
+			
+			
 		}
 		return true;
 		
@@ -292,7 +302,7 @@ public class SymbolTable {
 		{
 			return false;
 		}
-		SymbolInfoNode descendentClassNode= hashTable.get(predeccessor.ICType);
+		SymbolInfoNode descendentClassNode= hashTable.get(descendent.ICType);
 		ClassSymbolInfo descendentClass=(ClassSymbolInfo) descendentClassNode.symbolInfo;
 		if(descendentClass.extendedClassName!=null)
 		{

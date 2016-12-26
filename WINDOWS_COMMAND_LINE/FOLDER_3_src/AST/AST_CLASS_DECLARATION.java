@@ -59,12 +59,17 @@ public class AST_CLASS_DECLARATION extends AST_Node
 					}
 					
 					// signature validation
-					FunctionSymbolInfo newInsertedMethod=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,((AST_METHOD) currObj).methodName) ;
-					FunctionSymbolInfo methodWithTheSameNameInPredesseccor=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(extendsClassName,((AST_METHOD) currObj).methodName) ;
-					
-					if(!newInsertedMethod.equals(methodWithTheSameNameInPredesseccor))
+					if(extendsClassName!=null)
 					{
-						return null;
+					FunctionSymbolInfo newInsertedMethod=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,((AST_METHOD) currObj).methodName) ;
+					FunctionSymbolInfo methodWithTheSameNameInPredesseccor=(FunctionSymbolInfo)SymbolTable.searchSymbolInfoInClassAndUp(extendsClassName,((AST_METHOD) currObj).methodName) ;
+					if(methodWithTheSameNameInPredesseccor!=null)
+					{
+						if(!newInsertedMethod.equals(methodWithTheSameNameInPredesseccor))
+						{
+							return null;
+						}
+					}
 					}
 				}
 				

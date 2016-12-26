@@ -24,7 +24,7 @@ public class AST_PROGRAM extends AST_Node
 			{
 				return null;
 			}
-			iterator=l.tail;
+			iterator=iterator.tail;
 		}
 
 		if(!SymbolTable.doesOneMainExistInProgram())

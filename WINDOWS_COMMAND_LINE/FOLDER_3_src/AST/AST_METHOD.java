@@ -49,7 +49,12 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		{
 			return null;
 		}
-		
+		SymbolInfo symbolWithTheSameName=SymbolTable.searchSymbolInfoInClassAndUp(className, methodName);
+		if((symbolWithTheSameName!=null)&&(!(symbolWithTheSameName instanceof FunctionSymbolInfo)))
+		{
+			// we allow only method override.
+			return null;
+		}
 		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
 		
 		// note: the signature validation is executed in the end of the function, 

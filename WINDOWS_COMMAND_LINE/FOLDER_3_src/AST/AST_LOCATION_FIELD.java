@@ -27,22 +27,16 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 		if(varInfo==null)
 			return null;
 		
-		SymbolInfo varFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,fieldName);
-		
-		// var must be found in current class or in extended classes + var must be a variable
-		if(varFound==null  &&  varFound.getSymbolType() != SymbolInfo.SymbolType.SYMBOL_TYPE_VARIABLE)
+		if(!varInfo.isICClass())
+		{
 			return null;
+		}
 		
-		// var must be ICClass
-		if(! ((VariableSymbolInfo) varFound).variableType.isICClass())
-			return null;
-		
-		// field must be found in the class of var or in extended classes
-		String varClass = ((VariableSymbolInfo) varFound).variableType.ICType; // we already know that class name is not a regular class name
+		String varClass = varInfo.ICType;
 		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
 
 		// field must exist + must be a variable
-		if(fieldFound==null  &&  fieldFound.getSymbolType() != SymbolInfo.SymbolType.SYMBOL_TYPE_VARIABLE)
+		if(fieldFound==null  &&  (!(fieldFound instanceof VariableSymbolInfo)))
 			return null;
 		
 		//everything is good :)

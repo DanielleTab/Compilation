@@ -33,6 +33,15 @@ public class FunctionSymbolInfo extends SymbolInfo{
 		{
 			return false;
 		}
+		if((this.argumentsTypes!=null) && (comparedSymbol.argumentsTypes==null))
+		{
+			return false;
+		}
+		if((comparedSymbol.argumentsTypes!=null) && (this.argumentsTypes==null))
+		{
+			return false;
+		}
+		
 		if((argumentsTypes!=null)&&(comparedSymbol.argumentsTypes!=null)&&(!argumentsTypes.equals(comparedSymbol.argumentsTypes)))
 		{
 			return false;

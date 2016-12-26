@@ -3,6 +3,7 @@
 import java.io.*;
 
 import AST.*;
+import SemanticAnalysis.SymbolTable;
 import java_cup.runtime.Symbol;
 
 public class Main
@@ -35,7 +36,7 @@ public class Main
 			/* [4] Initialize a new parser */
 			/*******************************/
 			p = new CUP_FILECup(l);
-
+			SymbolTable.hashTable.clear();
 			Symbol temp=p.parse();
 			if(((AST_PROGRAM)temp.value).validate(null)!=null)
 			{

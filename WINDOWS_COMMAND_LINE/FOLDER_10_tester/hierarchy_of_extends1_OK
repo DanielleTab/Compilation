@@ -54,8 +54,8 @@ class ClassD extends ClassC{
 		int newnum3 = num3;
 		
 		string newStr1 = str1;
-		string newStr1 = str2;
-		string newStr1 = str3;
+		string newStr2 = str2;
+		string newStr3 = str3;
 
 		ClassA newObj1 = obj1;
 		ClassA newObj2 = obj2;
