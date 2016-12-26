@@ -1,0 +1,16 @@
+class ClassWithoutFields
+{
+	int method1()
+	{
+		return 1;
+	}
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		ClassWithoutFields objWithoutFields = new ClassWithoutFields();
+		int i = objWithoutFields.method1;
+	}
+}

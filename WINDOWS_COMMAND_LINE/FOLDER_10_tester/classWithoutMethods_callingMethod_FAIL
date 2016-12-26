@@ -1,0 +1,13 @@
+class ClassWithoutMethods
+{
+	int field1;
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		ClassWithoutMethods objWithoutMethods = new ClassWithoutMethods();
+		objWithoutMethods.unexistingMethod();
+	}
+}

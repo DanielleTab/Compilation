@@ -1,0 +1,15 @@
+class ClassWithoutFields
+{
+	void method1()
+	{
+	}
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		ClassWithoutFields objWithoutFields = new ClassWithoutFields();
+		objWithoutFields.method1();
+	}
+}

@@ -1,0 +1,11 @@
+class EmptyClass
+{
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		EmptyClass emptyObj = new EmptyClass();	
+	}
+}

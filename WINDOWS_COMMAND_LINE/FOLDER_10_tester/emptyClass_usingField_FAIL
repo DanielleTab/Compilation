@@ -1,0 +1,12 @@
+class EmptyClass
+{
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		EmptyClass emptyObj = new EmptyClass();
+		int i = emptyObj.unexistingField;	
+	}
+}

@@ -56,8 +56,8 @@ public class AST_CALL extends AST_Node
 		if (symbolInfo == null)
 		{
 			String debugMessage = 
-					String.format("AST_CALL.getObjectSymbolInfo: The symbol %s doesn't exist in %s", 
-							      funcName, expTypeInfo.ICType);
+					String.format("AST_CALL.getObjectSymbolInfo: The class '%s' doesn't contain the symbol '%s'.", 
+								  expTypeInfo.ICType, funcName);
 			DebugPrint.print(debugMessage);
 			return null;
 		}
@@ -85,7 +85,7 @@ public class AST_CALL extends AST_Node
 					SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, funcName);
 			if (functionSymbolInfo == null)
 			{
-				DebugPrint.print("AST_CALL.getFunctionSymbolInfo: The symbol " + funcName + " doesn't exist locally or in " + className);
+				DebugPrint.print("AST_CALL.getFunctionSymbolInfo: The symbol '" + funcName + "' doesn't exist locally or in the class '" + className + "'.");
 				return null;
 			}
 		}
@@ -102,7 +102,7 @@ public class AST_CALL extends AST_Node
 		// Validates the symbol is a function
 		if (!(functionSymbolInfo instanceof FunctionSymbolInfo))
 		{
-			DebugPrint.print("AST_CALL.getFunctionSymbolInfo: " + funcName + " is not a function.");
+			DebugPrint.print("AST_CALL.getFunctionSymbolInfo: '" + funcName + "' is not a function.");
 			return null;
 		}
 		
