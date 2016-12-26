@@ -63,11 +63,6 @@ public class AST_ID_LIST extends AST_Node
 			}
 		}
 	
-		else
-		{
-			// we can't insert this new symbol, probably this symbol name is already in the symbol table.
-			return null;
-		}
 		return new ICTypeInfo();
 	}
 	public boolean isEmpty()
