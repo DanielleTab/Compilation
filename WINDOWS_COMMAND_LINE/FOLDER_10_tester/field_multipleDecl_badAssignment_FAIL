@@ -1,0 +1,21 @@
+class SimpleClass
+{
+}
+
+class ClassWithFieldsDelcaredTogether
+{
+	int field1, field2;
+	SimpleClass field3, field4, field5;	
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		ClassWithFieldsDelcaredTogether obj = new ClassWithFieldsDelcaredTogether();
+		int i = obj.field1;
+		i = obj.field2;
+		
+		SimpleClass j = obj.field1;
+	}
+}
