@@ -259,6 +259,11 @@ public class SymbolTable {
 	 */
 	public static boolean validatePredeccessor(ICTypeInfo predeccessor, ICTypeInfo descendent) throws SemanticAnalysisException
 	{
+		if (predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_NULL))
+		{
+			// null is predecessor of null alone
+			return descendent.ICType.equals(ICTypeInfo.IC_TYPE_NULL);
+		}
 		if(descendent.ICType.equals(ICTypeInfo.IC_TYPE_NULL))
 		{
 			if (predeccessor.isFlatICType(ICTypeInfo.IC_TYPE_INT))
