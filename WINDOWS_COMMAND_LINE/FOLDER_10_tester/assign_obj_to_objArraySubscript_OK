@@ -1,0 +1,24 @@
+class MyClass
+{
+}
+
+class Main
+{
+	MyClass[] objArrayField;
+
+	void main(string[] args)
+	{
+		MyClass[] objArrayVar1 = null;
+		MyClass[] objArrayVar2 = new MyClass[6];
+		
+		// Array bounds aren't checked in compile time.
+		objArrayField[0] = new MyClass();
+		objArrayVar1[0] = new MyClass();
+		objArrayVar2[10] = new MyClass();
+		
+		objArrayField[3] = objArrayVar2[2];
+		
+		MyClass obj = new MyClass();
+		objArrayField[2] = obj;
+	}
+}

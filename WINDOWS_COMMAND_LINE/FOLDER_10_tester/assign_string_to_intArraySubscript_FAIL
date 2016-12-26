@@ -1,0 +1,9 @@
+class MyClass
+{
+	int[] intArray;
+
+	void main(string[] args)
+	{
+		intArray[0] = "I'm not an int!";
+	}
+}

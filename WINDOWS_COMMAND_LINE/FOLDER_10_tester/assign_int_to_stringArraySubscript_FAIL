@@ -1,0 +1,10 @@
+class MyClass
+{
+	int field1;
+
+	void main(string[] args)
+	{
+		string[] stringArray;
+		stringArray[0] = field1;
+	}
+}

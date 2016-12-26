@@ -1,0 +1,16 @@
+class Father
+{
+}
+
+class Son extends Father
+{}
+
+class Main
+{
+	Father[] fatherArrayField;
+
+	void main(string[] args)
+	{
+		fatherArrayField[0] = new Son();
+	}
+}

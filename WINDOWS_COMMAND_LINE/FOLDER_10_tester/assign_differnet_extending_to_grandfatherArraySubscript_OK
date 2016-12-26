@@ -1,0 +1,21 @@
+class Grandfather
+{}
+
+class Middle extends Grandfather
+{
+}
+
+class Son extends Middle
+{}
+
+class Main
+{
+	Grandfather[] grandfatherArrayField;
+
+	void main(string[] args)
+	{
+		grandfatherArrayField[0] = new Son();
+		grandfatherArrayField[1] = new Middle();
+		grandfatherArrayField[2] = new Grandfather();
+	}
+}

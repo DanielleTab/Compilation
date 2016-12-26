@@ -1,0 +1,17 @@
+class MyClass
+{
+	string[] stringArrayField;
+
+	void main(string[] args)
+	{
+		string[] stringArrayVar1 = null;
+		string[] stringArrayVar2 = new string[6];
+		
+		// Array bounds aren't checked in compile time.
+		stringArrayField[0] = "123";
+		stringArrayVar1[0] = "Hello!";
+		stringArrayVar2[10] = "La la la";
+		
+		stringArrayVar1[1] = stringArrayVar1[3];
+	}
+}
