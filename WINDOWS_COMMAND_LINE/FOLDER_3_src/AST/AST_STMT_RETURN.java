@@ -86,7 +86,7 @@ public class AST_STMT_RETURN extends AST_STMT
 		{
 			throw new ExpectedReturnTypeIsNotInitializedException();
 		}
-		else if (expectedReturnType.ICType == ICTypeInfo.IC_TYPE_VOID)
+		else if (expectedReturnType.ICType.equals(ICTypeInfo.IC_TYPE_VOID))
 		{
 			return validateEmptyReturn();
 		}
