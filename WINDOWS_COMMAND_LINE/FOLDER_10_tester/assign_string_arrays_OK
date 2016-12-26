@@ -1,0 +1,9 @@
+class MyClass
+{
+	string[] stringArrayField;	
+
+	void main(string[] args)
+	{
+		string[] stringArrayVar = stringArrayField;
+	}
+}

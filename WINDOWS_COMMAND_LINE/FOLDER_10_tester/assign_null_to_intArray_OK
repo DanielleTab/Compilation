@@ -1,0 +1,7 @@
+class MyClass
+{
+	void main(string[] args)
+	{
+		int[] intArray = null;
+	}
+}

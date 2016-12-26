@@ -1,0 +1,9 @@
+class MyClass
+{
+	int[] intArrayField;	
+
+	void main(string[] args)
+	{
+		int intVar = intArrayField;
+	}
+}
