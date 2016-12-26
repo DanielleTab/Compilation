@@ -26,6 +26,10 @@ public class AST_EXP_BINOP extends AST_EXP
 		ICTypeInfo leftInfo  = left.validate(className);
 		ICTypeInfo rightInfo = right.validate(className);
 		
+		// fail comes from children
+		if(leftInfo==null || rightInfo==null)
+			return null;
+			
 		if(op instanceof AST_BINOP_PLUS)
 		{
 			// two ints
