@@ -1,0 +1,15 @@
+class ClassA{
+	string str1;
+	int num1;
+	
+	void func1(){
+		string s = "some string";
+		{
+			int num1 = 5;
+		}
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

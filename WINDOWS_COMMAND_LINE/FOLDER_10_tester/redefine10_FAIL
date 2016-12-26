@@ -1,0 +1,10 @@
+class ClassA{
+	int func1;
+	
+	void func1(){
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

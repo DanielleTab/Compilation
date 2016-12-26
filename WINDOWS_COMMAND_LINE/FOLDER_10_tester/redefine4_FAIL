@@ -1,0 +1,13 @@
+class ClassA{
+	string str1;
+	int num1;
+}
+
+class ClassB extends ClassA{
+	string str1;
+	int num1;
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

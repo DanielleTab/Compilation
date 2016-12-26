@@ -1,0 +1,17 @@
+class ClassA{
+
+	void func1(string s){
+	}
+}
+
+class ClassB extends ClassA{
+	
+	void func1(string s){
+		int i = 1;
+	}
+
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

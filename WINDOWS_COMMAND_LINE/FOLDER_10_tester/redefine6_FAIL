@@ -1,0 +1,9 @@
+class ClassA{
+	void func1(string s){
+		string s = "bad shadowing";
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}
