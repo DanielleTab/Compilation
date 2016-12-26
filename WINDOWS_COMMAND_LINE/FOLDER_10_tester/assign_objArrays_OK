@@ -1,0 +1,14 @@
+class MyClass
+{
+}
+
+class Main
+{
+	MyClass[] objArrayField;
+	
+	void main(string[] args)
+	{
+		MyClass[] objArrayVar = new MyClass[3];
+		objArrayVar = objArrayField;
+	}
+}

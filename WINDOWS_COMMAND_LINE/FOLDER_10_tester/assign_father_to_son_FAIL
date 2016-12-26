@@ -1,0 +1,15 @@
+class Father
+{
+}
+
+class Son extends Father
+{
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		Son son = new Father();
+	}
+}

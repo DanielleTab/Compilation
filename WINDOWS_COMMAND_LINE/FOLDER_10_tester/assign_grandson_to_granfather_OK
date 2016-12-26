@@ -1,0 +1,19 @@
+class Grandfather
+{
+}
+
+class Middle extends Grandfather
+{
+}
+
+class Grandson extends Middle
+{
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		Grandfather grandfather = new Grandson();
+	}
+}

@@ -1,0 +1,14 @@
+class MyClass
+{
+	int[] intArrayField;
+
+	void main(string[] args)
+	{
+		int[] intArrayVar1;
+		int[] intArrayVar2 = new int[6];
+		
+		//intArrayField[0] = 0;
+		intArrayVar1[0] = 1;
+		//intArrayVar2[0] = 2;
+	}
+}

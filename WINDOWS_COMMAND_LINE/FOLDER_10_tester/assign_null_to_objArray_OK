@@ -1,0 +1,11 @@
+class MyClass
+{
+}
+
+class Main
+{
+	void main(string[] args)
+	{
+		MyClass[] objArray = null;
+	}
+}
