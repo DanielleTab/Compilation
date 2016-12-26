@@ -1,0 +1,21 @@
+class ClassA{
+	string str1;
+	int num1;
+	
+	void func1(){
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}
+
+class ClassB{
+	ClassA obj2;
+
+	void func2(){
+		ClassA obj = new ClassA();
+		
+		int j = obj - obj2;
+	}
+}

@@ -1,0 +1,13 @@
+class ClassA{
+	string str1;
+	int num1;
+	int num2;
+	
+	void func1(){
+		int i = num1-num2+3;
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

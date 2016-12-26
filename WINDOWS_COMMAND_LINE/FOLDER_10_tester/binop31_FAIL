@@ -1,0 +1,28 @@
+class ClassA{
+
+}
+
+
+class ClassB extends ClassA{
+
+}
+
+class ClassC extends ClassB{
+
+}
+
+class ClassOther extends ClassA{
+
+}
+
+
+class ClassD extends ClassC{
+	
+	
+	void main(string[] args){
+		ClassOther objA = new ClassOther();
+		ClassB objB = new ClassOther();
+		
+		int i = objA == objB;
+	}
+}

@@ -1,0 +1,12 @@
+class ClassA{
+	string str1;
+	int num1;
+	
+	void func1(){
+		int i = 1 != 2 + 3;
+	}
+	
+	void main(string[] args){
+		int i = 1;
+	}
+}

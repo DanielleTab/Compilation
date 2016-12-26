@@ -1,0 +1,7 @@
+class ClassA{
+	
+	void main(string[] args){
+		
+		string i = null + "some string";
+	}
+}
