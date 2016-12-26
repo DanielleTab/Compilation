@@ -2,6 +2,7 @@ package SemanticAnalysis;
 import java.util.*;
 
 import SemanticAnalysis.SymbolInfo.SymbolType;
+import Utils.DebugPrint;
 
 public class SymbolTable {
 
@@ -260,7 +261,7 @@ public class SymbolTable {
 	{
 		if(descendent.ICType.equals(ICTypeInfo.IC_TYPE_NULL))
 		{
-			if((predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_INT)) ||(predeccessor.ICType.equals(ICTypeInfo.IC_TYPE_STRING)))
+			if (predeccessor.isFlatICType(ICTypeInfo.IC_TYPE_INT))
 			{
 				return false;
 			}
