@@ -5,6 +5,7 @@ import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
 import SemanticAnalysis.SymbolTable;
 import SemanticAnalysis.VariableSymbolInfo;
+import Utils.DebugPrint;
 
 public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 {
@@ -27,12 +28,19 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 		
 		// TODO: is this compilation error or rum time?
 		// index is int
-		if(subscriptInfo.ICType==ICTypeInfo.IC_TYPE_INT)
-			return null;
-		
+		if(!subscriptInfo.isFlatICType(ICTypeInfo.IC_TYPE_INT))
+		{
+			DebugPrint.print("AST_LOCATION_SUBSCRIPT.validate: the array index is not an integer. index : " + subscriptInfo);
+			return null;			
+		}
+
 		// var must be array
 		if(varInfo.pointerDepth<1)
+		{
+			DebugPrint.print("AST_LOCATION_SUBSCRIPT.validate: the expression is not an array. exp : " + varInfo);
 			return null;
+		}
+			
 		
 		return new ICTypeInfo(varInfo.ICType,varInfo.pointerDepth -1);
 	}
