@@ -1,0 +1,11 @@
+class MyClass
+{
+	int nonVoidFunc()
+	{
+		string str = "I ain't no hollaback girl";
+	}
+	
+	void main(string[] args)
+	{
+	}
+}

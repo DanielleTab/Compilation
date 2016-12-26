@@ -1,0 +1,12 @@
+class MyClass
+{
+	string field1;	
+
+	void main(string[] args)
+	{
+		string i;
+		string j = i;
+		j = field1;
+		j = "who am i?";
+	}
+}

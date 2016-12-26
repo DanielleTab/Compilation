@@ -1,0 +1,15 @@
+class MyClass
+{
+	int nonVoidFunc()
+	{
+		while (1 == 1)
+		{
+			return "gotcha!";
+		}
+		return 0;
+	}
+	
+	void main(string[] args)
+	{
+	}
+}

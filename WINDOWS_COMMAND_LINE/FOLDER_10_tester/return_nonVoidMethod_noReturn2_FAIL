@@ -1,0 +1,10 @@
+class MyClass
+{
+	int nonVoidFunc()
+	{
+	}
+	
+	void main(string[] args)
+	{
+	}
+}

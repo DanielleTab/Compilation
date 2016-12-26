@@ -1,0 +1,12 @@
+class MyClass
+{
+	int field1;	
+
+	void main(string[] args)
+	{
+		int i;
+		int j = i;
+		j = field1;
+		j = 1;
+	}
+}
