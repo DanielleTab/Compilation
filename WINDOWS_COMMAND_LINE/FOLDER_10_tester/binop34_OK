@@ -1,0 +1,23 @@
+class ClassA{
+
+}
+
+
+class ClassB extends ClassA{
+
+}
+
+class ClassC extends ClassB{
+
+}
+
+class ClassD extends ClassC{
+	
+	
+	void main(string[] args){
+		ClassA objA = new ClassA();
+		ClassB objB = new ClassB();
+		
+		int i = objA != objB == (890/689);
+	}
+}

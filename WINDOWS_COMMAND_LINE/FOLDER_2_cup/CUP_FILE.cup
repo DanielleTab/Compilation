@@ -4,7 +4,7 @@
 import java_cup.runtime.*;
 import AST.*;
 
-parser code 
+parser code        
 {:
 	public Lexer lexer;
 
@@ -13,7 +13,7 @@ parser code
 		super(lexer);
 		this.lexer = lexer;
 	}
-:} 
+:}    
 
 /************************/
 /* CUSTOMIZE CUP PARSER */ 
@@ -111,21 +111,16 @@ non terminal AST_LITERAL literal;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
-/***********************/
-/* array index [] */
-/* method call () */
-precedence left LPAREN,LBRACK;
-
-precedence left DOT;
-precedence right UMINUS, LNEG;
-precedence left TIMES, DIVIDE, MOD;
-precedence left PLUS, MINUS;
-precedence left LT, LTE, GT, GTE;
-precedence left EQUAL, NEQUAL;
-precedence left LAND;
-precedence left LOR;
+/***********************/  
 precedence right ASSIGN;
-
+precedence left LOR;
+precedence left LAND;
+precedence left EQUAL, NEQUAL;
+precedence left LT, LTE, GT, GTE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE, MOD;
+precedence right LNEG;
+precedence left LPAREN,LBRACK,DOT;
 
 /************************/
 /* START WITH: stmtList */
