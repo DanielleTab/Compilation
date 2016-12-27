@@ -1,0 +1,10 @@
+class A
+{
+	void func(int a, B b)
+	{
+	}
+	void main(string[] args)
+{
+}
+
+}

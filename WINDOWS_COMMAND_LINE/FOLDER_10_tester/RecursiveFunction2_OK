@@ -8,7 +8,7 @@ class A
    
       return fibonacci(n - 1,b) + fibonacci(n - 2,b);
 }
- void main (string[] args)
+void main (string[] args)
 {
 int a=fibonacci(3,"a");
 }
