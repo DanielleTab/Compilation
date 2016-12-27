@@ -1,0 +1,18 @@
+class A
+{
+	int f()
+{
+int k=g();
+return 0;
+}
+}
+class B extends A
+{
+int g()
+{
+return 0;
+}
+void main(string[] args)
+{
+}
+}

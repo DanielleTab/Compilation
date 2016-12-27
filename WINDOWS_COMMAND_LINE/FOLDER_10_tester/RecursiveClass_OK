@@ -1,0 +1,14 @@
+class Node
+{
+	Node next;
+	string info;
+	void main(string[] args)
+	{
+		Node n1=new Node();
+		Node n2=new Node();
+		n1.info="n1";
+		n2.info="n2";
+		n1.next=n2;
+	}
+
+}

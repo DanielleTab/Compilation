@@ -1,0 +1,16 @@
+class A
+{
+	int fibonacci(int n, string b)  {
+    if(n == 0)
+        return 0;
+    if(n == 1)
+      return 1;
+   
+      return fibonacci(n - 1,b) + fibonacci(n - 2,b);
+}
+ void main (string[] args)
+{
+int a=fibonacci(3,"a");
+}
+}
+
