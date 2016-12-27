@@ -165,8 +165,10 @@ method		::=     type:t ID:methodName LPAREN formalsList:f RPAREN LBRACE stmtList
 					| VOID ID:methodName LPAREN RPAREN LBRACE stmtList:body RBRACE {: RESULT = new AST_METHOD(null,methodName,null,body); :} // t=null for void
 					;
 
-formalsList	::=     type:t ID:formalName				{: RESULT = new AST_FORMALS_LIST(t,formalName,null); :}
-					| type:t ID:formalName COMMA formalsList:l {: RESULT = new AST_FORMALS_LIST(t,formalName,l); :}
+formalsList	::=     type:t ID:formalName				{: System.out.println("formalsList -> type:t ID:formalName, formalName = " + formalName);
+															RESULT = new AST_FORMALS_LIST(t,formalName,null); :}
+					| type:t ID:formalName COMMA formalsList:l {:   System.out.println("type:t ID:formalName COMMA formalsList:l, formalName = " + formalName);
+																RESULT = new AST_FORMALS_LIST(t,formalName,l); :}
 					;
 
 type        ::=		INT									{: RESULT = new AST_TYPE_INT(); 			:}								
