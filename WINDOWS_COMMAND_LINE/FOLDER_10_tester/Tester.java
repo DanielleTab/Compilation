@@ -46,7 +46,7 @@ public class Tester
 	
 	static public void processFile(String inputFilePath)
 	{
-		if (inputFilePath.endsWith("field_multipleDecl_OK"))
+		if (inputFilePath.endsWith("method_multipleStringArguments_OK"))
 		{
 			System.out.println("now!");
 		}
