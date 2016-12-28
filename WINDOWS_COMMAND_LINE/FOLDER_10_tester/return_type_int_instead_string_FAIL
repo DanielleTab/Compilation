@@ -1,0 +1,11 @@
+class MyClass
+{
+	string stringFunc()
+	{
+		return 0;
+	}
+	
+	void main(string[] args)
+	{
+	}
+}

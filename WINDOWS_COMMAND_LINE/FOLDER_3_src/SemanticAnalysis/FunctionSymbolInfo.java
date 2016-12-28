@@ -3,6 +3,8 @@ package SemanticAnalysis;
 import java.util.ArrayList;
 import java.util.List;
 
+import Utils.DebugPrint;
+
 public class FunctionSymbolInfo extends SymbolInfo{
 
 	public ICTypeInfo returnType;
@@ -53,22 +55,35 @@ public class FunctionSymbolInfo extends SymbolInfo{
 		return true;
 	}
 	
-	public boolean isMain()
+	// Checks if the current function is a valid main function,
+	// assuming its name is 'main'.
+	public boolean validateMainIsValid() throws FunctionIsNotMainException
 	{
-		if(!this.symbolName.equals("main"))
+		if(!this.symbolName.equals(SymbolTable.MAIN_FUNC_SYMBOL_NAME))
 		{
+			throw new FunctionIsNotMainException();
+		}
+		
+		if((this.argumentsTypes == null) || (this.argumentsTypes.size()!=1))
+		{
+			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method has a wrong number of arguments.");
 			return false;
 		}
-		if(this.argumentsTypes.size()!=1)
+		if(!(this.argumentsTypes.get(0).ICType.equals(ICTypeInfo.IC_TYPE_STRING)))
 		{
-			return false;
-		}
-		if(this.argumentsTypes.get(0).ICType!=ICTypeInfo.IC_TYPE_STRING)
-		{
+			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid argument");
 			return false;
 		}
 		if(this.argumentsTypes.get(0).pointerDepth!=1)
 		{
+			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid argument");
+			return false;
+		}
+		if(!this.returnType.ICType.equals(ICTypeInfo.IC_TYPE_VOID))
+		{
+			String debugMessage = String.format("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid return type: %s instead of void.", 
+					returnType);
+			DebugPrint.print(debugMessage);
 			return false;
 		}
 		return true;

@@ -1,0 +1,13 @@
+
+class MyClass
+{
+	int intFunc()
+	{
+		return null;
+	}
+	
+	void main(string[] args)
+	{
+		int i = intFunc();
+	}
+}

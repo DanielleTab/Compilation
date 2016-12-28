@@ -1,13 +1,11 @@
 package SemanticAnalysis;
 import java.util.*;
 
-import SemanticAnalysis.SymbolInfo.SymbolType;
-import Utils.DebugPrint;
-
 public class SymbolTable {
 
 	public static Hashtable<String,SymbolInfoNode> hashTable=new Hashtable<String,SymbolInfoNode>();
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
+	public static final String MAIN_FUNC_SYMBOL_NAME = "main";
 	
 
 	/*

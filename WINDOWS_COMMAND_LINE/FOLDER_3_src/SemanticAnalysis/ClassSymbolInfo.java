@@ -47,7 +47,8 @@ public class ClassSymbolInfo extends SymbolInfo{
 		
 		for(int i=0;i<this.methods.size();i++)
 		{
-			if(this.methods.get(i).isMain())
+			FunctionSymbolInfo methodSymbolInfo = this.methods.get(i);
+			if(methodSymbolInfo.symbolName.equals(SymbolTable.MAIN_FUNC_SYMBOL_NAME))
 			{
 				count++;
 			}

@@ -62,7 +62,9 @@ public class AST_STMT_RETURN extends AST_STMT
 		// Validating the returned expression's type
 		if (!SymbolTable.validatePredeccessor(expectedReturnType, expType))
 		{
-			DebugPrint.print("AST_STMT_RETURN.validateValuedReturn: The returned expression is not from the right type.");
+			String debugMessage = String.format("AST_STMT_RETURN.validateValuedReturn: return mismatch, expected : %s, found : %s.",
+					expectedReturnType, expType);
+			DebugPrint.print(debugMessage);
 			return null;
 		}
 		

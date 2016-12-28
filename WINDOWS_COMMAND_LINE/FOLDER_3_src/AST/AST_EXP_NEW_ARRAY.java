@@ -20,7 +20,7 @@ public class AST_EXP_NEW_ARRAY extends AST_EXP{
 		ICTypeInfo sizeInfo = size.validate(className);
 		
 		// size of array must be int
-		if(sizeInfo.ICType != ICTypeInfo.IC_TYPE_INT)
+		if(!sizeInfo.isFlatICType(ICTypeInfo.IC_TYPE_INT))
 			return null;
 		
 		// type must be defined (int / string / defined class name) - we check it in type.validate;

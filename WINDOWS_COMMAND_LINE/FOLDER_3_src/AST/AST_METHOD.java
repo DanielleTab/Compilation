@@ -1,6 +1,5 @@
 package AST;
 
-import SemanticAnalysis.ClassSymbolInfo;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -59,7 +58,8 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		
 		// note: the signature validation is executed in the end of the function, 
 		// because we have to compare two functionSymbolInfo - and we build the current one in that function.
-		SymbolTable.insertNewSymbol(new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null);
+		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		if(this.formalsList!=null)
 		{
 			this.formalsList.functionName=methodName;
@@ -77,7 +77,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 			DebugPrint.print("AST_METHOD.validate: The body isn't valid (returns an incompatible type, or invalid in itself)");
 			return null;
 		}	
-		if ((this.body.expectedReturnType.ICType != ICTypeInfo.IC_TYPE_VOID) &&
+		if ((!this.body.expectedReturnType.ICType.equals(ICTypeInfo.IC_TYPE_VOID)) &&
 			(!this.body.doesAlwaysReturnValue))
 		{
 			// The body doesn't always return a value though it should
@@ -87,6 +87,14 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		
 		
 		SymbolTable.closeCurrentScope();
+		if (methodName.equals(SymbolTable.MAIN_FUNC_SYMBOL_NAME))
+		{
+			if (!methodSymbolInfo.validateMainIsValid())
+			{
+				DebugPrint.print("AST_METHOD.validate: Invalid main.");
+				return null;
+			}
+		}
 		
 		return new ICTypeInfo();
 	}

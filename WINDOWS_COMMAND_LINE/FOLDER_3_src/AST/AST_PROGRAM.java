@@ -3,6 +3,7 @@ package AST;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
+import Utils.DebugPrint;
 
 public class AST_PROGRAM extends AST_Node 
 {
@@ -29,6 +30,7 @@ public class AST_PROGRAM extends AST_Node
 
 		if(!SymbolTable.doesOneMainExistInProgram())
 		{
+			DebugPrint.print("AST_PROGRAM.validate: The program doesn't contain exactly one valid main method");
 			return null;
 		}
 		SymbolTable.closeCurrentScope();

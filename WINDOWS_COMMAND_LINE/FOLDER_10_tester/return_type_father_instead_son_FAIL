@@ -1,0 +1,20 @@
+class Father
+{
+}
+
+class Son extends Father
+{
+}
+
+class MyClass
+{
+	Son sonFunc()
+	{
+		return new Father();
+	}
+	
+	void main(string[] args)
+	{
+		Son s = sonFunc();
+	}
+}

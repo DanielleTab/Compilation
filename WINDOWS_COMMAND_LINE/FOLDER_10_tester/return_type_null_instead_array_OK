@@ -1,0 +1,13 @@
+
+class MyClass
+{
+	int[] intArrFunc()
+	{
+		return null;
+	}
+	
+	void main(string[] args)
+	{
+		int[] intArr = intArrFunc();
+	}
+}
