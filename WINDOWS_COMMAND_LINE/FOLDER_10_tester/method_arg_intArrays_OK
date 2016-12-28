@@ -1,0 +1,14 @@
+class MyClass
+{
+	int[] intArrayField;	
+
+	void func(int[] intArrArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		int[] intArrayVar = intArrayField;
+		func(intArrayVar);
+	}
+}

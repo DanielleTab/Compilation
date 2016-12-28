@@ -1,0 +1,15 @@
+class MyClass
+{
+}
+
+class Main
+{
+	void func(MyClass objArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		func(null);
+	}
+}

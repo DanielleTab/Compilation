@@ -1,0 +1,13 @@
+class MyClass
+{
+	string[] stringArr;
+
+	void func(int intArg)
+	{
+	}
+	
+	void main(string[] args)
+	{
+		func(stringArr[0]);
+	}
+}

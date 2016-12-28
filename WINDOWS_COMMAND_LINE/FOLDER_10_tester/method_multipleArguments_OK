@@ -1,0 +1,36 @@
+class MyClass
+{}
+
+class Father
+{
+	MyClass fatherObj;
+	int fatherInt;
+}
+
+class Main extends Father
+{
+	MyClass objField;
+	string strField;
+	
+	void voidFuncWithMultipleArguments(MyClass objArg, int intArg, 
+									   string strArg, string[] strArrArg)
+	{
+		if (strArrArg[intArg] == strArg)
+		{
+			MyClass objVar = objArg;
+		}
+		
+		int intVar = intArg;
+		// * is like &&, since the boolean is really int
+		if ((strArg == null) * (objArg != null))
+		{
+			strArg = "Sleepy Lagoon";
+		}
+	}
+
+	void main(string[] args)
+	{
+		voidFuncWithMultipleArguments(new MyClass(), 8, "days a week", new string[8]);
+		voidFuncWithMultipleArguments(objField, fatherInt, args[fatherInt], args);
+	}
+}

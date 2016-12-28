@@ -44,14 +44,18 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		ICTypeInfo varICTypeInfo = varType.validate(className);
 		if (varICTypeInfo == null)
 		{
-			DebugPrint.print("AST_STMT_VAR_DECL.validate: The type isn't valid.");
+			String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The type of the variable '%s' isn't valid.", 
+					varName);
+			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
 		// Making sure that the variable name doesn't already exist in the current scope
 		if (SymbolTable.doesSymbolExistInCurrentScope(varName))
 		{
-			DebugPrint.print("AST_STMT_VAR_DECL.validate: The variable's name already exists.");
+			String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The variable '%s' is redefined.", 
+					varName);
+			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
@@ -61,7 +65,9 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 			ICTypeInfo expressionICTypeInfo = exp.validate(className);
 			if (expressionICTypeInfo == null)
 			{
-				DebugPrint.print("AST_STMT_VAR_DECL.validate: The expression isn't valid.");
+				String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The initial expression of the variable '%s' isn't valid.", 
+						varName);
+				DebugPrint.print(debugMessage);
 				return null;
 			}
 			

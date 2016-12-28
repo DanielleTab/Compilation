@@ -1,0 +1,32 @@
+class Class1
+{
+	int[] arr;
+}
+
+class MyClass
+{
+	int field1;
+	int field2, field3;
+	Class1 objField;
+}
+
+class Main
+{
+	int[] intArrayField;
+	
+	void func(int intArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		int[] intArrayVar1 = null;
+		int[] intArrayVar2 = new int[6];
+		
+		func(intArrayField[0]);
+		func(intArrayField[intArrayField[intArrayField[3]]]);
+		
+		MyClass myClassObj;
+		func(myClassObj.objField.arr[2]);
+	}
+}

@@ -1,0 +1,13 @@
+class Main
+{
+	int intField;	
+	
+	void func(int[] intArrArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		func(intField);
+	}
+}

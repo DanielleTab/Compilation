@@ -1,0 +1,12 @@
+class Main
+{	
+	void funcWithOneArgument(int arg1)
+	{
+		string strVar = "One thing";
+	}
+
+	void main(string[] args)
+	{
+		funcWithOneArgument();
+	}
+}

@@ -1,0 +1,12 @@
+class Main
+{	
+	void funcWithTwoArguments(int arg1, string[] arg2)
+	{
+		string strVar = arg2[arg1];
+	}
+
+	void main(string[] args)
+	{
+		funcWithTwoArguments(1, args, 3, 4);
+	}
+}

@@ -1,0 +1,12 @@
+class Main
+{	
+	void funcWithThreeArguments(string arg1, int arg2, string arg3)
+	{
+		string strVar = "Three thousands and five";
+	}
+
+	void main(string[] args)
+	{
+		funcWithThreeArguments("3005");
+	}
+}

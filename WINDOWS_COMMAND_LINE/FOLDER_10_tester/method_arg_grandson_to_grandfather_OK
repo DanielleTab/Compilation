@@ -1,0 +1,27 @@
+class Grandfather
+{
+}
+
+class Middle extends Grandfather
+{
+}
+
+class Grandson extends Middle
+{
+}
+
+class Son extends Middle
+{
+}
+
+class Main
+{
+	void func(Grandfather grandfatherArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		func(new Son());
+	}
+}

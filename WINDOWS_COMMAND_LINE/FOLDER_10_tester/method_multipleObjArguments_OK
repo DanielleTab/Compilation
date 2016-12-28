@@ -1,0 +1,64 @@
+class MyClass
+{}
+
+class Father
+{
+	MyClass fatherObj;
+}
+
+class Main extends Father
+{
+	MyClass field1;
+	
+	void voidFuncWithObjArguments(MyClass objArg1, MyClass objArg2)
+	{
+		MyClass objVar1 = objArg1;
+		objVar1 = objArg2;
+		objArg1 = objArg2;
+	}
+
+	MyClass objFuncWithObjArguments(MyClass objArg1, MyClass objArg2)
+	{
+		if (objArg1 == null)
+		{
+			return objArg2;
+		}
+		if (objArg1 == objArg2)
+		{
+			MyClass result = new MyClass();
+			return result;
+		}
+		if (objArg1 != objArg2)
+		{
+			return null;
+		}
+		
+		// This will never happen
+		return new MyClass();
+	}
+
+	void callVoidFunc()
+	{
+		MyClass i;
+		MyClass j = i;
+		
+		voidFuncWithObjArguments(i, field1);
+		voidFuncWithObjArguments(field1, i);
+		voidFuncWithObjArguments(j, j);
+	}
+	
+	void callObjFunc(MyClass[] objArr)
+	{
+		objArr[0] = objFuncWithObjArguments(objArr[1], objArr[2]);
+		MyClass objVar = objFuncWithObjArguments(null, field1);
+		field1 = objFuncWithObjArguments(fatherObj, objVar);
+	}
+
+	void main(string[] args)
+	{
+		MyClass[][] objDoubleArr;
+		callVoidFunc();
+		callObjFunc(objDoubleArr[0]);
+		callObjFunc(new MyClass[4/5]);
+	}
+}

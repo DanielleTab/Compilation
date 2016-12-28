@@ -34,15 +34,15 @@ class Main extends Father
 		string j = i;
 		
 		voidFuncWithStringArguments(i, field1);
-		//voidFuncWithStringArguments(field1, i);
-		//voidFuncWithStringArguments(j, j);
+		voidFuncWithStringArguments(field1, i);
+		voidFuncWithStringArguments(j, j);
 	}
 	
 	void callStringFunc(string[] args)
 	{
-		//args[0] = stringFuncWithStringArguments(args[1], args[2]);
-		//string strVar = stringFuncWithStringArguments("wassap?", field1);
-		//field1 = stringFuncWithStringArguments(fatherString, strVar);
+		args[0] = stringFuncWithStringArguments(args[1], args[2]);
+		string strVar = stringFuncWithStringArguments("wassap?", field1);
+		field1 = stringFuncWithStringArguments(fatherString, strVar);
 	}
 
 	void main(string[] args)

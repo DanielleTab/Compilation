@@ -1,0 +1,11 @@
+class MyClass
+{
+	void func(string[] strArrArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		func(null);
+	}
+}

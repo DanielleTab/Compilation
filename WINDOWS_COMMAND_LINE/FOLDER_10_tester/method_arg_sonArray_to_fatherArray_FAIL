@@ -1,0 +1,20 @@
+class Father
+{
+}
+
+class Son extends Father
+{
+}
+
+class Main
+{
+
+	void func(Father[] fatherArrArg)
+	{
+	}
+
+	void main(string[] args)
+	{
+		func(new Son[6]);
+	}
+}

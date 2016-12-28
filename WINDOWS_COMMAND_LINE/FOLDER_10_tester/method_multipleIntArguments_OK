@@ -1,0 +1,56 @@
+class Father
+{
+	int fatherInt;
+}
+
+class Main extends Father
+{
+	int field1;
+	
+	void voidFuncWithIntArguments(int intArg1, int intArg2)
+	{
+		int intVar1 = intArg1;
+		intVar1 = intArg2;
+		intArg1 = intArg2;
+	}
+
+	int intFuncWithIntArguments(int intArg1, int intArg2)
+	{
+		if (intArg1 == 3)
+		{
+			return intArg1;
+		}
+		if (intArg1 != 3)
+		{
+			int result = 6;
+			return result;
+		}
+		
+		// This will never happen
+		return 101;
+	}
+
+	void callVoidFunc()
+	{
+		int i;
+		int j = i;
+		
+		voidFuncWithIntArguments(i, field1);
+		voidFuncWithIntArguments(field1, i);
+		voidFuncWithIntArguments(j, j);
+	}
+	
+	void callIntFunc(int[] intArr)
+	{
+		intArr[0] = intFuncWithIntArguments(intArr[1], intArr[2]);
+		int intVar = intFuncWithIntArguments(3005, field1);
+		field1 = intFuncWithIntArguments(fatherInt, intVar);
+	}
+
+	void main(string[] args)
+	{
+		int[][] intDoubleArr;
+		callVoidFunc();
+		callIntFunc(intDoubleArr[0]);
+	}
+}

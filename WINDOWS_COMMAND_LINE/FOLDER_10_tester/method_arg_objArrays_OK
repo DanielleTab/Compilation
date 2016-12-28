@@ -1,0 +1,18 @@
+class MyClass
+{
+}
+
+class Main
+{
+	void func(MyClass[] objArrArg)
+	{
+	}
+
+	MyClass[] objArrayField;
+	
+	void main(string[] args)
+	{
+		MyClass[] objArrayVar = new MyClass[3];
+		func(objArrayVar);
+	}
+}

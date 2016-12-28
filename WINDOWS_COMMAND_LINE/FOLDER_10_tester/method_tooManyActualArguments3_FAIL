@@ -1,0 +1,12 @@
+class Main
+{	
+	void funcWithoutArguments()
+	{
+		string strVar = "you're so argumentative";
+	}
+
+	void main(string[] args)
+	{
+		funcWithoutArguments(null);
+	}
+}
