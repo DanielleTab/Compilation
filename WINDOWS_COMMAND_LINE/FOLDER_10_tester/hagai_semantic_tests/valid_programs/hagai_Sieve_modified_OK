@@ -1,0 +1,86 @@
+/**
+ * Sieve <n>: finds all prime numbers less than n.
+ * Output: all prime numbers less than n.
+ */
+
+class Library {
+  void println(string s) {}
+  void print(string s) {}
+  void printi(int i) {}
+  int stoi(string s, int error) {return 0;}
+}
+
+
+class Sieve {
+  Library library;
+
+  int[] num;
+
+  int num_length() {return 0;}
+
+  void initArray() {
+    int i = 0;
+    while (i < num_length()) {
+      num[i] = i;
+      i=i+1;
+    }
+  }
+
+  void sieve(int n) {
+    int i = 2*n;
+    while (i < num_length()) {
+      num[i] = 0;
+      i=i+n;
+    }
+  }
+
+  void sieveAll() {
+    int i = 2;
+    while (i < num_length()) {
+      sieve(i);
+      i=i+1; 
+    }
+  }
+
+  void printPrimes() {
+    int i = 2;
+    library.print("Primes less than ");
+    library.printi(num_length());
+    library.print(": ");
+    while (i < num_length()) {
+      if (num[i] != 0) {
+        library.printi(num[i]);
+        library.print(" ");
+      }
+      i=i+1;
+    }
+  }
+
+  void test(string[] args) {
+    int n;
+
+    if (num_length() != 1) {
+      library.println("Unspecified number.");
+      return;
+    }
+
+    library.println("");
+    n = library.stoi(args[0], 0);
+    if (n <= 0) {
+      library.println("Invalid array length");
+      return;
+    }
+    num = new int[n];
+
+    initArray();
+    sieveAll();
+    printPrimes();
+    library.println("");
+
+  }
+
+  /*static*/ void main(string[] args) {
+    (new Sieve()).test(args);
+  }
+
+}

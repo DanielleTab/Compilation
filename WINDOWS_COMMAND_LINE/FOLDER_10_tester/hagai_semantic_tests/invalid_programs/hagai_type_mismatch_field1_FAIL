@@ -1,0 +1,6 @@
+class A {
+    int i;
+    void main (string[] args) {
+        i = "asdf";
+    }
+}

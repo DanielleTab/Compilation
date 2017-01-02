@@ -1,0 +1,86 @@
+
+
+class Library {
+    void print(string s) {}
+    int stoi(string s, int error) {return 0;}
+}
+
+
+class AAA {
+    int x, y;
+
+    void f() {
+        (new Library()).print("AAA.f");
+        return;
+    }
+}
+
+class BBB extends AAA {
+    AAA aaa;
+
+
+    void f() {(new Library()).print("BBB.f");}
+}
+
+class Main {
+    Library library;
+
+    int[] numn;
+    string[] strings;
+    int[][][][] multi;
+
+    int j;
+    int k;
+
+    int func1(int a, string b, int[][] array) {
+        int k = 5;
+        {int k = 7;}
+        {
+            string k;
+            k = "fdsa";
+        }
+        
+        if (k < 6) return 9 + j;
+
+        BBB  bbb = new BBB();
+        bbb = null;
+        bbb.f();
+
+        BBB[] bbbs = new BBB[123];
+        bbbs[1].aaa = bbb.aaa;
+        bbbs = null;
+
+        string s = null;
+
+        int[] t = new int[k*5];
+        array[4] = t;
+
+        while (6 > 4) {
+            return 0;
+        }
+
+		
+        if (1 + 2 == 3) return 0;
+        if (3 == 1 + 2) return 0;
+
+		// TODO: How to fix this?
+        // if ("a" + "b" == "ab") return 0;
+        
+        if ("ab" == "a" + "b") return 0;
+
+        return (1+2/7)-6*4;
+    }
+
+    int aaa(){
+        {
+            {
+                return 6;
+            }
+        }
+    }
+
+    void main(string[] args) {
+        int asdf = func1(6, "asdf", multi[4][1]);
+        func1(6, "asdf", multi[4][1]);
+    }
+}

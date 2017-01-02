@@ -1,0 +1,6 @@
+class A {
+    void main (string[] args) {
+        if (i == 0) return;
+        int i = 0;
+    }
+}

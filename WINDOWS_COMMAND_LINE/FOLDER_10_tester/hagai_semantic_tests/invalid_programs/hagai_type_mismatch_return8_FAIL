@@ -1,0 +1,6 @@
+class A {
+    int f() { 
+        // no return statement
+    }
+    void main (string[] args) {}
+}

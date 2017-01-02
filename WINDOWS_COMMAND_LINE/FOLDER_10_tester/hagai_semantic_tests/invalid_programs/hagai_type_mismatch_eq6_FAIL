@@ -1,0 +1,8 @@
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        int[] a = new int[123];
+        int[][] b = new int[][12];
+        if (a == b) return;
+    }
+}

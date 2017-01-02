@@ -1,0 +1,35 @@
+class Base {
+    int a;
+    int b;
+
+    void f() {}
+    void g() {}
+
+}
+
+class X extends Base {
+    int c;
+
+    void f() {}
+    void h() {}
+}
+
+class List { int data; List next; }
+class Node { int data; Edge[] edges; }
+class Edge { int label; Node dest; }
+
+
+class A {
+    void f(Base b) {}
+    Base g() {
+        return new X();
+        return null;
+    }
+
+    void main (string[] args) {
+        f(new Base());
+        f(new X());
+        f(null);
+        Base b = new X();
+    }
+}

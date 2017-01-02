@@ -1,0 +1,11 @@
+class Base {
+    void f() {}
+}
+
+class Sub extends Base {
+    void f(int i) {}
+}
+
+class A {
+    void main (string[] args) {}
+}

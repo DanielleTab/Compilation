@@ -1,0 +1,9 @@
+class Base {}
+class Sub extends Base{}
+
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        Base[] a = new Sub[234];
+    }
+}

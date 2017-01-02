@@ -1,0 +1,12 @@
+class A {
+    A a;
+    A[][] aa;
+
+    A f(A x, A[] y) {
+        A z = new A();
+        A[] t = new A[5];
+        return z;
+    }
+
+    void main (string[] args) {}
+}

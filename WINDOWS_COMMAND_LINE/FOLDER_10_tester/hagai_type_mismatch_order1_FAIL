@@ -1,0 +1,6 @@
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        if (5 < "asdf") return;
+    }
+}

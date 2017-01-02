@@ -1,0 +1,9 @@
+class B {
+    int i;
+}
+
+class A {
+    void main (string[] args) {
+        int x = null.i;
+    }
+}

@@ -1,0 +1,25 @@
+class P {}
+
+class C extends P {}
+
+class A {
+    void main (string[] args) {
+        C c = new C();
+        P p = new P();
+        P c2 = new C();
+        if (c == null) return;
+        if (null == null) return;
+        if (c == p) return;
+        if (c != p) return;
+        if (p == c) return;
+        if (c == c) return;
+        if (p == c2) return;
+        if (c == c2) return;
+        if (5 == 4) return;
+        if ((new int[3]) == (new int[5])) return;
+        string s;
+        string[] ss;
+        if (s != null) return;
+        if (ss != null) return;
+    }
+}

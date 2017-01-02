@@ -1,0 +1,6 @@
+class A {
+    string f() {}
+    void main (string[] args) {
+        int x = f();
+    }
+}

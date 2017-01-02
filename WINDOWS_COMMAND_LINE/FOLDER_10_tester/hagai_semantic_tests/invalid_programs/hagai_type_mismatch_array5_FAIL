@@ -1,0 +1,6 @@
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        int x = null[1];
+    }
+}

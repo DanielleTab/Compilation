@@ -1,0 +1,6 @@
+class A {
+    int f() {
+        return new A();
+    }
+    void main (string[] args) {}
+}

@@ -1,0 +1,10 @@
+class B {
+    int i;
+}
+
+class A {
+    void main (string[] args) {
+        B b = new B();
+        b.i = "asdf";
+    }
+}

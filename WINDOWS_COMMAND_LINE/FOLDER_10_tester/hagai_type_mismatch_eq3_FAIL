@@ -1,0 +1,9 @@
+class B {}
+
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        B b = new B();
+        if (b == 6) return;
+    }
+}

@@ -1,0 +1,5 @@
+class A {
+    void i() {}
+    int i;
+    void main (string[] args) {}
+}

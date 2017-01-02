@@ -1,0 +1,7 @@
+class A {
+    void f(int a) {}
+    void main (string[] args) {
+        int y = 8;
+        int x = ((5 + y) / 2 -(98 + "asd")) * 2 + 1;
+    }
+}
