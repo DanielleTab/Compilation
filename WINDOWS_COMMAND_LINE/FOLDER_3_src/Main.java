@@ -19,9 +19,9 @@ public class Main
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
 		
-		// TODO: Surround this with try-catch block. It's not currently surrounded to fix bugs.
-		//try
-		//{
+		
+		try
+		{
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
@@ -53,8 +53,7 @@ public class Main
 			outputWriter.close();
 			}
 			
-    	//}
-		/*	     
+    	}     
 		catch (Exception e)
 		{
 			try
@@ -67,7 +66,7 @@ public class Main
 			{
 			}
 		}
-		*/
+		
 	}
 }
 
