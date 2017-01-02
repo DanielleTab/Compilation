@@ -3,6 +3,7 @@ package AST;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
+import Utils.DebugPrint;
 
 public class AST_EXP_BINOP extends AST_EXP
 {
@@ -41,6 +42,8 @@ public class AST_EXP_BINOP extends AST_EXP
 				return new ICTypeInfo(ICTypeInfo.IC_TYPE_STRING,0);
 			
 			// illegal
+			String debugMessage = String.format("AST_EXP_BINOP.validate: %s + %s is undefined.", leftInfo, rightInfo);
+			DebugPrint.print(debugMessage);
 			return null;
 		}
 		else if(op instanceof AST_BINOP_MINUS || op instanceof AST_BINOP_TIMES || op instanceof AST_BINOP_DIVIDE)

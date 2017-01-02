@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,11 +11,13 @@ public class Tester
 {
 	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//";
 	public static final String OUTPUT_FILE_NAME = "output.txt";
+	public static final String TESTER_OUTPUT_FILE_NAME = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//tester_output.txt";
 	public static final String OK_STRING = "OK";
 	public static final String FAIL_STRING = "FAIL";
 	
 	private static int passedNum = 0;
 	private static int failedNum = 0;
+	private static PrintStream outputWriter;
 	
 	static public void compareToExpectedOutput(String expectedOutput) throws IOException
 	{	
@@ -63,16 +66,20 @@ public class Tester
 		}
 		catch (Exception e) 
 		{
-			System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+			System.setOut(outputWriter);
 			System.out.println("Failed: Caught an exception: ");
-			e.printStackTrace();
+			e.printStackTrace(outputWriter);
+			//e.printStackTrace();
 			System.out.println();
 			failedNum++;
 		}
 	}
 	
-	static public void main(String argv[]) 
+	static public void main(String argv[]) throws FileNotFoundException 
 	{
+		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
+		System.setOut(outputWriter);
+		
 		File folder = new File("WINDOWS_COMMAND_LINE//FOLDER_10_tester");
 		File[] folderFiles = folder.listFiles();
 
@@ -85,7 +92,7 @@ public class Tester
 	    }
 		    
 		System.out.println("Total passed: " + passedNum);
-		System.out.println("Total failed: " + failedNum);
+		System.out.println("Total failed: " + failedNum); 
 	}
 	
 }

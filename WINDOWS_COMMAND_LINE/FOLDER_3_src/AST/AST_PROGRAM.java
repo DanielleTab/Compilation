@@ -8,6 +8,7 @@ import Utils.DebugPrint;
 public class AST_PROGRAM extends AST_Node 
 {
 	public AST_CLASS_DECLARATION_LIST l;
+	
 	public AST_PROGRAM(AST_CLASS_DECLARATION_LIST l)
 	{
 		this.l=l;
@@ -19,7 +20,7 @@ public class AST_PROGRAM extends AST_Node
 	{
 		SymbolTable.createNewScope();
 		AST_CLASS_DECLARATION_LIST iterator=l;
-		while(iterator!=null)
+		while((iterator!=null) && (iterator.head!=null))
 		{
 			if(iterator.head.validate(className)==null)
 			{
