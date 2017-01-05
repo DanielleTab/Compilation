@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_STMT_LIST;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -126,5 +127,12 @@ public class AST_STMT_LIST extends AST_STMT
 		// This node is valid
 		markIfAlwaysReturnValue();
 		return new ICTypeInfo();
+	}
+	
+	// TODO: Implement this using head.createIR() and tail.createIR()
+	public IR_STMT_LIST createIR()
+	{
+		// TODO: Change this default value
+		return null;
 	}
 }

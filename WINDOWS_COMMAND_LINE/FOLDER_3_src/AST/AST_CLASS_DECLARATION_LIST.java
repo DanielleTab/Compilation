@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_CLASS_DECL_LIST;
+
 public class AST_CLASS_DECLARATION_LIST extends AST_Node
 {
 	/****************/
@@ -34,6 +36,13 @@ public class AST_CLASS_DECLARATION_LIST extends AST_Node
 	public boolean isEmpty()
 	{
 		return ((this.tail==null)&&(this.head==null));
+	}
+	
+	// TODO: Implement this using head.createIR() and tail.createIR().
+	public IR_CLASS_DECL_LIST createIR()
+	{
+		// TODO: Change this default value.
+		return null;
 	}
 }
 

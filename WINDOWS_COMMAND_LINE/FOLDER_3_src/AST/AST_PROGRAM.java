@@ -4,6 +4,7 @@ import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
 import Utils.DebugPrint;
+import IR.IR_PROGRAM;
 
 public class AST_PROGRAM extends AST_Node 
 {
@@ -36,6 +37,11 @@ public class AST_PROGRAM extends AST_Node
 		}
 		SymbolTable.closeCurrentScope();
 		return new ICTypeInfo();
+	}
+	
+	public IR_PROGRAM createIR()
+	{
+		return new IR_PROGRAM(l.createIR());
 	}
 	
 }

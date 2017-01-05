@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP_MEM;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -50,5 +51,13 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 
 		//everything is good :)
 		return ((VariableSymbolInfo) fieldFound).variableType;
+	}
+	
+	// TODO: Implement.
+	@Override
+	public IR_EXP_MEM createIR()
+	{
+		// TODO: Change this default value.
+		return null;
 	}
 }

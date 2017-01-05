@@ -1,4 +1,5 @@
 package AST;
+import IR.IR_CLASS_DECL;
 import SemanticAnalysis.*;
 public class AST_CLASS_DECLARATION extends AST_Node 
 {
@@ -78,6 +79,14 @@ public class AST_CLASS_DECLARATION extends AST_Node
 		}
 		SymbolTable.closeCurrentScope();
 		return new ICTypeInfo();
+	}
+	
+	// TODO: Implement this using fieldsOrMethods.createIR().
+	// This should be completed after the next recitation (11.1.17)
+	public IR_CLASS_DECL createIR()
+	{
+		// TODO: Change default value
+		return null;
 	}
 	
 }

@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_METHOD_LIST;
+
 public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 {
 	public AST_FIELD_OR_METHOD head;
@@ -30,4 +32,11 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
+	// TODO: Implement this using head.createIR() (which returns a value only if it's a method) 
+	// and tail.createIR().
+	public IR_METHOD_LIST createIR()
+	{
+		// TODO: Change default value
+		return null;
+	}
 }

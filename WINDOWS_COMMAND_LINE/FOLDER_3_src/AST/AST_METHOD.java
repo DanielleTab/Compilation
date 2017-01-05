@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_METHOD;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -97,6 +98,13 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		
 		return new ICTypeInfo();
+	}
+	
+	// TODO: Implement this using body.createIR()
+	public IR_METHOD createIR()
+	{
+		// TODO: Change this default value
+		return null;
 	}
 
 }

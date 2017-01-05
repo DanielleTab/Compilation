@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP_MEM;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -43,6 +44,14 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 			
 		
 		return new ICTypeInfo(varInfo.ICType,varInfo.pointerDepth -1);
+	}
+	
+	// TODO: Implement
+	@Override
+	public IR_EXP_MEM createIR()
+	{
+		// TODO: Change this default value.
+		return null;
 	}
 	
 }

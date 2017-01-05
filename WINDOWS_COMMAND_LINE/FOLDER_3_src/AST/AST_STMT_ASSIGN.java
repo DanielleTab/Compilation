@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_STMT;
+import IR.IR_STMT_MOVE;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.NullFieldException;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -68,5 +70,18 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		
 		// The assignment-statement is valid
 		return new ICTypeInfo();
+	}
+	
+	@Override
+	public IR_STMT createIR()
+	{
+		return createSpecificIR();
+	}
+	
+	// TODO: Implement this using location.createSpecificIR() and expression.createIR().
+	public IR_STMT_MOVE createSpecificIR()
+	{
+		// TODO: Change this default value
+		return null;
 	}
 }
