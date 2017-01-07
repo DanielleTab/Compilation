@@ -1,0 +1,13 @@
+class A
+{
+	void main(string[] args)
+	{
+		if(5)
+		{
+		
+		}
+		if(0)
+		{
+		}
+	}
+}

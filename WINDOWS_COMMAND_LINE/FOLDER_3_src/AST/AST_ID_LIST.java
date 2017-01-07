@@ -82,6 +82,10 @@ public class AST_ID_LIST extends AST_Node
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type,fieldOffset);
 		SymbolTable.insertNewSymbol(fieldInfo);
 		SymbolTable.addFieldToClass(className, fieldInfo);
-		this.tail.createIR();
+		if(this.tail!=null)
+		{
+			this.tail.className=this.className;
+			this.tail.createIR();
+		}
 	}
 }

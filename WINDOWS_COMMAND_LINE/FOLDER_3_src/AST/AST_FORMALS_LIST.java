@@ -88,6 +88,8 @@ public class AST_FORMALS_LIST extends AST_Node
 		SymbolTable.insertNewSymbol(formalInfo);
 		if(this.tail!=null)
 		{
+			this.tail.functionName = this.functionName;
+			this.tail.className = this.className;
 			this.tail.createIR();
 		}
 	}
