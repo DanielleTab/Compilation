@@ -2,6 +2,8 @@ package AST;
 
 
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
+import SemanticAnalysis.ClassNameNotInitializedException;
+import SemanticAnalysis.ClassSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
@@ -10,6 +12,7 @@ import SemanticAnalysis.VariableSymbolInfo;
 
 public class AST_ID_LIST extends AST_Node
 {
+	public String className;
 	public String head;
 	public AST_ID_LIST tail;
 	public ICTypeInfo type;
@@ -39,6 +42,7 @@ public class AST_ID_LIST extends AST_Node
 	// returns null if one or more of the names in the list are reserved word.
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
+		this.className=className;
 		if(type==null)
 		{
 			throw new TypeInAstIdListIsNotInitialized();
@@ -68,5 +72,16 @@ public class AST_ID_LIST extends AST_Node
 	public boolean isEmpty()
 	{
 		return ((this.tail==null)&&(this.head==null));
+	}
+	
+	public void createIR() throws ClassIsNotInSymbolTableException, ClassNameNotInitializedException
+	{
+		assertClassNameInitialized();
+		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(className);
+		int fieldOffset=currentClassSymbolInfo.size;
+		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type,fieldOffset);
+		SymbolTable.insertNewSymbol(fieldInfo);
+		SymbolTable.addFieldToClass(className, fieldInfo);
+		this.tail.createIR();
 	}
 }

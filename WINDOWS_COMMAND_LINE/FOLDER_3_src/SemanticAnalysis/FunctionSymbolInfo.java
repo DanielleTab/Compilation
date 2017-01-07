@@ -9,12 +9,21 @@ public class FunctionSymbolInfo extends SymbolInfo{
 
 	public ICTypeInfo returnType;
 	public List<ICTypeInfo> argumentsTypes;
+	public int frameSize=-1;
 	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes)
 	{
 		super(symbolName);
 		this.argumentsTypes=argumentsTypes;
 		this.returnType=returnType;
 	}
+	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes, int frameSize)
+	{
+		super(symbolName);
+		this.argumentsTypes=argumentsTypes;
+		this.returnType=returnType;
+		this.frameSize=frameSize;
+	}
+	
 	public SymbolType getSymbolType()
 	{
 		return SymbolType.SYMBOL_TYPE_FUNCTION;

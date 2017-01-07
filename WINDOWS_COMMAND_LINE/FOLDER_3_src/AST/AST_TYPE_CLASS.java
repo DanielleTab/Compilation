@@ -14,9 +14,6 @@ public class AST_TYPE_CLASS extends AST_TYPE
 	
 	public ICTypeInfo validate(String receivedClassName) throws SemanticAnalysisException
 	{
-		// TODO: Danielle check this
-	
-		// do we know this className?
 		if(SemanticAnalysis.SymbolTable.doesClassExist(className))
 			return new ICTypeInfo(className, 0);
 		else

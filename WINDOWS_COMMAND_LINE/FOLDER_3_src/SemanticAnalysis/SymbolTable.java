@@ -84,7 +84,6 @@ public class SymbolTable {
 		}
 	}
 	
-	// TODO: Pay attention to this fix.
 	// check if class with the received className does exist in the table.
 	public static boolean doesClassExist(String className)
 	{
@@ -186,6 +185,7 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
+				currentMethod.frameSize=currentMethod.frameSize+formal.variableType.getTypeSize();
 			}
 			else
 			{
@@ -197,6 +197,7 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
+				currentMethod.frameSize=currentMethod.frameSize+formal.variableType.getTypeSize();
 			}
 			
 			
@@ -250,6 +251,42 @@ public class SymbolTable {
 		{
 			throw new ClassIsNotInSymbolTableException();
 		}
+	}
+	
+	/*
+	 * The assumption: the class does exist (!!!!) in the symbol table.
+	 */
+	public static ClassSymbolInfo getClassSymbolInfo(String className)
+	{
+		SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
+		if(classSymbolInfoNode!=null)
+		{
+			SymbolInfo symbolInfo=classSymbolInfoNode.symbolInfo;
+			if(symbolInfo instanceof ClassSymbolInfo)
+			{
+				return (ClassSymbolInfo) symbolInfo;
+			}
+		}
+		return null;
+	}
+	
+	/*
+	 * The assumption: the class and the function do exist (!!!!) in the symbol table.
+	 */
+	public static FunctionSymbolInfo getMethodSymbolInfo(String className, String functionName)
+	{
+		SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
+		if(classSymbolInfoNode!=null)
+		{
+			SymbolInfo symbolInfo=classSymbolInfoNode.symbolInfo;
+			if(symbolInfo instanceof ClassSymbolInfo)
+			{
+				
+				ClassSymbolInfo currClass = (ClassSymbolInfo) symbolInfo;
+				return currClass.searchMethod(functionName);
+			}
+		}
+		return null;
 	}
 	
 	/*

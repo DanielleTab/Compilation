@@ -38,11 +38,14 @@ public class AST_CLASS_DECLARATION_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	// TODO: Implement this using head.createIR() and tail.createIR().
 	public IR_CLASS_DECL_LIST createIR()
 	{
-		// TODO: Change this default value.
-		return null;
+		// TODO: optional: update this function after the next recitation.
+		if(tail!=null)
+		{
+			return new IR_CLASS_DECL_LIST(head.createIR(),tail.createIR());
+		}
+		return new IR_CLASS_DECL_LIST(head.createIR(),null);
 	}
 }
 

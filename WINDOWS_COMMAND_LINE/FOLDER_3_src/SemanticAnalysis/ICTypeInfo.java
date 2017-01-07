@@ -75,4 +75,10 @@ public class ICTypeInfo {
 		
 		return rep;
 	}
+	
+	public int getTypeSize()
+	{
+		// TODO: implement this.
+		return 0;
+	}
 }

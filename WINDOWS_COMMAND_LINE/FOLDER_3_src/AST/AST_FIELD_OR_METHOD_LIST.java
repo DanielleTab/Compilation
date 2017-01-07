@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_METHOD;
 import IR.IR_METHOD_LIST;
 
 public class AST_FIELD_OR_METHOD_LIST extends AST_Node
@@ -32,11 +33,22 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	// TODO: Implement this using head.createIR() (which returns a value only if it's a method) 
-	// and tail.createIR().
 	public IR_METHOD_LIST createIR()
 	{
-		// TODO: Change default value
-		return null;
+		if(this.head instanceof AST_METHOD)
+		{
+			IR_METHOD temp=((AST_METHOD) this.head).createIR();
+			return new IR_METHOD_LIST(temp,tail.createIR());
+		}
+		else // if the head is not a method, we want to iterate over the list until the first method.
+		{
+			AST_FIELD_OR_METHOD_LIST iterator=tail;
+			while(iterator.head instanceof AST_FIELD)
+			{
+				((AST_FIELD)iterator.head).createIR();
+				iterator=iterator.tail;
+			}
+			return new IR_METHOD_LIST(((AST_METHOD) iterator.head).createIR(), iterator.tail.createIR());
+		}
 	}
 }

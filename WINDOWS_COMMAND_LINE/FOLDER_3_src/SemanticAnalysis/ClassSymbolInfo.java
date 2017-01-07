@@ -8,13 +8,21 @@ public class ClassSymbolInfo extends SymbolInfo{
 	public String extendedClassName;
 	public List<VariableSymbolInfo> fields;
 	public List<FunctionSymbolInfo> methods;
-	
+	public int size;
 	public ClassSymbolInfo(String symbolName, String extendedClassName,List<VariableSymbolInfo> fields, List<FunctionSymbolInfo> methods)
 	{
 		super(symbolName);
 		this.extendedClassName=extendedClassName;
 		this.fields=fields;
 		this.methods=methods;
+	}
+	public ClassSymbolInfo(String symbolName, String extendedClassName,List<VariableSymbolInfo> fields, List<FunctionSymbolInfo> methods, int size)
+	{
+		super(symbolName);
+		this.extendedClassName=extendedClassName;
+		this.fields=fields;
+		this.methods=methods;
+		this.size=size;
 	}
 	
 	
@@ -33,6 +41,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 			this.fields=new ArrayList<VariableSymbolInfo>();
 		}
 		this.fields.add(field);
+		this.size+=field.variableType.getTypeSize();
 	}
 
 	public int getMainFunctionsCount()
