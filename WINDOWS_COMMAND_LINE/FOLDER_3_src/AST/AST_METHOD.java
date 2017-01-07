@@ -1,6 +1,8 @@
 package AST;
 
+import IR.IR_LABEL;
 import IR.IR_METHOD;
+import IR.IR_STMT_LIST;
 import SemanticAnalysis.ClassNameNotInitializedException;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
@@ -101,13 +103,24 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		return new ICTypeInfo();
 	}
 	
-	// TODO: Implement this using body.createIR()
 	public IR_METHOD createIR() throws SemanticAnalysisException
 	{
 		assertClassNameInitialized();
-		formalsList.createIR();
-		// TODO: Change this default value
-		return null;
+		this.formalsList.className=this.className;
+		this.formalsList.functionName=this.methodName;
+		this.formalsList.createIR();
+		IR_STMT_LIST bodyStmtList;
+		if(this.body!=null)
+		{
+			this.body.className=this.className;
+			this.body.functionName=this.methodName;
+			bodyStmtList=this.body.createIR();
+		}
+		else
+		{
+			bodyStmtList=null;
+		}
+		
+		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.className,this.methodName)),bodyStmtList);
 	}
-
 }
