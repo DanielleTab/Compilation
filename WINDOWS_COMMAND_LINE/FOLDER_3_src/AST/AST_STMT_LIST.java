@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_STMT_LIST;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -130,9 +131,16 @@ public class AST_STMT_LIST extends AST_STMT
 	}
 	
 	// TODO: Implement this using head.createIR() and tail.createIR()
-	public IR_STMT_LIST createIR()
+	public IR_STMT_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		// TODO: Change this default value
-		return null;
+		assertClassAndFunctionNamesInitialized(functionName);
+		if((head!=null)&&(tail!=null))
+		{
+			return new IR_STMT_LIST(head.createIR(),tail.createIR());
+		}
+		else
+		{
+			return new IR_STMT_LIST(head.createIR(),null);
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package IR;
 
-public class IR_STMT_LIST extends IR_Node 
+public class IR_STMT_LIST extends IR_STMT 
 {
 	// fields
 	public IR_STMT head;

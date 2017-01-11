@@ -9,7 +9,8 @@ public class FunctionSymbolInfo extends SymbolInfo{
 
 	public ICTypeInfo returnType;
 	public List<ICTypeInfo> argumentsTypes;
-	public int frameSize=-1;
+	public int frameSize=0;
+	public int offset=0;
 	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes)
 	{
 		super(symbolName);

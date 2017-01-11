@@ -6,7 +6,7 @@ public class SymbolTable {
 	public static Hashtable<String,SymbolInfoNode> hashTable=new Hashtable<String,SymbolInfoNode>();
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
 	public static final String MAIN_FUNC_SYMBOL_NAME = "main";
-	
+	public static final int ADDRESS_SIZE=4;
 
 	/*
 	 *  The caller responsibility is to check whether the symbol name does exist
@@ -185,7 +185,7 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
-				currentMethod.frameSize=currentMethod.frameSize+formal.variableType.getTypeSize();
+				currentMethod.frameSize=currentMethod.frameSize + formal.variableType.getTypeSize();
 			}
 			else
 			{
@@ -197,7 +197,7 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
-				currentMethod.frameSize=currentMethod.frameSize+formal.variableType.getTypeSize();
+				currentMethod.frameSize=currentMethod.frameSize + formal.variableType.getTypeSize();
 			}
 			
 			

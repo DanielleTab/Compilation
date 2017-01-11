@@ -1,10 +1,15 @@
 package SemanticAnalysis;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
+
+
 public class ClassSymbolInfo extends SymbolInfo{
-	
+	public List<String> virtualFunctionsOrder;
+	public Hashtable<String,String> virtualFunctionsTable; // <key, value>: <function name,class name>
+	public List<String> functionNamesInVFT;
 	public String extendedClassName;
 	public List<VariableSymbolInfo> fields;
 	public List<FunctionSymbolInfo> methods;
@@ -12,9 +17,26 @@ public class ClassSymbolInfo extends SymbolInfo{
 	public ClassSymbolInfo(String symbolName, String extendedClassName,List<VariableSymbolInfo> fields, List<FunctionSymbolInfo> methods)
 	{
 		super(symbolName);
+		
 		this.extendedClassName=extendedClassName;
 		this.fields=fields;
 		this.methods=methods;
+		
+		// add the size of the parents.
+		if(this.extendedClassName!=null)
+		{
+			ClassSymbolInfo father = SymbolTable.getClassSymbolInfo(extendedClassName);
+			this.size=father.size; // this size includes the 32 bit of virtual function table.
+			this.virtualFunctionsTable=father.virtualFunctionsTable;
+			this.virtualFunctionsOrder=new ArrayList<String>(father.virtualFunctionsOrder);
+		}
+		else
+		{
+			// we have to initialize the size to 32 bit because of the virtual function table.
+			this.size=SymbolTable.ADDRESS_SIZE;
+			this.virtualFunctionsTable=new Hashtable<String,String>();
+			this.virtualFunctionsOrder=new ArrayList<String>();
+		}
 	}
 	public ClassSymbolInfo(String symbolName, String extendedClassName,List<VariableSymbolInfo> fields, List<FunctionSymbolInfo> methods, int size)
 	{
@@ -33,7 +55,17 @@ public class ClassSymbolInfo extends SymbolInfo{
 			this.methods=new ArrayList<FunctionSymbolInfo>();
 		}
 		this.methods.add(method);
+		if(!this.virtualFunctionsOrder.contains(method.symbolName))
+		{
+			// We have to find the offset of the new inserted function before add it to the list.
+			// each function in the list is 32 bit (of address).
+			method.offset=this.virtualFunctionsOrder.size()*SymbolTable.ADDRESS_SIZE;
+			this.virtualFunctionsOrder.add(method.symbolName);
+		}
+		
+		this.virtualFunctionsTable.put(method.symbolName, this.symbolName);
 	}
+	
 	public void addField(VariableSymbolInfo field)
 	{
 		if(this.fields==null)

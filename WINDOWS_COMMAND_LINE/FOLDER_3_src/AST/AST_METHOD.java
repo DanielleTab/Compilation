@@ -119,8 +119,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		else
 		{
 			bodyStmtList=null;
-		}
-		
+		}		
 		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.className,this.methodName)),bodyStmtList);
 	}
 }
