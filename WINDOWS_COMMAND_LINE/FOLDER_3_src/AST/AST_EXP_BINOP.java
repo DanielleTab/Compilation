@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP_BINOP;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
@@ -81,6 +82,12 @@ public class AST_EXP_BINOP extends AST_EXP
 		}
 		
 		// shouldn't get here
+		return null;
+	}
+	
+	// TODO: implement
+	public IR_EXP_BINOP createIR()
+	{
 		return null;
 	}
 }

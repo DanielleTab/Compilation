@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_CLASS_DECL_LIST;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_CLASS_DECLARATION_LIST extends AST_Node
 {
@@ -38,7 +39,7 @@ public class AST_CLASS_DECLARATION_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public IR_CLASS_DECL_LIST createIR()
+	public IR_CLASS_DECL_LIST createIR() throws SemanticAnalysisException
 	{
 		// TODO: optional: update this function after the next recitation.
 		if(tail!=null)

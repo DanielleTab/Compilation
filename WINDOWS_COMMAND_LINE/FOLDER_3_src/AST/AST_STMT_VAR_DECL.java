@@ -1,5 +1,8 @@
 package AST;
 
+import IR.IR_STMT;
+import IR.IR_STMT_VAR_DEC;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
@@ -87,5 +90,11 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		
 		// The variable-declaration-statement is valid
 		return new ICTypeInfo();
+	}
+
+	@Override
+	public IR_STMT_VAR_DEC createIR() throws ClassOrFunctionNamesNotInitializedExecption {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

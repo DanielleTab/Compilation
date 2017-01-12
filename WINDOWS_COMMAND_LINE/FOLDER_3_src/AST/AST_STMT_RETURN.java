@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_STMT_RETURN;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -96,5 +97,11 @@ public class AST_STMT_RETURN extends AST_STMT
 		{
 			return validateValuedReturn(className);
 		}
+	}
+	
+	// TODO: implement this.
+	public IR_STMT_RETURN createIR()
+	{
+		return null;
 	}
 }

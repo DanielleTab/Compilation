@@ -2,6 +2,7 @@ package AST;
 
 import IR.IR_METHOD;
 import IR.IR_METHOD_LIST;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 {
@@ -33,7 +34,7 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public IR_METHOD_LIST createIR()
+	public IR_METHOD_LIST createIR() throws SemanticAnalysisException
 	{
 		if(this.head instanceof AST_METHOD)
 		{

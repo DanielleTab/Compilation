@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_STMT;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
@@ -60,4 +62,13 @@ public class AST_STMT_COND extends AST_STMT
 		// The conditioned statement is valid
 		return new ICTypeInfo();
 	}
+
+	// TODO: implement
+	@Override
+	public IR_STMT createIR() throws ClassOrFunctionNamesNotInitializedExecption {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

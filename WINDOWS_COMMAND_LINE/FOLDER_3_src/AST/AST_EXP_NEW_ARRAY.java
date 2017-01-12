@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 //import SemanticAnalysis;
@@ -30,4 +31,14 @@ public class AST_EXP_NEW_ARRAY extends AST_EXP{
 		// everything is ok
 		return new ICTypeInfo(typeInfo.ICType,typeInfo.pointerDepth+1);
 	}
+
+
+	// TODO: should return IR_EXP_NEW_ARRAY
+	@Override
+	public IR_EXP createIR() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

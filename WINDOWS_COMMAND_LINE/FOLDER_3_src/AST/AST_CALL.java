@@ -12,7 +12,7 @@ import Utils.DebugPrint;
 public class AST_CALL extends AST_Node 
 {
 	public AST_EXP exp; // might be null
-	public String funcName;
+	public String calledFunctionName;
 	public AST_EXPS_LIST args; // might be null
 	
 	public AST_CALL(AST_EXP exp, String funcName, AST_EXPS_LIST args)
@@ -20,7 +20,7 @@ public class AST_CALL extends AST_Node
 		//TODO: delete print
 		System.out.println("AST_CALL: "+funcName);
 		this.exp = exp;
-		this.funcName = funcName;
+		this.calledFunctionName = funcName;
 		this.args = args;
 	}
 	
@@ -52,12 +52,12 @@ public class AST_CALL extends AST_Node
 		}
 		
 		// Checking if the object has a member with the function's name.
-		SymbolInfo symbolInfo = SymbolTable.searchSymbolInfoInClassAndUp(expTypeInfo.ICType, funcName);
+		SymbolInfo symbolInfo = SymbolTable.searchSymbolInfoInClassAndUp(expTypeInfo.ICType, calledFunctionName);
 		if (symbolInfo == null)
 		{
 			String debugMessage = 
 					String.format("AST_CALL.getObjectSymbolInfo: The class '%s' doesn't contain the symbol '%s'.", 
-								  expTypeInfo.ICType, funcName);
+								  expTypeInfo.ICType, calledFunctionName);
 			DebugPrint.print(debugMessage);
 			return null;
 		}
@@ -82,10 +82,10 @@ public class AST_CALL extends AST_Node
 		{
 			// There isn't a calling object
 			functionSymbolInfo = 
-					SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, funcName);
+					SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, calledFunctionName);
 			if (functionSymbolInfo == null)
 			{
-				DebugPrint.print("AST_CALL.getFunctionSymbolInfo: The symbol '" + funcName + "' doesn't exist locally or in the class '" + className + "'.");
+				DebugPrint.print("AST_CALL.getFunctionSymbolInfo: The symbol '" + calledFunctionName + "' doesn't exist locally or in the class '" + className + "'.");
 				return null;
 			}
 		}
@@ -102,7 +102,7 @@ public class AST_CALL extends AST_Node
 		// Validates the symbol is a function
 		if (!(functionSymbolInfo instanceof FunctionSymbolInfo))
 		{
-			DebugPrint.print("AST_CALL.getFunctionSymbolInfo: '" + funcName + "' is not a function.");
+			DebugPrint.print("AST_CALL.getFunctionSymbolInfo: '" + calledFunctionName + "' is not a function.");
 			return null;
 		}
 		

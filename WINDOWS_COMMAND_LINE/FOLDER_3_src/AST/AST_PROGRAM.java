@@ -39,7 +39,7 @@ public class AST_PROGRAM extends AST_Node
 		return new ICTypeInfo();
 	}
 	
-	public IR_PROGRAM createIR()
+	public IR_PROGRAM createIR() throws SemanticAnalysisException
 	{
 		return new IR_PROGRAM(l.createIR());
 	}

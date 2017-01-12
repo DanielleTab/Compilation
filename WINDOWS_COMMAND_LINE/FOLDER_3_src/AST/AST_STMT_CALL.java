@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_EXP_CALL;
+import IR.IR_STMT_CALL;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.NullFieldException;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -38,5 +40,11 @@ public class AST_STMT_CALL extends AST_STMT
 		
 		// The call-statement is valid
 		return new ICTypeInfo();
+	}
+	
+	// TODO: build IR_STMT_CALL based on the local field call.
+	public IR_STMT_CALL createIR()
+	{
+		return  null;
 	}
 }
