@@ -27,7 +27,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 		{
 			ClassSymbolInfo father = SymbolTable.getClassSymbolInfo(extendedClassName);
 			this.size=father.size; // this size includes the 32 bit of virtual function table.
-			this.virtualFunctionsTable=father.virtualFunctionsTable;
+			this.virtualFunctionsTable=new Hashtable<>(father.virtualFunctionsTable);
 			this.virtualFunctionsOrder=new ArrayList<String>(father.virtualFunctionsOrder);
 		}
 		else
@@ -38,6 +38,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 			this.virtualFunctionsOrder=new ArrayList<String>();
 		}
 	}
+	
 	public ClassSymbolInfo(String symbolName, String extendedClassName,List<VariableSymbolInfo> fields, List<FunctionSymbolInfo> methods, int size)
 	{
 		super(symbolName);

@@ -1,5 +1,7 @@
 package AST;
 import IR.IR_CLASS_DECL;
+import IR.IR_METHOD;
+import IR.IR_METHOD_LIST;
 import SemanticAnalysis.*;
 public class AST_CLASS_DECLARATION extends AST_Node 
 {
@@ -83,10 +85,38 @@ public class AST_CLASS_DECLARATION extends AST_Node
 	
 	// TODO: Implement this using fieldsOrMethods.createIR().
 	// This should be completed after the next recitation (11.1.17)
-	public IR_CLASS_DECL createIR()
+	public IR_CLASS_DECL createIR() throws SemanticAnalysisException
 	{
-		// TODO: Change default value
-		return null;
+		IR_METHOD_LIST classMethods=null;
+		ClassSymbolInfo classSymbolInfo=new ClassSymbolInfo(this.className, this.extendsClassName, null, null);
+		SymbolTable.insertNewSymbol(classSymbolInfo);
+		SymbolTable.createNewScope();
+		if(this.fieldsOrMethods!=null)
+		{
+			AST_FIELD_OR_METHOD_LIST iterator=this.fieldsOrMethods;
+			while(iterator!=null)
+			{
+				AST_FIELD_OR_METHOD currObj=iterator.head;
+				if(currObj instanceof AST_FIELD)
+				{
+					((AST_FIELD)currObj).className=this.className;
+					((AST_FIELD)currObj).createIR();
+				}
+				else if(currObj instanceof AST_METHOD)
+				{
+					((AST_METHOD)currObj).className=this.className;
+					IR_METHOD methodValidation=((AST_METHOD)currObj).createIR();
+					// add the method to the methods list.
+					// note: it's ok also for the first element because we put methodValidation as head and null as tail.
+					classMethods = new IR_METHOD_LIST(methodValidation, classMethods);
+				}
+				
+				iterator=iterator.tail;
+			}
+		}
+		SymbolTable.closeCurrentScope();
+		
+		return new IR_CLASS_DECL(classMethods);
 	}
 	
 }

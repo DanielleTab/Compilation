@@ -3,7 +3,7 @@ package IR;
 public class IR_STMT_MOVE extends IR_STMT 
 {
 	// fields
-	public IR_EXP_MEM dst;
+	public IR_EXP dst;
 	public IR_EXP src;
 	
 	// C'tor

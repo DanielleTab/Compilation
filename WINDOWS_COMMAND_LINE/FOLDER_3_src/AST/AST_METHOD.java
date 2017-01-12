@@ -105,10 +105,19 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	
 	public IR_METHOD createIR() throws SemanticAnalysisException
 	{
+		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null);
+		SymbolTable.insertNewSymbol(methodSymbolInfo);
+		
 		assertClassNameInitialized();
-		this.formalsList.className=this.className;
-		this.formalsList.functionName=this.methodName;
-		this.formalsList.createIR();
+		SymbolTable.createNewScope(); // !!the formals list are like local variables of the method.
+		
+		if(this.formalsList!=null)
+		{
+			this.formalsList.className=this.className;
+			this.formalsList.functionName=this.methodName;
+			this.formalsList.createIR();
+		}
 		IR_STMT_LIST bodyStmtList;
 		if(this.body!=null)
 		{
@@ -119,7 +128,9 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		else
 		{
 			bodyStmtList=null;
-		}		
+		}
+		SymbolTable.closeCurrentScope();
+		
 		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.className,this.methodName)),bodyStmtList);
 	}
 }
