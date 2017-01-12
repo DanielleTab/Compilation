@@ -2,6 +2,9 @@ package AST;
 
 import java.util.List;
 
+import IR.IR_CALL;
+import IR.IR_EXP_LIST;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -14,6 +17,7 @@ public class AST_CALL extends AST_Node
 	public AST_EXP exp; // might be null
 	public String calledFunctionName;
 	public AST_EXPS_LIST args; // might be null
+	public String functionName;
 	
 	public AST_CALL(AST_EXP exp, String funcName, AST_EXPS_LIST args)
 	{
@@ -217,4 +221,18 @@ public class AST_CALL extends AST_Node
 		return functionSymbolInfo.returnType;
 	}
 	
+	public IR_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	{
+		this.assertClassAndFunctionNamesInitialized(this.exp.functionName);
+		this.exp.className=this.className;
+		this.exp.functionName=this.functionName;
+		IR_EXP_LIST temp=null;
+		if(this.args!=null)
+		{
+			this.args.className=this.className;
+			this.args.functionName=this.functionName;
+			temp=this.args.createIR();
+		}
+		return new IR_CALL(this.calledFunctionName,this.exp.createIR(),temp);
+	}
 }

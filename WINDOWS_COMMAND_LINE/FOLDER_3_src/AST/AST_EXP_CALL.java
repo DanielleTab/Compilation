@@ -2,6 +2,7 @@ package AST;
 
 import IR.IR_EXP_CALL;
 import IR.IR_STMT_CALL;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 
@@ -20,8 +21,8 @@ public class AST_EXP_CALL extends AST_EXP
 	}
 	
 	// TODO: build IR_EXP_CALL based on the local field call.
-	public IR_EXP_CALL createIR()
+	public IR_EXP_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		return  null;
+		return new IR_EXP_CALL(call.createIR());
 	}
 }
