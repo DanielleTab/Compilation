@@ -116,8 +116,10 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		{
 			this.formalsList.className=this.className;
 			this.formalsList.functionName=this.methodName;
+			this.formalsList.formalNumber=0; // TODO: maybe it should be 4 or something like this
 			this.formalsList.createIR();
 		}
+		
 		IR_STMT_LIST bodyStmtList;
 		if(this.body!=null)
 		{

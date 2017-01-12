@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 
@@ -20,8 +21,11 @@ public class AST_EXP_LPRP extends AST_EXP
 
 	
 	@Override
-	public IR_EXP createIR() {
-		// TODO Auto-generated method stub
-		return null;
+	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption 
+	{
+		assertClassAndFunctionNamesInitialized(this.functionName);
+		this.e.functionName=this.functionName;
+		this.e.className=this.className;
+		return this.e.createIR();
 	}
 }

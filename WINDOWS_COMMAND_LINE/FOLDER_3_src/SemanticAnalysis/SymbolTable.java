@@ -185,7 +185,6 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
-				currentMethod.frameSize=currentMethod.frameSize + formal.variableType.getTypeSize();
 			}
 			else
 			{
@@ -197,7 +196,6 @@ public class SymbolTable {
 			{
 				FunctionSymbolInfo currentMethod=(FunctionSymbolInfo)currentSymbolInfo;
 				currentMethod.addFormal(formal.variableType);
-				currentMethod.frameSize=currentMethod.frameSize + formal.variableType.getTypeSize();
 			}
 			
 			
