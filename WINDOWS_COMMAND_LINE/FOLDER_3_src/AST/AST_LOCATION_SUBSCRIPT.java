@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -48,7 +49,7 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 	
 	// TODO: Implement
 	@Override
-	public IR_EXP_MEM createIR()
+	public IR_EXP_BINOP createIR()
 	{
 		// TODO: Change this default value.
 		return null;

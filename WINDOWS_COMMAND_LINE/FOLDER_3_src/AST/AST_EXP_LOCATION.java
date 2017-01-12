@@ -30,6 +30,6 @@ public class AST_EXP_LOCATION extends AST_EXP
 	// it needs IR_EXP_MEM.
 	public IR_EXP_MEM createSpecificIR()
 	{
-		return location.createIR();
+		return new IR_EXP_MEM(location.createIR());
 	}
 }

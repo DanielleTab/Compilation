@@ -1,5 +1,6 @@
 package AST;
 
+import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -40,7 +41,7 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 	// TODO: Implement by creating IR_EXP_MEM out of
 	// IR_EXP_BINOP with the $fp and variable offset.
 	@Override
-	public IR_EXP_MEM createIR()
+	public IR_EXP_BINOP createIR()
 	{
 		// Do something like:
 		// return new IR_EXP_MEM(new IR_EXP_BINOP($fp, variableInfo.offset));
