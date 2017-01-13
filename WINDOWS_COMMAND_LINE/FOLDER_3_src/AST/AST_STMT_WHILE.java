@@ -33,6 +33,7 @@ public class AST_STMT_WHILE extends AST_STMT_COND
 		
 		SymbolTable.createNewScope();
 		IR_STMT bodyIR = body.createIR();
+		SymbolTable.closeCurrentScope();
 		
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
 		int whileIndex = functionInfo.getNewIfIndex();
