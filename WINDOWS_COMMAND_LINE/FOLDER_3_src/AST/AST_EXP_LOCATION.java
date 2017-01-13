@@ -22,14 +22,7 @@ public class AST_EXP_LOCATION extends AST_EXP
 	@Override
 	public IR_EXP createIR()
 	{
-		return createSpecificIR();
-	}
-	
-	// This method is needed because IR_STMT_MOVE expects to receive IR_EXP_MEM
-	// and not the generic IR_EXP, so when AST_STMT_ASSIGN creates the IR_STMT_MOVE
-	// it needs IR_EXP_MEM.
-	public IR_EXP_MEM createSpecificIR()
-	{
 		return new IR_EXP_MEM(location.createIR());
 	}
+	
 }
