@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -21,7 +22,7 @@ public class AST_EXP_LPRP extends AST_EXP
 
 	
 	@Override
-	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption 
+	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException 
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.e.currentFunctionName=this.currentFunctionName;

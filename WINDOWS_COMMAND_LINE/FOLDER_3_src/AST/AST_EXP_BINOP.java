@@ -3,6 +3,7 @@ package AST;
 import IR.BinOperation;
 import IR.IR_EXP;
 import IR.IR_EXP_BINOP;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -135,7 +136,7 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 	
 	
-	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		BinOperation currentOP=getBinOperation();
 		assertClassAndFunctionNamesInitialized();

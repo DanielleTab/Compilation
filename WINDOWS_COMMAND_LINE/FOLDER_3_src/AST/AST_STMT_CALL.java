@@ -2,6 +2,7 @@ package AST;
 
 import IR.IR_EXP_CALL;
 import IR.IR_STMT_CALL;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.NullFieldException;
@@ -44,7 +45,7 @@ public class AST_STMT_CALL extends AST_STMT
 	}
 	
 	// TODO: build IR_STMT_CALL based on the local field call.
-	public IR_STMT_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	public IR_STMT_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		return new IR_STMT_CALL(call.createIR());
 	}

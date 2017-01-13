@@ -3,6 +3,7 @@ package AST;
 import IR.BinOperation;
 import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -51,7 +52,7 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 	
 	// TODO: Implement
 	@Override
-	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.var.currentClassName=this.currentClassName;

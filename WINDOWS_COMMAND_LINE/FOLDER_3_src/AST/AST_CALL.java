@@ -4,6 +4,7 @@ import java.util.List;
 
 import IR.IR_CALL;
 import IR.IR_EXP_LIST;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
@@ -220,7 +221,7 @@ public class AST_CALL extends AST_Node
 		return functionSymbolInfo.returnType;
 	}
 	
-	public IR_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	public IR_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		this.assertClassAndFunctionNamesInitialized();
 		this.exp.currentClassName=this.currentClassName;

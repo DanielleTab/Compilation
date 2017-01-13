@@ -6,6 +6,8 @@ import IR.IR_EXP_MEM;
 import IR.IR_LITERAL_CONST;
 import IR.IR_TEMP;
 import IR.TempType;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -45,10 +47,10 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 	// TODO: Implement by creating IR_EXP_MEM out of
 	// IR_EXP_BINOP with the $fp and variable offset.
 	@Override
-	public IR_EXP_BINOP createIR()
+	public IR_EXP_BINOP createIR() throws ClassIsNotInSymbolTableException, ClassOrFunctionNamesNotInitializedExecption
 	{
 		assertClassAndFunctionNamesInitialized();
-		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,name);
+		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(this.currentClassName,name);
 		return new IR_EXP_BINOP(new IR_TEMP(TempType.fp),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
 	}
 }

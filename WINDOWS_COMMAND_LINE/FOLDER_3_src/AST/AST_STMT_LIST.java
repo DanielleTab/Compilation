@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_STMT_LIST;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
@@ -131,7 +132,7 @@ public class AST_STMT_LIST extends AST_STMT
 	}
 	
 	// TODO: Implement this using head.createIR() and tail.createIR()
-	public IR_STMT_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption
+	public IR_STMT_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		assertClassAndFunctionNamesInitialized();
 		if((head!=null)&&(tail!=null))

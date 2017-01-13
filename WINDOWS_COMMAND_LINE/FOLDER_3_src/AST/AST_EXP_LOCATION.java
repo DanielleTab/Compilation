@@ -2,6 +2,8 @@ package AST;
 
 import IR.IR_EXP;
 import IR.IR_EXP_MEM;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 
@@ -20,7 +22,7 @@ public class AST_EXP_LOCATION extends AST_EXP
 	}
 	
 	@Override
-	public IR_EXP createIR()
+	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		return new IR_EXP_MEM(location.createIR());
 	}
