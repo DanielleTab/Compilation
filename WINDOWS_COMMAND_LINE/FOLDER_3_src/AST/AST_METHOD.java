@@ -3,7 +3,6 @@ package AST;
 import IR.IR_LABEL;
 import IR.IR_METHOD;
 import IR.IR_STMT_LIST;
-import SemanticAnalysis.ClassNameNotInitializedException;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -135,6 +134,8 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		SymbolTable.closeCurrentScope();
 		
-		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),bodyStmtList);
+		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),
+							 bodyStmtList, 
+							 methodSymbolInfo.frameSize);
 	}
 }
