@@ -136,7 +136,7 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 	
 	
-	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
 	{
 		BinOperation currentOP=getBinOperation();
 		assertClassAndFunctionNamesInitialized();

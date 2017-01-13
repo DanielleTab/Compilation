@@ -2,10 +2,16 @@ package AST;
 
 import java.util.List;
 
+import IR.BinOperation;
 import IR.IR_CALL;
+import IR.IR_EXP;
+import IR.IR_EXP_BINOP;
 import IR.IR_EXP_LIST;
+import IR.IR_EXP_MEM;
+import IR.IR_LITERAL_CONST;
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
+import SemanticAnalysis.FunctionNotInSymbolTableException;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -15,15 +21,14 @@ import Utils.DebugPrint;
 
 public class AST_CALL extends AST_Node 
 {
-	public AST_EXP exp; // might be null
+	public AST_EXP caller; // might be null
+	public String callerClassName = null; // assigned in validate (if a caller exists)
 	public String calledFunctionName;
 	public AST_EXPS_LIST args; // might be null
 	
 	public AST_CALL(AST_EXP exp, String funcName, AST_EXPS_LIST args)
 	{
-		//TODO: delete print
-		System.out.println("AST_CALL: "+funcName);
-		this.exp = exp;
+		this.caller = exp;
 		this.calledFunctionName = funcName;
 		this.args = args;
 	}
@@ -40,28 +45,29 @@ public class AST_CALL extends AST_Node
 	private SymbolInfo getObjectSymbolInfo(String className) throws SemanticAnalysisException
 	{
 		// Validating the expression is a valid object
-		ICTypeInfo expTypeInfo = exp.validate(className);
-		if (expTypeInfo == null)
+		ICTypeInfo callerTypeInfo = caller.validate(className);
+		if (callerTypeInfo == null)
 		{
 			DebugPrint.print("AST_CALL.getObjectSymbolInfo: The calling expression isn't a valid expression.");
 			return null;
 		}
-		if (!expTypeInfo.isICClass())
+		if (!callerTypeInfo.isICClass())
 		{
 			String debugMessage = 
 					String.format("AST_CALL.getObjectSymbolInfo: The calling expression isn't an object, exp : %s", 
-								  expTypeInfo); 
+								  callerTypeInfo); 
 			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
 		// Checking if the object has a member with the function's name.
-		SymbolInfo symbolInfo = SymbolTable.searchSymbolInfoInClassAndUp(expTypeInfo.ICType, calledFunctionName);
+		callerClassName = callerTypeInfo.ICType;
+		SymbolInfo symbolInfo = SymbolTable.searchSymbolInfoInClassAndUp(callerClassName, calledFunctionName);
 		if (symbolInfo == null)
 		{
 			String debugMessage = 
 					String.format("AST_CALL.getObjectSymbolInfo: The class '%s' doesn't contain the symbol '%s'.", 
-								  expTypeInfo.ICType, calledFunctionName);
+								  callerTypeInfo.ICType, calledFunctionName);
 			DebugPrint.print(debugMessage);
 			return null;
 		}
@@ -82,7 +88,7 @@ public class AST_CALL extends AST_Node
 	{
 		SymbolInfo functionSymbolInfo = null;
 		
-		if (exp == null)
+		if (caller == null)
 		{
 			// There isn't a calling object
 			functionSymbolInfo = 
@@ -221,18 +227,107 @@ public class AST_CALL extends AST_Node
 		return functionSymbolInfo.returnType;
 	}
 	
-	public IR_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	
+	/**
+	 * @brief 	bequeathing the class and function names to the children,
+	 * 			after asserting they are initialized.
+	 */
+	private void bequeathClassAndFunctionNamesToChildren() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		this.assertClassAndFunctionNamesInitialized();
-		this.exp.currentClassName=this.currentClassName;
-		this.exp.currentFunctionName=this.currentFunctionName;
-		IR_EXP_LIST temp=null;
-		if(this.args!=null)
+		// Asserting the names are initialized in this node
+		assertClassAndFunctionNamesInitialized();
+		
+		// Bequeathing the names to the caller child
+		if (caller != null)
 		{
-			this.args.currentClassName=this.currentClassName;
-			this.args.currentFunctionName=this.currentFunctionName;
-			temp=this.args.createIR();
+			caller.currentClassName = this.currentClassName;
+			caller.currentFunctionName = this.currentFunctionName;
 		}
-		return new IR_CALL(this.calledFunctionName,this.exp.createIR(),temp);
+	
+		// Bequeathing the names to the arguments child
+		if (args != null)
+		{
+			args.currentClassName = this.currentClassName;
+			args.currentFunctionName = this.currentFunctionName;
+		}
+	}
+	
+	/**
+	 * @throws SemanticAnalysisException 
+	 * @brief	Returns the (heap) address of the calling object.
+	 * 			If there's no explicit caller, the calling object is 'this' object.
+	 */
+	private IR_EXP getCallerAddress() throws SemanticAnalysisException
+	{
+		if (caller == null)
+		{
+			// no explicit caller - therefore the caller is 'this' object.
+			return getThisObjectHeapAddress();
+		}
+		else
+		{
+			// the stack-value of the caller is actually its heap-address.
+			return caller.createIR();
+		}
+	}
+	
+	/**
+	 * @brief	Returns the called function's offset in the caller's virtual table.
+	 */
+	private IR_EXP getFunctionOffsetInCallerVirtualTable() throws FunctionNotInSymbolTableException, ClassIsNotInSymbolTableException
+	{
+		if (callerClassName == null)
+		{
+			// no explicit caller - therefore the caller is 'this' object.
+			callerClassName = currentClassName;
+		}
+		
+		SymbolInfo calledFunctionInfo = SymbolTable.searchSymbolInfoInClassAndUp(callerClassName, calledFunctionName);
+		if ((calledFunctionInfo == null) || (!(calledFunctionInfo instanceof FunctionSymbolInfo)))
+		{
+			throw new FunctionNotInSymbolTableException(callerClassName, calledFunctionName);
+		}
+		
+		return new IR_LITERAL_CONST(((FunctionSymbolInfo)calledFunctionInfo).offset);
+	}
+	
+	/**
+	 * @brief	Returns the called function address, which is the content
+	 * 			of the appropriate entry in the virtual table.
+	 */
+	private IR_EXP getCalledFunctionAddress(IR_EXP callerAddress) throws FunctionNotInSymbolTableException, ClassIsNotInSymbolTableException
+	{
+		// The virtual table is the first thing inside the object, therefore
+		// no offset from callerAddress is needed.
+		IR_EXP callerVirtualTableAddress = new IR_EXP_MEM(callerAddress); 
+		
+		IR_EXP calledFunctionOffset = getFunctionOffsetInCallerVirtualTable();
+		IR_EXP virtualTableEntryAddress = new IR_EXP_BINOP(callerVirtualTableAddress, 
+				   										   calledFunctionOffset, 
+				   										   BinOperation.PLUS);
+		
+		IR_EXP virtualTableEntryContent = new IR_EXP_MEM(virtualTableEntryAddress);
+		return virtualTableEntryContent;
+	}
+	
+	/**
+	 * @brief	Creates an IR_CALL after finding the caller's address 
+	 * 			(if there's no explicit caller, 'this' is the caller),
+	 * 			and its appropriate virtual function address. 	
+	 */
+	public IR_CALL createIR() throws SemanticAnalysisException
+	{
+		bequeathClassAndFunctionNamesToChildren();
+		
+		IR_EXP callerAddress = getCallerAddress();
+		IR_EXP calledFunctionAddress = getCalledFunctionAddress(callerAddress);
+		
+		IR_EXP_LIST argumentsIR = null;
+		if (args != null)
+		{
+			argumentsIR = args.createIR();
+		}
+		
+		return new IR_CALL(calledFunctionAddress, callerAddress, argumentsIR);
 	}
 }

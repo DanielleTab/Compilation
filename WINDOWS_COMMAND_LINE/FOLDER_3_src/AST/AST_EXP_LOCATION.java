@@ -21,7 +21,7 @@ public class AST_EXP_LOCATION extends AST_EXP
 	}
 	
 	@Override
-	public IR_EXP_MEM createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_MEM createIR() throws SemanticAnalysisException
 	{
 		return new IR_EXP_MEM(location.createIR());
 	}

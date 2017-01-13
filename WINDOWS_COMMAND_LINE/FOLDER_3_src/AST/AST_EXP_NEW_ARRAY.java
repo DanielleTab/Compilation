@@ -38,7 +38,7 @@ public class AST_EXP_NEW_ARRAY extends AST_EXP{
 
 	// TODO: should return IR_EXP_NEW_ARRAY
 	@Override
-	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException 
+	public IR_EXP createIR() throws SemanticAnalysisException 
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.size.currentFunctionName=this.currentFunctionName;

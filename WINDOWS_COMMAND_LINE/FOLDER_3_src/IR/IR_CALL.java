@@ -1,14 +1,16 @@
 package IR;
 
-public class IR_CALL extends IR_Node{
+public class IR_CALL extends IR_Node
+{
 
-	public String calledFunctionName;
-	public IR_EXP exp;
+	public IR_EXP calledFunctionAddress; // taken from the virtual table
+	public IR_EXP callerAddress; // should be passed as first argument
 	public IR_EXP_LIST args;
-	public IR_CALL(String calledFunctionName,IR_EXP exp, IR_EXP_LIST args)
+	
+	public IR_CALL(IR_EXP calledFunctionAddress, IR_EXP callerAddress, IR_EXP_LIST args)
 	{
-		this.calledFunctionName=calledFunctionName;
-		this.exp=exp;
-		this.args=args;
+		this.calledFunctionAddress = calledFunctionAddress;
+		this.callerAddress = callerAddress;
+		this.args = args;
 	}
 }

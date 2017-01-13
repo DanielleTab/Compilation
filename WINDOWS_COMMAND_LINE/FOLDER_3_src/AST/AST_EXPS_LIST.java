@@ -3,6 +3,7 @@ package AST;
 import IR.IR_EXP_LIST;
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
+import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.TailWithNoHeadException;
 
 public class AST_EXPS_LIST extends AST_Node 
@@ -45,7 +46,7 @@ public class AST_EXPS_LIST extends AST_Node
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public IR_EXP_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_LIST createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.head.currentClassName=this.currentClassName;

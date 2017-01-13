@@ -22,7 +22,7 @@ public class AST_EXP_LPRP extends AST_EXP
 
 	
 	@Override
-	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException 
+	public IR_EXP createIR() throws SemanticAnalysisException 
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.e.currentFunctionName=this.currentFunctionName;

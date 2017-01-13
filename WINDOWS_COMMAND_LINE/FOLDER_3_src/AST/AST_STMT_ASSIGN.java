@@ -92,10 +92,11 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Creates an IR_STMT_MOVE by using the children's created IR nodes.
 	 */
 	@Override
-	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_STMT_MOVE createIR() throws SemanticAnalysisException
 	{
 		bequeathClassAndFunctionNamesToChildren();
 		return new IR_STMT_MOVE(location.createIR(), expression.createIR());

@@ -52,7 +52,7 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 	
 	// TODO: Implement
 	@Override
-	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
 		this.var.currentClassName=this.currentClassName;

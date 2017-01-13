@@ -22,7 +22,7 @@ public class AST_EXP_CALL extends AST_EXP
 	}
 	
 	// TODO: build IR_EXP_CALL based on the local field call.
-	public IR_EXP_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_CALL createIR() throws SemanticAnalysisException
 	{
 		return new IR_EXP_CALL(call.createIR());
 	}

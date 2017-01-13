@@ -61,7 +61,7 @@ public class AST_STMT_CALL extends AST_STMT
 	 * @brief	Creates an IR_STMT_CALL by using the child's created IR_CALL.
 	 */
 	@Override
-	public IR_STMT_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_STMT_CALL createIR() throws SemanticAnalysisException
 	{
 		bequeathClassAndFunctionNamesToChild();
 		return new IR_STMT_CALL(call.createIR());

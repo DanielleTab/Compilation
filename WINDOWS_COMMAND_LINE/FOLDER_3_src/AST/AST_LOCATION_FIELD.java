@@ -61,7 +61,7 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 	
 	// TODO: Implement.
 	@Override
-	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
 		VariableSymbolInfo fieldFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
