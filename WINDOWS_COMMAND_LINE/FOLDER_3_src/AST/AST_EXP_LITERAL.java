@@ -1,6 +1,8 @@
 package AST;
 
 import IR.IR_EXP;
+import IR.IR_LITERAL_CONST;
+import IR.IR_LITERAL_STRING;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 
@@ -21,6 +23,12 @@ public class AST_EXP_LITERAL extends AST_EXP{
 	// create IR_LITERAL_CONST or IR_LITERAL_STRING according to the local field.
 	public IR_EXP createIR()
 	{
-		return null;
+		if(this.l instanceof AST_LITERAL_INTEGER){
+			return new IR_LITERAL_CONST(((AST_LITERAL_INTEGER) this.l).i);
+		}else if(this.l instanceof AST_LITERAL_QUOTE){
+			return new IR_LITERAL_STRING(((AST_LITERAL_QUOTE) this.l).str);
+		}else{
+			return null;
+		}
 	}
 }
