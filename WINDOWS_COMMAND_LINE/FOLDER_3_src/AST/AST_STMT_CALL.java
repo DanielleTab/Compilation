@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP_CALL;
 import IR.IR_STMT_CALL;
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
@@ -44,9 +43,20 @@ public class AST_STMT_CALL extends AST_STMT
 		return new ICTypeInfo();
 	}
 	
-	// TODO: build IR_STMT_CALL based on the local field call.
+	private void bequeathClassAndFunctionNamesToChild() throws ClassOrFunctionNamesNotInitializedExecption
+	{
+		// Asserting the names are initialized in this node
+		assertClassAndFunctionNamesInitialized();
+		
+		// Bequeathing the names to the call child
+		call.currentClassName = this.currentClassName;
+		call.currentFunctionName = this.currentFunctionName;
+	}
+	
+	@Override
 	public IR_STMT_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
+		bequeathClassAndFunctionNamesToChild();
 		return new IR_STMT_CALL(call.createIR());
 	}
 }

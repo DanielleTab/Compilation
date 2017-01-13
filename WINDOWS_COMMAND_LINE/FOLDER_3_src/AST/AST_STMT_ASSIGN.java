@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_STMT;
 import IR.IR_STMT_MOVE;
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
@@ -89,18 +88,10 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 	
 	@Override
-	public IR_STMT createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		bequeathClassAndFunctionNamesToChildren();
 		return new IR_STMT_MOVE(location.createIR(), expression.createIR());
 	}
 	
-	// TODO: Delete if really unnecessary.
-	/*
-	public IR_STMT_MOVE createSpecificIR()
-	{
-		// TODO: Change this default value
-		return null;
-	}
-	*/
 }
