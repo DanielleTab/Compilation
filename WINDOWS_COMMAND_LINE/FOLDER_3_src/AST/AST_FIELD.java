@@ -60,7 +60,7 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 		assertClassNameInitialized();
 		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(className);
 		int fieldOffset=currentClassSymbolInfo.size;
-		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, icFieldType,fieldOffset);
+		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, icFieldType,fieldOffset,true);
 		SymbolTable.insertNewSymbol(fieldInfo);
 		SymbolTable.addFieldToClass(className, fieldInfo);
 		this.idsList.createIR();

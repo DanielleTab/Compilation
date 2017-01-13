@@ -10,11 +10,12 @@ public class VariableSymbolInfo extends SymbolInfo
 		super(symbolName);
 		this.variableType=variableType;
 	}
-	public VariableSymbolInfo(String symbolName,ICTypeInfo variableType, int offset)
+	public VariableSymbolInfo(String symbolName,ICTypeInfo variableType, int offset, boolean isField)
 	{
 		super(symbolName);
 		this.variableType=variableType;
 		this.offset=offset;
+		this.isField=isField;
 	}
 	public SymbolType getSymbolType()
 	{
