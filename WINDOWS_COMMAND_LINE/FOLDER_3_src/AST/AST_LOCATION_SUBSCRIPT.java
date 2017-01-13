@@ -1,7 +1,9 @@
 package AST;
 
+import IR.BinOperation;
 import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -49,10 +51,15 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 	
 	// TODO: Implement
 	@Override
-	public IR_EXP_BINOP createIR()
+	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		// TODO: Change this default value.
-		return null;
+		assertClassAndFunctionNamesInitialized();
+		this.var.currentClassName=this.currentClassName;
+		this.var.currentFunctionName=this.currentFunctionName;
+		this.subscript.currentClassName=this.currentClassName;
+		this.subscript.currentFunctionName=this.currentFunctionName;
+		
+		return new IR_EXP_BINOP(this.var.createIR(),this.subscript.createIR(),BinOperation.PLUS);
 	}
 	
 }

@@ -1,7 +1,11 @@
 package AST;
 
+import IR.BinOperation;
 import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
+import IR.IR_LITERAL_CONST;
+import IR.IR_TEMP;
+import IR.TempType;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -43,10 +47,8 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 	@Override
 	public IR_EXP_BINOP createIR()
 	{
-		// Do something like:
-		// return new IR_EXP_MEM(new IR_EXP_BINOP($fp, variableInfo.offset));
-		
-		// TODO: Change this default value.
-		return null;
+		assertClassAndFunctionNamesInitialized();
+		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,name);
+		return new IR_EXP_BINOP(new IR_TEMP(TempType.fp),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
 	}
 }

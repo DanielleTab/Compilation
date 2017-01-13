@@ -1,7 +1,11 @@
 package AST;
 
+import IR.BinOperation;
 import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
+import IR.IR_LITERAL_CONST;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -11,6 +15,7 @@ import Utils.DebugPrint;
 
 public class AST_LOCATION_FIELD extends AST_LOCATION
 {
+	public String varClass;
 	public AST_EXP var;
 	public String fieldName;
 	
@@ -38,7 +43,7 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 			return null;
 		}
 		
-		String varClass = varInfo.ICType;
+		this.varClass = varInfo.ICType;
 		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
 
 		// field must exist + must be a variable
@@ -56,9 +61,12 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 	
 	// TODO: Implement.
 	@Override
-	public IR_EXP_BINOP createIR()
+	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
-		// TODO: Change this default value.
-		return null;
+		assertClassAndFunctionNamesInitialized();
+		VariableSymbolInfo fieldFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
+		this.var.currentClassName=this.currentClassName;
+		this.var.currentFunctionName=this.currentFunctionName;
+		return new IR_EXP_BINOP(var.createIR(),new IR_LITERAL_CONST(fieldFound.offset),BinOperation.PLUS);
 	}
 }
