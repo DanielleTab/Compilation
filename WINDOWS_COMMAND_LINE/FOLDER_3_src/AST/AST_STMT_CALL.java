@@ -43,6 +43,10 @@ public class AST_STMT_CALL extends AST_STMT
 		return new ICTypeInfo();
 	}
 	
+	/**
+	 * @brief 	bequeathing the class and function names to the child,
+	 * 			after asserting they are initialized.
+	 */
 	private void bequeathClassAndFunctionNamesToChild() throws ClassOrFunctionNamesNotInitializedExecption
 	{
 		// Asserting the names are initialized in this node
@@ -53,6 +57,9 @@ public class AST_STMT_CALL extends AST_STMT
 		call.currentFunctionName = this.currentFunctionName;
 	}
 	
+	/**
+	 * @brief	Creates an IR_STMT_CALL by using the child's created IR_CALL.
+	 */
 	@Override
 	public IR_STMT_CALL createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{

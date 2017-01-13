@@ -73,6 +73,10 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		return new ICTypeInfo();
 	}
 	
+	/**
+	 * @brief 	bequeathing the class and function names to the children,
+	 * 			after asserting they are initialized.
+	 */
 	private void bequeathClassAndFunctionNamesToChildren() throws ClassOrFunctionNamesNotInitializedExecption
 	{
 		// Asserting the names are initialized in this node
@@ -87,6 +91,9 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		expression.currentFunctionName = this.currentFunctionName;
 	}
 	
+	/**
+	 * @brief	Creates an IR_STMT_MOVE by using the children's created IR nodes.
+	 */
 	@Override
 	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
