@@ -58,7 +58,6 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 		assertClassNameInitialized();
 		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(currentClassName);
 		int fieldOffset=currentClassSymbolInfo.size;
-		// TODO: Update the size of the class according to the field size
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, icFieldType,fieldOffset,true);
 		SymbolTable.insertNewSymbol(fieldInfo);
 		SymbolTable.addFieldToClass(currentClassName, fieldInfo);

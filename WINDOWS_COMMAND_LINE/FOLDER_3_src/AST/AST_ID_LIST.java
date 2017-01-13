@@ -77,7 +77,6 @@ public class AST_ID_LIST extends AST_Node
 		assertClassNameInitialized();
 		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(currentClassName);
 		int fieldOffset=currentClassSymbolInfo.size;
-		// TODO: Update the size of the class according to the field size
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type, fieldOffset, true);
 		SymbolTable.insertNewSymbol(fieldInfo);
 		SymbolTable.addFieldToClass(currentClassName, fieldInfo);
