@@ -12,7 +12,6 @@ import SemanticAnalysis.VariableSymbolInfo;
 
 public class AST_ID_LIST extends AST_Node
 {
-	public String className;
 	public String head;
 	public AST_ID_LIST tail;
 	public ICTypeInfo type;
@@ -42,7 +41,6 @@ public class AST_ID_LIST extends AST_Node
 	// returns null if one or more of the names in the list are reserved word.
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		this.className=className;
 		if(type==null)
 		{
 			throw new TypeInAstIdListIsNotInitialized();
@@ -77,14 +75,15 @@ public class AST_ID_LIST extends AST_Node
 	public void createIR() throws ClassIsNotInSymbolTableException, ClassNameNotInitializedException
 	{
 		assertClassNameInitialized();
-		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(className);
+		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(currentClassName);
 		int fieldOffset=currentClassSymbolInfo.size;
-		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type,fieldOffset);
+		// TODO: Update the size of the class according to the field size
+		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type, fieldOffset, true);
 		SymbolTable.insertNewSymbol(fieldInfo);
-		SymbolTable.addFieldToClass(className, fieldInfo);
+		SymbolTable.addFieldToClass(currentClassName, fieldInfo);
 		if(this.tail!=null)
 		{
-			this.tail.className=this.className;
+			this.tail.currentClassName=this.currentClassName;
 			this.tail.createIR();
 		}
 	}

@@ -25,7 +25,7 @@ public class AST_EXP_NEW_CLASS extends AST_EXP{
 	// TODO: should return IR_RXP_NEW_CLASS
 	@Override
 	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption {
-		assertClassAndFunctionNamesInitialized(this.functionName);
+		assertClassAndFunctionNamesInitialized();
 		return new IR_EXP_NEW_CLASS(this.newExpClassName);
 	}
 

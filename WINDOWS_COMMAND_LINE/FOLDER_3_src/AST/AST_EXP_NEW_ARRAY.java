@@ -39,9 +39,9 @@ public class AST_EXP_NEW_ARRAY extends AST_EXP{
 	@Override
 	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption 
 	{
-		assertClassAndFunctionNamesInitialized(this.functionName);
-		this.size.functionName=this.functionName;
-		this.size.className=this.className;
+		assertClassAndFunctionNamesInitialized();
+		this.size.currentFunctionName=this.currentFunctionName;
+		this.size.currentClassName=this.currentClassName;
 		return new IR_EXP_NEW_ARRAY(this.size.createIR());
 	}
 	

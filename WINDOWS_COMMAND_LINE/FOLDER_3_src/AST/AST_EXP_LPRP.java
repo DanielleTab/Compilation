@@ -23,9 +23,9 @@ public class AST_EXP_LPRP extends AST_EXP
 	@Override
 	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption 
 	{
-		assertClassAndFunctionNamesInitialized(this.functionName);
-		this.e.functionName=this.functionName;
-		this.e.className=this.className;
+		assertClassAndFunctionNamesInitialized();
+		this.e.currentFunctionName=this.currentFunctionName;
+		this.e.currentClassName=this.currentClassName;
 		return this.e.createIR();
 	}
 }

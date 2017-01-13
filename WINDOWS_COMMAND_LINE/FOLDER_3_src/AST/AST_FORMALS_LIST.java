@@ -11,16 +11,13 @@ import Utils.DebugPrint;
 public class AST_FORMALS_LIST extends AST_Node
 {
 	public ICTypeInfo formalICType;
-	public String functionName;
 	public AST_TYPE formal_type; // shouldn't be null
 	public String formal_name; // shouldn't be null
 	public AST_FORMALS_LIST tail;
-	public String className;
 	public int formalNumber;
 	
 	public AST_FORMALS_LIST(AST_TYPE formal_type,String formal_name,AST_FORMALS_LIST tail)
 	{
-		this.functionName=null;
 		this.tail=tail;
 		this.formal_type=formal_type;
 		this.formal_name=formal_name;
@@ -28,8 +25,7 @@ public class AST_FORMALS_LIST extends AST_Node
 	
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		this.className=className;
-		if(this.functionName==null)
+		if(this.currentFunctionName==null)
 		{
 			throw new FunctionNameInFormalsListIsNotInitializedException();
 		}
@@ -40,22 +36,22 @@ public class AST_FORMALS_LIST extends AST_Node
 			if (formalICType == null)
 			{
 				String debugMessage = String.format("AST_FORMALS_LIST.validate: The formal '%s' of the method '%s.%s' has an invalid type.",
-						formal_name, className, functionName);
+						formal_name, className, currentFunctionName);
 				DebugPrint.print(debugMessage);
 				return null;
 			}
 			if(SymbolTable.doesSymbolExistInCurrentScope(formal_name))
 			{
 				String debugMessage = String.format("AST_FORMALS_LIST.validate: The formal '%s' of the method '%s.%s' is redefined.",
-						formal_name, className, functionName);
+						formal_name, className, currentFunctionName);
 				DebugPrint.print(debugMessage);
 				return null;
 			}
 			VariableSymbolInfo formalInfo=new VariableSymbolInfo(formal_name, formalICType);
-			if(SymbolTable.addFormalToMethod(className,functionName, formalInfo)==false)
+			if(SymbolTable.addFormalToMethod(className,currentFunctionName, formalInfo)==false)
 			{
 				String debugMessage = String.format("AST_FORMALS_LIST.validate: Failed adding the formal '%s' to the method '%s.%s'.",
-						formal_name, className, functionName);
+						formal_name, className, currentFunctionName);
 				DebugPrint.print(debugMessage);
 				return null;
 			}
@@ -65,7 +61,7 @@ public class AST_FORMALS_LIST extends AST_Node
 			// Validating the rest of the list
 			if (this.tail != null)
 			{
-				tail.functionName = this.functionName;
+				tail.currentFunctionName = this.currentFunctionName;
 				if (tail.validate(className) == null)
 				{
 					DebugPrint.print("AST_FORMALS_LIST.validate: The tail isn't valid.");
@@ -82,14 +78,14 @@ public class AST_FORMALS_LIST extends AST_Node
 	
 	public void createIR() throws SemanticAnalysisException
 	{
-		assertClassAndFunctionNamesInitialized(functionName);
-		VariableSymbolInfo formalInfo=new VariableSymbolInfo(formal_name, formalICType,this.formalNumber*SymbolTable.ADDRESS_SIZE);
-		SymbolTable.addFormalToMethod(className,functionName, formalInfo);
+		assertClassAndFunctionNamesInitialized();
+		VariableSymbolInfo formalInfo=new VariableSymbolInfo(formal_name, formalICType,this.formalNumber*SymbolTable.ADDRESS_SIZE, false);
+		SymbolTable.addFormalToMethod(currentClassName,currentFunctionName, formalInfo);
 		SymbolTable.insertNewSymbol(formalInfo);
 		if(this.tail!=null)
 		{
-			this.tail.functionName = this.functionName;
-			this.tail.className = this.className;
+			this.tail.currentFunctionName = this.currentFunctionName;
+			this.tail.currentClassName = this.currentClassName;
 			this.tail.formalNumber=this.formalNumber+SymbolTable.ADDRESS_SIZE;
 			this.tail.createIR();
 		}

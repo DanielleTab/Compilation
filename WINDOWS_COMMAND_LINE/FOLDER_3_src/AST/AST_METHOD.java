@@ -13,8 +13,10 @@ import Utils.DebugPrint;
 
 public class AST_METHOD extends AST_FIELD_OR_METHOD
 {
+	// There's no special field for the method name,
+	// the generic currentFunctionName is used instead.
+	
 	public AST_TYPE returnArgumentType;
-	public String methodName;
 	public AST_FORMALS_LIST formalsList;
 	public AST_STMT_LIST body;
 
@@ -24,7 +26,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	public AST_METHOD(AST_TYPE returnArgumentType,String methodName,AST_FORMALS_LIST formalsList,AST_STMT_LIST body)
 	{
 		this.returnArgumentType=returnArgumentType;
-		this.methodName=methodName;
+		this.currentFunctionName = methodName;
 		this.formalsList=formalsList;
 		this.body=body;
 	}
@@ -48,25 +50,25 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 			
 		}
 		
-		if(SymbolTable.doesSymbolExistInCurrentScope(methodName))
+		if(SymbolTable.doesSymbolExistInCurrentScope(currentFunctionName))
 		{
 			return null;
 		}
-		SymbolInfo symbolWithTheSameName=SymbolTable.searchSymbolInfoInClassAndUp(className, methodName);
+		SymbolInfo symbolWithTheSameName=SymbolTable.searchSymbolInfoInClassAndUp(className, currentFunctionName);
 		if((symbolWithTheSameName!=null)&&(!(symbolWithTheSameName instanceof FunctionSymbolInfo)))
 		{
 			// we allow only method override.
 			return null;
 		}
-		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
+		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null));
 		
 		// note: the signature validation is executed in the end of the function, 
 		// because we have to compare two functionSymbolInfo - and we build the current one in that function.
-		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null);
+		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		if(this.formalsList!=null)
 		{
-			this.formalsList.functionName=methodName;
+			this.formalsList.currentFunctionName=currentFunctionName;
 		}
 		SymbolTable.createNewScope(); // !!the formals list are like local variables of the method.
 		if((this.formalsList!=null)&&(this.formalsList.validate(className)==null))
@@ -91,7 +93,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		
 		
 		SymbolTable.closeCurrentScope();
-		if (methodName.equals(SymbolTable.MAIN_FUNC_SYMBOL_NAME))
+		if (currentFunctionName.equals(SymbolTable.MAIN_FUNC_SYMBOL_NAME))
 		{
 			if (!methodSymbolInfo.validateMainIsValid())
 			{
@@ -105,8 +107,8 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	
 	public IR_METHOD createIR() throws SemanticAnalysisException
 	{
-		SymbolTable.addMethodToClass(className, new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null));
-		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(methodName,this.body.expectedReturnType,null);
+		SymbolTable.addMethodToClass(currentClassName, new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null));
+		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		
 		assertClassNameInitialized();
@@ -114,8 +116,8 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		
 		if(this.formalsList!=null)
 		{
-			this.formalsList.className=this.className;
-			this.formalsList.functionName=this.methodName;
+			this.formalsList.currentClassName=this.currentClassName;
+			this.formalsList.currentFunctionName=this.currentFunctionName;
 			this.formalsList.formalNumber=0; // TODO: maybe it should be 4 or something like this
 			this.formalsList.createIR();
 		}
@@ -123,8 +125,8 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		IR_STMT_LIST bodyStmtList;
 		if(this.body!=null)
 		{
-			this.body.className=this.className;
-			this.body.functionName=this.methodName;
+			this.body.currentClassName=this.currentClassName;
+			this.body.currentFunctionName=this.currentFunctionName;
 			bodyStmtList=this.body.createIR();
 		}
 		else
@@ -133,6 +135,6 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		SymbolTable.closeCurrentScope();
 		
-		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.className,this.methodName)),bodyStmtList);
+		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),bodyStmtList);
 	}
 }

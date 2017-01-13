@@ -11,7 +11,6 @@ public class AST_EXPS_LIST extends AST_Node
 	/****************/
 	public AST_EXP head;
 	public AST_EXPS_LIST tail;
-	public String functionName;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -47,14 +46,14 @@ public class AST_EXPS_LIST extends AST_Node
 	
 	public IR_EXP_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		assertClassAndFunctionNamesInitialized(functionName);
-		this.head.className=this.className;
-		this.head.functionName=this.functionName;
+		assertClassAndFunctionNamesInitialized();
+		this.head.currentClassName=this.currentClassName;
+		this.head.currentFunctionName=this.currentFunctionName;
 		IR_EXP_LIST temp=null;
 		if(this.tail!=null)
 		{
-			this.tail.className=this.className;
-			this.tail.functionName=this.functionName;
+			this.tail.currentClassName=this.currentClassName;
+			this.tail.currentFunctionName=this.currentFunctionName;
 			temp=this.tail.createIR();
 		}
 		return new IR_EXP_LIST(this.head.createIR(),temp);

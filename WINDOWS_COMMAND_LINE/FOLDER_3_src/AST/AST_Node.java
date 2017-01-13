@@ -7,7 +7,16 @@ import SemanticAnalysis.SemanticAnalysisException;
 public abstract class AST_Node 
 {
 	public int SerialNumber;
-	public String className;
+	
+	// The current class (not relevant to AST_PROGRAM and AST_CLASS_DECLARATION_LIST).
+	// It is set in the AST_CLASS_DECLARATION c'tor, and from then it is passed 
+	// from parent to child.
+	public String currentClassName = null;
+	
+	// The current function (relevant to AST_METHOD and to nodes inside a method).
+	// It is set in the AST_METHOD c'tor, and from the it is passed from parent to child.
+	public String currentFunctionName = null; 
+	
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
 		// TODO: delete the implementation. This method should be implemented in each inherited class.
@@ -16,19 +25,19 @@ public abstract class AST_Node
 	
 	public void assertClassNameInitialized() throws ClassNameNotInitializedException
 	{
-		if(this.className==null)
+		if(this.currentClassName==null)
 		{
 			throw new ClassNameNotInitializedException();
 		}
 	}
 	
-	public void assertClassAndFunctionNamesInitialized(String functionName) throws ClassOrFunctionNamesNotInitializedExecption
+	public void assertClassAndFunctionNamesInitialized() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		if(this.className==null)
+		if(this.currentClassName==null)
 		{
 			throw new ClassOrFunctionNamesNotInitializedExecption();
 		}
-		if(functionName==null)
+		if(currentFunctionName==null)
 		{
 			throw new ClassOrFunctionNamesNotInitializedExecption();
 		}

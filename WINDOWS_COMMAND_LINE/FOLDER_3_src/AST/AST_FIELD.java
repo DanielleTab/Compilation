@@ -10,7 +10,6 @@ import SemanticAnalysis.VariableSymbolInfo;
 
 public class AST_FIELD extends AST_FIELD_OR_METHOD
 {
-	public String className;
 	public AST_TYPE type;
 	public String fieldName;
 	public AST_ID_LIST idsList;
@@ -25,7 +24,6 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 	
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		this.className=className;
 		icFieldType=type.validate(className);
 		if(icFieldType==null)
 		{
@@ -58,11 +56,17 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 	public void createIR() throws ClassIsNotInSymbolTableException, ClassNameNotInitializedException
 	{
 		assertClassNameInitialized();
-		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(className);
+		ClassSymbolInfo currentClassSymbolInfo=SymbolTable.getClassSymbolInfo(currentClassName);
 		int fieldOffset=currentClassSymbolInfo.size;
+		// TODO: Update the size of the class according to the field size
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(fieldName, icFieldType,fieldOffset,true);
 		SymbolTable.insertNewSymbol(fieldInfo);
-		SymbolTable.addFieldToClass(className, fieldInfo);
-		this.idsList.createIR();
+		SymbolTable.addFieldToClass(currentClassName, fieldInfo);
+		
+		if (idsList != null)
+		{
+			idsList.currentClassName = this.currentClassName;
+			idsList.createIR();	
+		}
 	}
 }

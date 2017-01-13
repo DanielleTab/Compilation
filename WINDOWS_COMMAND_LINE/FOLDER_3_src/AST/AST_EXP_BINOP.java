@@ -138,12 +138,12 @@ public class AST_EXP_BINOP extends AST_EXP
 	public IR_EXP_BINOP createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
 		BinOperation currentOP=getBinOperation();
-		assertClassAndFunctionNamesInitialized(this.functionName);
+		assertClassAndFunctionNamesInitialized();
 		//right and left can't be null at this point because it is a semantic error.
-		left.className=this.className;
-		right.className=this.className;
-		left.functionName=this.functionName;
-		right.functionName=this.functionName;
+		left.currentClassName=this.currentClassName;
+		right.currentClassName=this.currentClassName;
+		left.currentFunctionName=this.currentFunctionName;
+		right.currentFunctionName=this.currentFunctionName;
 		IR_EXP leftExp  = left.createIR();
 		IR_EXP rightExp = right.createIR();
 		return new IR_EXP_BINOP(leftExp,rightExp,currentOP);

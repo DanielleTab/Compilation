@@ -133,7 +133,7 @@ public class AST_STMT_LIST extends AST_STMT
 	// TODO: Implement this using head.createIR() and tail.createIR()
 	public IR_STMT_LIST createIR() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		assertClassAndFunctionNamesInitialized(functionName);
+		assertClassAndFunctionNamesInitialized();
 		if((head!=null)&&(tail!=null))
 		{
 			return new IR_STMT_LIST(head.createIR(),tail.createIR());
