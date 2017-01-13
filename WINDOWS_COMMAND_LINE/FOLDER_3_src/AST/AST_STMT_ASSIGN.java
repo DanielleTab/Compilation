@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_STMT;
 import IR.IR_STMT_MOVE;
 import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
@@ -74,6 +73,10 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		return new ICTypeInfo();
 	}
 	
+	/**
+	 * @brief 	bequeathing the class and function names to the children,
+	 * 			after asserting they are initialized.
+	 */
 	private void bequeathClassAndFunctionNamesToChildren() throws ClassOrFunctionNamesNotInitializedExecption
 	{
 		// Asserting the names are initialized in this node
@@ -88,19 +91,14 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		expression.currentFunctionName = this.currentFunctionName;
 	}
 	
+	/**
+	 * @brief	Creates an IR_STMT_MOVE by using the children's created IR nodes.
+	 */
 	@Override
-	public IR_STMT createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
+	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption, ClassIsNotInSymbolTableException
 	{
 		bequeathClassAndFunctionNamesToChildren();
 		return new IR_STMT_MOVE(location.createIR(), expression.createIR());
 	}
 	
-	// TODO: Delete if really unnecessary.
-	/*
-	public IR_STMT_MOVE createSpecificIR()
-	{
-		// TODO: Change this default value
-		return null;
-	}
-	*/
 }
