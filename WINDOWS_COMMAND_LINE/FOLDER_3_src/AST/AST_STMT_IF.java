@@ -22,7 +22,7 @@ public class AST_STMT_IF extends AST_STMT_COND
 	/**
 	 * @brief	Creates an IR_STMT_IF by using its children created IR nodes,
 	 * 			and creating a new label from the following format:
-	 * 			className_funcName_if_ifIndex
+	 * 			className_funcName_if_ifIndex.
 	 */
 	@Override
 	public IR_STMT_IF createIR() throws SemanticAnalysisException
