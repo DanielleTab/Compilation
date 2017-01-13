@@ -1,13 +1,16 @@
 package AST;
 
-import IR.IR_STMT;
+import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
+import SemanticAnalysis.FunctionNotInSymbolTableException;
+import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.SymbolInfo;
 import SemanticAnalysis.SymbolTable;
 import Utils.DebugPrint;
 
-public class AST_STMT_COND extends AST_STMT
+public abstract class AST_STMT_COND extends AST_STMT
 {
 	public AST_EXP cond;
 	public AST_STMT body;
@@ -63,12 +66,40 @@ public class AST_STMT_COND extends AST_STMT
 		return new ICTypeInfo();
 	}
 
-	// TODO: implement
-	@Override
-	public IR_STMT createIR() throws ClassOrFunctionNamesNotInitializedExecption {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * @brief 	Bequeathes the class and function names to the children,
+	 * 			after asserting they are initialized.
+	 */
+	protected void bequeathClassAndFunctionNamesToChildren() throws ClassOrFunctionNamesNotInitializedExecption
+	{
+		// Asserting the names are initialized in this node
+		assertClassAndFunctionNamesInitialized();
+		
+		// Bequeathing the names to the condition child
+		cond.currentClassName = this.currentClassName;
+		cond.currentFunctionName = this.currentFunctionName;
+		
+		// Bequeathing the names to the body child
+		body.currentClassName = this.currentClassName;
+		body.currentFunctionName = this.currentFunctionName;
 	}
 	
+	/**
+	 * @brief 	Returns the symbol info of the current function.
+	 */
+	protected FunctionSymbolInfo getFunctionSymbolInfo() throws FunctionNotInSymbolTableException, ClassIsNotInSymbolTableException
+	{
+		SymbolInfo functionInfo = SymbolTable.searchSymbolInfoInClassAndUp(currentClassName, currentFunctionName);
+		if ((functionInfo == null) || (!(functionInfo instanceof FunctionSymbolInfo)))
+		{
+			throw new FunctionNotInSymbolTableException(currentClassName, currentFunctionName);
+		}
+		
+		return (FunctionSymbolInfo)functionInfo;
+	}
 	
+	protected String getLabelPrefix()
+	{
+		return String.format("%s_%s", currentClassName, currentFunctionName);
+	}
 }

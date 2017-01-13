@@ -11,6 +11,9 @@ public class FunctionSymbolInfo extends SymbolInfo{
 	public List<ICTypeInfo> argumentsTypes;
 	public int frameSize=0;
 	public int offset=0;
+	public int currentIfIndex = 0;
+	public int currentWhileIndex = 0;
+	
 	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes)
 	{
 		super(symbolName);
@@ -97,5 +100,19 @@ public class FunctionSymbolInfo extends SymbolInfo{
 			return false;
 		}
 		return true;
+	}
+	
+	public int getNewIfIndex()
+	{
+		int newIfIndex = currentIfIndex;
+		currentIfIndex++;
+		return newIfIndex;
+	}
+	
+	public int getNewWhileIndex()
+	{
+		int newWhileIndex = currentWhileIndex;
+		currentWhileIndex++;
+		return newWhileIndex;
 	}
 }
