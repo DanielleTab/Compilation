@@ -12,4 +12,9 @@ public class IR_METHOD_LIST extends IR_Node
 		this.head = head;
 		this.tail = tail;
 	}
+	
+	public void generateCode()
+	{
+		// TODO: Implement.
+	}
 }

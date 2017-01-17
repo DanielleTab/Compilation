@@ -44,13 +44,21 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 		}
 	}
 	
-	// TODO: Implement by creating IR_EXP_MEM out of
-	// IR_EXP_BINOP with the $fp and variable offset.
 	@Override
 	public IR_EXP_BINOP createIR() throws ClassIsNotInSymbolTableException, ClassOrFunctionNamesNotInitializedExecption
 	{
 		assertClassAndFunctionNamesInitialized();
 		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(this.currentClassName,name);
-		return new IR_EXP_BINOP(new IR_TEMP(TempType.fp),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
+		
+		if(symbolFound.isField)
+		{
+			// return this+offset
+			return new IR_EXP_BINOP(getThisObjectHeapAddress(),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
+		}
+		else
+		{
+			// return $fp+offset
+			return new IR_EXP_BINOP(new IR_TEMP(TempType.fp),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
+		}
 	}
 }

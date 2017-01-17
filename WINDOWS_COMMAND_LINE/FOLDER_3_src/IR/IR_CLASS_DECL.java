@@ -11,4 +11,9 @@ public class IR_CLASS_DECL extends IR_Node
 	{
 		this.methods = methods;
 	}
+	
+	public void generateCode()
+	{
+		methods.generateCode();
+	}
 }

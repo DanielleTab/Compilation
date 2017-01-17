@@ -111,13 +111,13 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		
 		assertClassNameInitialized();
-		SymbolTable.createNewScope(); // !!the formals list are like local variables of the method.
+		SymbolTable.createNewScope(); // !!the formals are like local variables of the method.
 		
 		if(this.formalsList!=null)
 		{
 			this.formalsList.currentClassName=this.currentClassName;
 			this.formalsList.currentFunctionName=this.currentFunctionName;
-			this.formalsList.formalNumber=0; // TODO: maybe it should be 4 or something like this
+			this.formalsList.formalNumber=0; // TODO: maybe it should be 4 or something like this because the first formal is "this"
 			this.formalsList.createIR();
 		}
 		
