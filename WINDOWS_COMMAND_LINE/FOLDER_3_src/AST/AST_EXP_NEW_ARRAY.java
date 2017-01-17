@@ -36,7 +36,6 @@ public class AST_EXP_NEW_ARRAY extends AST_EXP{
 	}
 
 
-	// TODO: should return IR_EXP_NEW_ARRAY
 	@Override
 	public IR_EXP createIR() throws SemanticAnalysisException 
 	{

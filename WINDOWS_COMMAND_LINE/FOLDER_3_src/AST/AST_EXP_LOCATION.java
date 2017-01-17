@@ -23,6 +23,12 @@ public class AST_EXP_LOCATION extends AST_EXP
 	@Override
 	public IR_EXP_MEM createIR() throws SemanticAnalysisException
 	{
+		assertClassAndFunctionNamesInitialized();
+		
+		// location is not null at this point because it's a semantic error.
+		this.location.currentClassName = this.currentClassName;
+		this.location.currentFunctionName = this.currentFunctionName;
+		
 		return new IR_EXP_MEM(location.createIR());
 	}
 	

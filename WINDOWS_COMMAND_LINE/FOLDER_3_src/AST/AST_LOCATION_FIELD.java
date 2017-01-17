@@ -59,7 +59,6 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 		return ((VariableSymbolInfo) fieldFound).variableType;
 	}
 	
-	// TODO: Implement.
 	@Override
 	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
 	{

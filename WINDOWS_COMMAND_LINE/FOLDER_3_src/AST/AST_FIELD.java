@@ -52,7 +52,6 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 		return new ICTypeInfo();
 	}
 	
-	// TODO: Implement.
 	public void createIR() throws ClassIsNotInSymbolTableException, ClassNameNotInitializedException
 	{
 		assertClassNameInitialized();

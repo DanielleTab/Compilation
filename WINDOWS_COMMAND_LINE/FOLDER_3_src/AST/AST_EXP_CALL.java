@@ -21,9 +21,14 @@ public class AST_EXP_CALL extends AST_EXP
 		return call.validate(className);
 	}
 	
-	// TODO: build IR_EXP_CALL based on the local field call.
 	public IR_EXP_CALL createIR() throws SemanticAnalysisException
 	{
+		assertClassAndFunctionNamesInitialized();
+		
+		// call is not null because it's a semantic error.
+		this.call.currentClassName = this.currentClassName;
+		this.call.currentFunctionName= this.currentFunctionName;
+		
 		return new IR_EXP_CALL(call.createIR());
 	}
 }

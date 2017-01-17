@@ -140,11 +140,13 @@ public class AST_EXP_BINOP extends AST_EXP
 	{
 		BinOperation currentOP=getBinOperation();
 		assertClassAndFunctionNamesInitialized();
+		
 		//right and left can't be null at this point because it is a semantic error.
 		left.currentClassName=this.currentClassName;
 		right.currentClassName=this.currentClassName;
 		left.currentFunctionName=this.currentFunctionName;
 		right.currentFunctionName=this.currentFunctionName;
+		
 		IR_EXP leftExp  = left.createIR();
 		IR_EXP rightExp = right.createIR();
 		return new IR_EXP_BINOP(leftExp,rightExp,currentOP);

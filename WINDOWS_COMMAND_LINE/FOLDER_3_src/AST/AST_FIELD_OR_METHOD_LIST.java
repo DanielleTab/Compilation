@@ -36,9 +36,12 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 	
 	public IR_METHOD_LIST createIR() throws SemanticAnalysisException
 	{
+		assertClassNameInitialized();
 		if(this.head instanceof AST_METHOD)
 		{
-			IR_METHOD temp=((AST_METHOD) this.head).createIR();
+			AST_METHOD astMethod=(AST_METHOD)this.head;
+			astMethod.currentClassName = this.currentClassName;
+			IR_METHOD temp=astMethod.createIR();
 			return new IR_METHOD_LIST(temp,tail.createIR());
 		}
 		else // if the head is not a method, we want to iterate over the list until the first method.
@@ -46,7 +49,9 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 			AST_FIELD_OR_METHOD_LIST iterator=tail;
 			while(iterator.head instanceof AST_FIELD)
 			{
-				((AST_FIELD)iterator.head).createIR();
+				AST_FIELD astField = (AST_FIELD)iterator.head;
+				astField.currentClassName = this.currentClassName;
+				astField.createIR();
 				iterator=iterator.tail;
 			}
 			return new IR_METHOD_LIST(((AST_METHOD) iterator.head).createIR(), iterator.tail.createIR());

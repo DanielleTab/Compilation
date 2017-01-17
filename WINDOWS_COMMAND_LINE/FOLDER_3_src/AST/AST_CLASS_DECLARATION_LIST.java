@@ -41,7 +41,6 @@ public class AST_CLASS_DECLARATION_LIST extends AST_Node
 	
 	public IR_CLASS_DECL_LIST createIR() throws SemanticAnalysisException
 	{
-		// TODO: optional: update this function after the next recitation.
 		if(tail!=null)
 		{
 			return new IR_CLASS_DECL_LIST(head.createIR(),tail.createIR());

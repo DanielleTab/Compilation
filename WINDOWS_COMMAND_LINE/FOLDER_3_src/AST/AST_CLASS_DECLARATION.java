@@ -85,8 +85,6 @@ public class AST_CLASS_DECLARATION extends AST_Node
 		return new ICTypeInfo();
 	}
 	
-	// TODO: Implement this using fieldsOrMethods.createIR().
-	// This should be completed after the next recitation (11.1.17)
 	public IR_CLASS_DECL createIR() throws SemanticAnalysisException
 	{
 		IR_METHOD_LIST classMethods=null;
@@ -95,26 +93,9 @@ public class AST_CLASS_DECLARATION extends AST_Node
 		SymbolTable.createNewScope();
 		if(this.fieldsOrMethods!=null)
 		{
-			AST_FIELD_OR_METHOD_LIST iterator=this.fieldsOrMethods;
-			while(iterator!=null)
-			{
-				AST_FIELD_OR_METHOD currObj=iterator.head;
-				if(currObj instanceof AST_FIELD)
-				{
-					((AST_FIELD)currObj).currentClassName=this.currentClassName;
-					((AST_FIELD)currObj).createIR();
-				}
-				else if(currObj instanceof AST_METHOD)
-				{
-					((AST_METHOD)currObj).currentClassName=this.currentClassName;
-					IR_METHOD methodValidation=((AST_METHOD)currObj).createIR();
-					// add the method to the methods list.
-					// note: it's ok also for the first element because we put methodValidation as head and null as tail.
-					classMethods = new IR_METHOD_LIST(methodValidation, classMethods);
-				}
-				
-				iterator=iterator.tail;
-			}
+			this.fieldsOrMethods.currentClassName = this.currentClassName;
+			classMethods = this.fieldsOrMethods.createIR();
+			
 		}
 		SymbolTable.closeCurrentScope();
 		

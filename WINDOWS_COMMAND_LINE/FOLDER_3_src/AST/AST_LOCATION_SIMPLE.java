@@ -1,6 +1,7 @@
 package AST;
 
 import IR.BinOperation;
+import IR.IR_EXP;
 import IR.IR_EXP_BINOP;
 import IR.IR_EXP_MEM;
 import IR.IR_LITERAL_CONST;
@@ -44,21 +45,26 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 		}
 	}
 	
+	private IR_EXP getLocationStartingOffset(VariableSymbolInfo symbolFound)
+	{
+		if(symbolFound.isField)
+		{
+			// return the "this" address
+			return getThisObjectHeapAddress();
+		}
+		
+		// in the other cases - where the symbol is local - we return $fp
+		return new IR_TEMP(TempType.fp);
+	
+	}
+	
 	@Override
 	public IR_EXP_BINOP createIR() throws ClassIsNotInSymbolTableException, ClassOrFunctionNamesNotInitializedExecption
 	{
 		assertClassAndFunctionNamesInitialized();
 		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(this.currentClassName,name);
+	
+		return new IR_EXP_BINOP(getLocationStartingOffset(symbolFound),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
 		
-		if(symbolFound.isField)
-		{
-			// return this+offset
-			return new IR_EXP_BINOP(getThisObjectHeapAddress(),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
-		}
-		else
-		{
-			// return $fp+offset
-			return new IR_EXP_BINOP(new IR_TEMP(TempType.fp),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
-		}
 	}
 }

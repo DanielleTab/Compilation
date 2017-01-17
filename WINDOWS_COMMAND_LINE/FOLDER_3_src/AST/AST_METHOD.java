@@ -106,11 +106,12 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	
 	public IR_METHOD createIR() throws SemanticAnalysisException
 	{
+		assertClassAndFunctionNamesInitialized();
+
 		SymbolTable.addMethodToClass(currentClassName, new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null));
 		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		
-		assertClassNameInitialized();
 		SymbolTable.createNewScope(); // !!the formals are like local variables of the method.
 		
 		if(this.formalsList!=null)
