@@ -10,5 +10,10 @@ public class IR_PROGRAM extends IR_Node {
 	{
 		this.classDeclList = classDeclList;
 	}
+
+	public void generateCode() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

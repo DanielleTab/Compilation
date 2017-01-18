@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import CodeGen.CodeGen_Temp;
+
 
 
 public class ClassSymbolInfo extends SymbolInfo{
@@ -48,6 +50,10 @@ public class ClassSymbolInfo extends SymbolInfo{
 		this.size=size;
 	}
 	
+	public String getVFTableLabel()
+	{
+		return String.format("VFtable%s", this.symbolName);
+	}
 	
 	public void addMethod(FunctionSymbolInfo method)
 	{
