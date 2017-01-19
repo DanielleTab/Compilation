@@ -34,7 +34,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 		}
 		else
 		{
-			// we have to initialize the size to 32 bit because of the virtual function table.
+			// we have to initialize the size to 32 bit because of the virtual function table address.
 			this.size=SymbolTable.ADDRESS_SIZE;
 			this.virtualFunctionsTable=new Hashtable<String,String>();
 			this.virtualFunctionsOrder=new ArrayList<String>();

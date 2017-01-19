@@ -12,4 +12,10 @@ public class IR_STMT_LIST extends IR_STMT
 		this.head = head;
 		this.tail = tail;
 	}
+	
+	public void generateCode()
+	{
+		head.generateCode();
+		tail.generateCode();
+	}
 }

@@ -25,6 +25,7 @@ public class IR_CALL extends IR_Node
 	
 	public void generateCode() throws IOException
 	{
+		// TODO: maybe: delete this t1
 //		CodeGen_Temp t1 = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp t2 = (CodeGen_Temp) calledFunctionAddress.generateCode();
 		CodeGen_Temp t3 = (CodeGen_Temp) callerAddress.generateCode();
