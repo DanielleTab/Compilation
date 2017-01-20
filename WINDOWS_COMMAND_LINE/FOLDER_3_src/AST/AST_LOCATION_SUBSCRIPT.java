@@ -50,7 +50,6 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 		return new ICTypeInfo(varInfo.ICType,varInfo.pointerDepth -1);
 	}
 	
-	// TODO: Implement
 	@Override
 	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
 	{
