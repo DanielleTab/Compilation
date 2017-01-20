@@ -3,9 +3,7 @@ package IR;
 import java.io.IOException;
 
 import CodeGen.AssemblyFilePrinter;
-import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
-import CodeGen.TempGenerator;
 
 public class IR_METHOD extends IR_Node 
 {
@@ -22,16 +20,16 @@ public class IR_METHOD extends IR_Node
 		this.frameSize = frameSize;
 	}
 	
-	public void writeProlog() throws IOException
+	public void printProlog() throws IOException
 	{
 		StringBuilder printed = new StringBuilder();
-		printed.append(String.format("mov $fp, $sp%s",AssemblyFilePrinter.NEW_LINE_STRING));
 		CodeGen_Utils.codeGen_Push("$ra");
 		CodeGen_Utils.codeGen_Push("$fp");
+		printed.append(String.format("mov $fp, $sp%s",AssemblyFilePrinter.NEW_LINE_STRING));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public void writeEpilog() throws IOException
+	public void printEpilog() throws IOException
 	{
 		StringBuilder printed = new StringBuilder();
 		printed.append(String.format("mov $sp, $fp%s",AssemblyFilePrinter.NEW_LINE_STRING));
@@ -45,8 +43,8 @@ public class IR_METHOD extends IR_Node
 	public void generateCode() throws IOException
 	{
 		AssemblyFilePrinter.getInstance(null).write(String.format("Label_%s:", this.label.name));
-		this.writeProlog();
+		this.printProlog();
 		body.generateCode();
-		this.writeEpilog();
+		this.printEpilog();
 	}
 }

@@ -1,5 +1,7 @@
 package IR;
 
+import java.io.IOException;
+
 public class IR_METHOD_LIST extends IR_Node 
 {
 	// fields
@@ -13,8 +15,9 @@ public class IR_METHOD_LIST extends IR_Node
 		this.tail = tail;
 	}
 	
-	public void generateCode()
+	public void generateCode() throws IOException
 	{
-		// TODO: Implement.
+		head.generateCode();
+		tail.generateCode();
 	}
 }

@@ -1,5 +1,7 @@
 package IR;
 
+import java.io.IOException;
+
 public class IR_CLASS_DECL_LIST extends IR_Node {
 
 	// fields
@@ -11,6 +13,12 @@ public class IR_CLASS_DECL_LIST extends IR_Node {
 	{
 		this.head = head;
 		this.tail = tail;
+	}
+	
+	public void generateCode() throws IOException
+	{
+		this.head.generateCode();
+		this.tail.generateCode();
 	}
 	
 }

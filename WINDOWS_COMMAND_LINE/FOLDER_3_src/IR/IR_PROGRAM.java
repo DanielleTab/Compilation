@@ -1,5 +1,7 @@
 package IR;
 
+import java.io.IOException;
+
 public class IR_PROGRAM extends IR_Node {
 
 	// fields
@@ -11,9 +13,9 @@ public class IR_PROGRAM extends IR_Node {
 		this.classDeclList = classDeclList;
 	}
 
-	public void generateCode() {
-		// TODO Auto-generated method stub
-		
+	public void generateCode() throws IOException {
+
+		this.classDeclList.generateCode();
 	}
 	
 }
