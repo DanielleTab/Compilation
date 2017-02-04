@@ -1,7 +1,6 @@
 package AST;
 
-import IR.IR_STMT;
-import IR.IR_STMT_VAR_DEC;
+import IR.IR_STMT_MOVE;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -94,7 +93,7 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 
 	// Might return null (if there's no assignment)
 	@Override
-	public IR_STMT_VAR_DEC createIR() throws ClassOrFunctionNamesNotInitializedExecption {
+	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption {
 		// TODO Auto-generated method stub
 		return null;
 	}
