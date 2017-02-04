@@ -31,6 +31,7 @@ public class IR_METHOD extends IR_Node
 	
 	public void printEpilog() throws IOException
 	{
+		// TODO: Doesn't this make the pop instructions be written before the move instruction?
 		StringBuilder printed = new StringBuilder();
 		printed.append(String.format("mov $sp, $fp%s",AssemblyFilePrinter.NEW_LINE_STRING));
 		CodeGen_Utils.codeGen_Pop("$fp");
