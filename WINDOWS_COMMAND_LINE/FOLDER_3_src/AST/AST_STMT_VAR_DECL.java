@@ -1,8 +1,11 @@
 package AST;
 
+import IR.IR_Node;
 import IR.IR_STMT_MOVE;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
+import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
+import SemanticAnalysis.NullFieldException;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
 import SemanticAnalysis.VariableSymbolInfo;
@@ -13,6 +16,7 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 	public AST_TYPE varType;
 	public String varName;
 	public AST_EXP exp;
+	public ICTypeInfo varICTypeInfo; // 'validate' sets this, 'createIR' uses it.
 	
 	public AST_STMT_VAR_DECL(AST_TYPE varType, String varName)
 	{
@@ -90,11 +94,60 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		// The variable-declaration-statement is valid
 		return new ICTypeInfo();
 	}
+	
+	/**
+	 * @brief 	bequeathing the class and function names to the given assignment statement,
+	 * 			after asserting they are initialized.
+	 */
+	private void bequeathClassAndFunctionNamesToAssignment(AST_STMT_ASSIGN assignment) throws ClassOrFunctionNamesNotInitializedExecption
+	{
+		// Asserting the names are initialized in this node
+		assertClassAndFunctionNamesInitialized();
+		
+		// Bequeathing the names to the assignment
+		assignment.currentClassName = this.currentClassName;
+		assignment.currentFunctionName = this.currentFunctionName;
+	}
 
-	// Might return null (if there's no assignment)
+	/**
+	 * @brief	Converts the variable declaration into an assignment.
+	 * 			If the declaration doesn't contain an assignment, assigns default zero value.
+	 */
+	private AST_STMT_ASSIGN convertToAssignment() throws NullFieldException
+	{
+		AST_LOCATION assignmentLocation = new AST_LOCATION_SIMPLE(varName);
+		
+		AST_EXP assignmentValue = exp;
+		if (assignmentValue == null)
+		{
+			// The declaration doesn't contain an assignment
+			assignmentValue = new AST_EXP_LITERAL(new AST_LITERAL_INTEGER(
+					IR_Node.VAR_DEFAULT_INIT_VALUE)); 
+		}
+		
+		return new AST_STMT_ASSIGN(assignmentLocation, assignmentValue);
+	}
+	
+	/**
+	 * @brief	Adds the declared variable to the symbol table, after calculating
+	 * 			its offset from the frame pointer. Updates the size of function's frame accordingly.
+	 * 			At last, converts the statement into an assignment statement and creates its IR node.
+	 */
 	@Override
-	public IR_STMT_MOVE createIR() throws ClassOrFunctionNamesNotInitializedExecption {
-		// TODO Auto-generated method stub
-		return null;
+	public IR_STMT_MOVE createIR() throws SemanticAnalysisException 
+	{
+		// Adding the variable to the symbol table
+		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
+		int variableOffset = AST_Node.FRAME_OFFSET_OF_FIRST_LOCAL - functionInfo.frameSize;
+		VariableSymbolInfo variableInfo = new VariableSymbolInfo(varName, varICTypeInfo, variableOffset, false);
+		SymbolTable.insertNewSymbol(variableInfo);
+		functionInfo.frameSize += varICTypeInfo.getTypeSize(); 
+		
+		// TODO: Should each declaration be converted to an assignment? Even 'int i;' ?
+		
+		// Converting the variable declaration into an assignment, and creating its IR node
+		AST_STMT_ASSIGN assignment = convertToAssignment();
+		bequeathClassAndFunctionNamesToAssignment(assignment);
+		return assignment.createIR();
 	}
 }

@@ -9,7 +9,7 @@ public class FunctionSymbolInfo extends SymbolInfo{
 
 	public ICTypeInfo returnType;
 	public List<ICTypeInfo> argumentsTypes;
-	public int frameSize=0;
+	public int frameSize = 0; // the size of all local variables
 	public int offset=0;
 	public int currentIfIndex = 0;
 	public int currentWhileIndex = 0;

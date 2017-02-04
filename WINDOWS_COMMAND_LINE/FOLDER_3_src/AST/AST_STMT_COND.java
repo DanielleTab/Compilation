@@ -1,12 +1,8 @@
 package AST;
 
-import SemanticAnalysis.ClassIsNotInSymbolTableException;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
-import SemanticAnalysis.FunctionNotInSymbolTableException;
-import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
-import SemanticAnalysis.SymbolInfo;
 import SemanticAnalysis.SymbolTable;
 import Utils.DebugPrint;
 
@@ -82,20 +78,6 @@ public abstract class AST_STMT_COND extends AST_STMT
 		// Bequeathing the names to the body child
 		body.currentClassName = this.currentClassName;
 		body.currentFunctionName = this.currentFunctionName;
-	}
-	
-	/**
-	 * @brief 	Returns the symbol info of the current function.
-	 */
-	protected FunctionSymbolInfo getFunctionSymbolInfo() throws FunctionNotInSymbolTableException, ClassIsNotInSymbolTableException
-	{
-		SymbolInfo functionInfo = SymbolTable.searchSymbolInfoInClassAndUp(currentClassName, currentFunctionName);
-		if ((functionInfo == null) || (!(functionInfo instanceof FunctionSymbolInfo)))
-		{
-			throw new FunctionNotInSymbolTableException(currentClassName, currentFunctionName);
-		}
-		
-		return (FunctionSymbolInfo)functionInfo;
 	}
 	
 	protected String getLabelPrefix()

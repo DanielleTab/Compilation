@@ -3,7 +3,7 @@ package SemanticAnalysis;
 public class VariableSymbolInfo extends SymbolInfo
 {	
 	public ICTypeInfo variableType;
-	public int offset=Integer.MAX_VALUE;
+	public int offset=Integer.MAX_VALUE; // offset from $fp
 	public boolean isField=false;
 	public VariableSymbolInfo(String symbolName,ICTypeInfo variableType)
 	{

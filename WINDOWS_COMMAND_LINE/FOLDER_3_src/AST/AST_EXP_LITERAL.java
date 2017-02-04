@@ -21,6 +21,7 @@ public class AST_EXP_LITERAL extends AST_EXP{
 	}
 	
 	// create IR_LITERAL_CONST or IR_LITERAL_STRING according to the local field.
+	// TODO: What about AST_LITERAL_NULL? Shouldn't it be translated into IR_LITERAL_INTEGER?
 	public IR_EXP createIR()
 	{
 		if(this.l instanceof AST_LITERAL_INTEGER){
