@@ -18,7 +18,7 @@ public class IR_METHOD extends IR_Node
 	public IR_METHOD(IR_LABEL label, IR_STMT_LIST body, int frameSize)
 	{
 		this.label = label;
-		this.body = body;
+		this.body = body; // might be null
 		this.frameSize = frameSize;
 	}
 	
@@ -48,7 +48,10 @@ public class IR_METHOD extends IR_Node
 		// TODO: Doesn't the label name already start with 'Label_' prefix?
 		AssemblyFilePrinter.getInstance(null).write(String.format("Label_%s:", this.label.name));
 		this.printProlog();
-		body.generateCode();
+		if (body != null)
+		{
+			body.generateCode();	
+		}
 		AssemblyFilePrinter.getInstance(null).write(String.format("Label_%s%s:", this.label.name, EPILOG_LABEL_SUFFIX));
 		this.printEpilog();
 	}

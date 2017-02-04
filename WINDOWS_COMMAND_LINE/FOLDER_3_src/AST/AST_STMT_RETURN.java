@@ -106,7 +106,7 @@ public class AST_STMT_RETURN extends AST_STMT
 	 * @brief 	Bequeathes the class and function names to the child,
 	 * 			after asserting they are initialized.
 	 */
-	protected void bequeathClassAndFunctionNamesToChild() throws ClassOrFunctionNamesNotInitializedExecption
+	private void bequeathClassAndFunctionNamesToChild() throws ClassOrFunctionNamesNotInitializedExecption
 	{
 		// Asserting the names are initialized in this node
 		assertClassAndFunctionNamesInitialized();

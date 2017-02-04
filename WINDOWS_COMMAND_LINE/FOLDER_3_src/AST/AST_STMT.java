@@ -10,6 +10,7 @@ public abstract class AST_STMT extends AST_Node
 	public boolean doesAlwaysReturnValue = false;
 	
 	// some of the implementations will return null 
-	// (like AST_STMT_VAR_DECL in case there's no assign)
+	// (like AST_STMT_VAR_DECL in case there's no assign,
+	// or AST_STMT_LIST in case it's empty or all of the statements return null)
 	public abstract IR_STMT createIR() throws SemanticAnalysisException;
 }

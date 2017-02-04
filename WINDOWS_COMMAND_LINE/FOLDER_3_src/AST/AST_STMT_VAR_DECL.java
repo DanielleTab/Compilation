@@ -92,6 +92,7 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		return new ICTypeInfo();
 	}
 
+	// Might return null (if there's no assignment)
 	@Override
 	public IR_STMT_VAR_DEC createIR() throws ClassOrFunctionNamesNotInitializedExecption {
 		// TODO Auto-generated method stub

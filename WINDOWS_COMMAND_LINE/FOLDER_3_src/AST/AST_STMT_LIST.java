@@ -1,6 +1,8 @@
 package AST;
 
+import IR.IR_STMT;
 import IR.IR_STMT_LIST;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -129,17 +131,74 @@ public class AST_STMT_LIST extends AST_STMT
 		return new ICTypeInfo();
 	}
 	
-	// TODO: Implement this using head.createIR() and tail.createIR()
-	public IR_STMT_LIST createIR() throws SemanticAnalysisException
+	/**
+	 * @brief 	Bequeathes the class and function names to the children (if they exist),
+	 * 			after asserting they are initialized.
+	 */
+	private void bequeathClassAndFunctionNamesToChildren() throws ClassOrFunctionNamesNotInitializedExecption
 	{
+		// Asserting the names are initialized in this node
 		assertClassAndFunctionNamesInitialized();
-		if((head!=null)&&(tail!=null))
+		
+		if (head != null)
 		{
-			return new IR_STMT_LIST(head.createIR(),tail.createIR());
+			// Bequeathing the names to the head child
+			head.currentClassName = this.currentClassName;
+			head.currentFunctionName = this.currentFunctionName;
+			
+			if (tail != null)
+			{
+				// Bequeathing the names to the tail child
+				tail.currentClassName = this.currentClassName;
+				tail.currentFunctionName = this.currentFunctionName;
+			}
+		}
+	}
+	
+	/**
+	 * @brief	If no tail exists, returns null.
+	 * 			if the tail exists, returns its IR node (which can still be null).
+	 */
+	private IR_STMT_LIST createTailIR() throws SemanticAnalysisException
+	{
+		if (tail != null)
+		{
+			return tail.createIR();
 		}
 		else
 		{
-			return new IR_STMT_LIST(head.createIR(),null);
+			return null;
+		}
+	}
+	
+	/**
+	 * @brief	Creates an IR_STMT_LIST by using the created IR nodes of the head and the tail.
+	 * 
+	 * @note	Might return null in case the list is empty, or all of the statements
+	 * 			didn't create IR nodes.
+	 */
+	@Override
+	public IR_STMT_LIST createIR() throws SemanticAnalysisException
+	{
+		bequeathClassAndFunctionNamesToChildren();
+		
+		if (head == null)
+		{
+			// Empty list - nothing to create
+			return null;
+		}
+		
+		// Creating IR for head and tail
+		IR_STMT headIR = head.createIR();
+		IR_STMT_LIST tailIR = createTailIR();
+		if (headIR != null)
+		{
+			return new IR_STMT_LIST(headIR, tailIR);
+		}
+		else
+		{
+			// The head didn't create any IR, therefore skipping it and returning the tail IR. 
+			return tailIR;
 		}
 	}
 }

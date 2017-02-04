@@ -127,7 +127,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		{
 			this.body.currentClassName=this.currentClassName;
 			this.body.currentFunctionName=this.currentFunctionName;
-			bodyStmtList=this.body.createIR();
+			bodyStmtList=this.body.createIR(); // might return null
 		}
 		else
 		{
