@@ -1,6 +1,9 @@
 package AST;
 
+import IR.IR_EXP;
+import IR.IR_METHOD;
 import IR.IR_STMT_RETURN;
+import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.ExpectedReturnTypeIsNotInitializedException;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
@@ -9,7 +12,7 @@ import Utils.DebugPrint;
 
 public class AST_STMT_RETURN extends AST_STMT 
 {
-	public AST_EXP returnedExpression;
+	public AST_EXP returnedExpression; // might be null
 	
 	public AST_STMT_RETURN(AST_EXP exp)
 	{
@@ -99,9 +102,41 @@ public class AST_STMT_RETURN extends AST_STMT
 		}
 	}
 	
-	// TODO: implement this.
-	public IR_STMT_RETURN createIR()
+	/**
+	 * @brief 	Bequeathes the class and function names to the child,
+	 * 			after asserting they are initialized.
+	 */
+	protected void bequeathClassAndFunctionNamesToChild() throws ClassOrFunctionNamesNotInitializedExecption
 	{
-		return null;
+		// Asserting the names are initialized in this node
+		assertClassAndFunctionNamesInitialized();
+		
+		if (returnedExpression != null)
+		{
+			// Bequeathing the names to the returned expression child
+			returnedExpression.currentClassName = this.currentClassName;
+			returnedExpression.currentFunctionName = this.currentFunctionName;		
+		}
+	}
+	
+	/**
+	 * @brief	Creates an IR_STMT_RETURN by using the returned expression created IR node
+	 * 			(if exists a returned expression).
+	 */
+	@Override
+	public IR_STMT_RETURN createIR() throws SemanticAnalysisException
+	{
+		bequeathClassAndFunctionNamesToChild();
+		
+		IR_EXP returnedExpressionIR = null;
+		if (returnedExpression != null)
+		{
+			returnedExpressionIR = returnedExpression.createIR();	
+		}
+		
+		String methodEpilogLabelName = String.format("Label_%s_%s%s", 
+				currentClassName, currentFunctionName, IR_METHOD.EPILOG_LABEL_SUFFIX);
+		
+		return new IR_STMT_RETURN(returnedExpressionIR, methodEpilogLabelName);
 	}
 }
