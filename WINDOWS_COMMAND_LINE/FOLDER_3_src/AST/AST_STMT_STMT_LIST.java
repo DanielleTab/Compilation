@@ -30,6 +30,7 @@ public class AST_STMT_STMT_LIST extends AST_STMT_LIST
 	
 	/**
 	 * @brief	Creates an IR_STMT_LIST by calling the super's implementation.
+	 * 			Surrounds the call with a new scope.
 	 * 
 	 * @note	Might return null in case the list is empty, or all of the statements
 	 * 			didn't create IR nodes.
