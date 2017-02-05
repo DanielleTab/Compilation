@@ -2,7 +2,9 @@ package IR;
 
 import java.io.IOException;
 
+import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
+import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 
 /* 
@@ -13,25 +15,45 @@ import CodeGen.TempGenerator;
 public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP 
 {
 	public IR_EXP arrayBase;
-	public IR_EXP subscript;
+	public IR_EXP index;
 	
-	public IR_EXP_LOCATION_SUBSCRIPT(IR_EXP arrayBase, IR_EXP subscript)
+	public IR_EXP_LOCATION_SUBSCRIPT(IR_EXP arrayBase, IR_EXP index)
 	{
 		this.arrayBase = arrayBase;
-		this.subscript = subscript;
+		this.index = index;
 	}
 	
-	// TODO: Implement
+	/**
+	 * @brief	Generates code which calculates the address of the array's subscript,
+	 * 			after validating it doesn't exceed the array's bounds. 
+	 */
 	public CodeGen_Temp generateCode() throws IOException
 	{
+		StringNLBuilder printed = new StringNLBuilder();
+		
+		CodeGen_Temp resultTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp arrayBaseTemp = arrayBase.generateCode();
-		CodeGen_Temp subscriptTemp = subscript.generateCode();
+		CodeGen_Temp offsetTemp = index.generateCode();
 		CodeGen_Temp arrayLengthTemp = TempGenerator.getAndAddNewTemp();
 		
-		StringBuilder printed = new StringBuilder();
-		//printed.append(//String.format)
-		
-		// TODO: Delete default value
-		return null;
+		printed.appendNL(String.format("lw %s,0(%s)", 
+									   arrayLengthTemp.getName(), 
+									   arrayBaseTemp.getName()));
+		printed.appendNL(String.format("bge %s,%s,%s", 
+									   offsetTemp.getName(), 
+									   arrayLengthTemp.getName(),
+									   IR_Node.ERROR_LABEL_NAME));
+		printed.appendNL(String.format("addi %s,%s,1", 
+									   offsetTemp.getName(), 
+									   offsetTemp.getName()));
+		// TODO: Can we do muli? (Does it exist in Oren's lexer?)
+		printed.appendNL(String.format("muli %s,%s,4", 
+									   offsetTemp.getName(),
+									   offsetTemp.getName()));
+		printed.appendNL(String.format("add %s,%s,%s", 
+									   resultTemp.getName(),
+									   arrayBase));
+
+		return resultTemp;
 	}
 }

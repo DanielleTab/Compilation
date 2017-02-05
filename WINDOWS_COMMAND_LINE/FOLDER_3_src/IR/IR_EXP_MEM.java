@@ -21,7 +21,7 @@ public class IR_EXP_MEM extends IR_EXP
 	{
 		CodeGen_Temp result = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp t1= this.address.generateCode();
-		AssemblyFilePrinter.getInstance(null).write(String.format("lw %s,%s%s",result.getName(),t1.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
+		AssemblyFilePrinter.getInstance(null).write(String.format("lw %s,0(%s)%s",result.getName(),t1.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
 		return result;
 	}
 }
