@@ -19,11 +19,11 @@ public class StringCollector {
 	
 	public static void printStringsToAssembly() throws IOException
 	{
-		StringBuilder printed = new StringBuilder();
+		StringNLBuilder printed = new StringNLBuilder();
 		for(int i=0;i<LabelAndStringMappings.size();i++)
 		{
 			Pair<String,String> currPair = LabelAndStringMappings.get(i);
-			printed.append(String.format("%s: %s", currPair.left,currPair.right));
+			printed.appendNL(String.format("%s: %s", currPair.left,currPair.right));
 		}
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());;
 	}

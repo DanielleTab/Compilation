@@ -6,6 +6,7 @@ import AST.AST_TYPE;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
+import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 
 public class IR_EXP_NEW_ARRAY extends IR_EXP{
@@ -19,9 +20,10 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 	{
 		CodeGen_Temp generatedSize = this.size.generateCode();
 		CodeGen_Temp heapAddress = CodeGen_Utils.codeGen_malloc(generatedSize);
-		StringBuilder printed = new StringBuilder();
+		StringNLBuilder printed = new StringNLBuilder();
 		// put the first element in the array to be the array size.
-		printed.append(String.format("sw %s,%s%s",generatedSize.getName(),heapAddress.getName(), AssemblyFilePrinter.NEW_LINE_STRING));
+		printed.appendNL(String.format("sw %s,%s",generatedSize.getName(),heapAddress.getName()));
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		return heapAddress;
 	}
 }
