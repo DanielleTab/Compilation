@@ -4,18 +4,22 @@ import java.io.IOException;
 
 public class CodeGen_Utils {
 	
-	public static void codeGen_Push(String pushedObject) throws IOException
+	/* 
+	 * @param	printed - the push instructions will be appended to this string builder. 
+	 *  */
+	public static void codeGen_Push(StringBuilder printed, String pushedObject) throws IOException
 	{
-		String printed = "addi $sp,$sp,-4"+AssemblyFilePrinter.NEW_LINE_STRING;
-		printed = printed+String.format("sw %s,0($sp)%s", pushedObject,AssemblyFilePrinter.NEW_LINE_STRING);
-		AssemblyFilePrinter.getInstance(null).write(printed);
+		printed.append(String.format("addi $sp,$sp,-4%s", AssemblyFilePrinter.NEW_LINE_STRING));
+		printed.append(String.format("sw %s,0($sp)%s", pushedObject,AssemblyFilePrinter.NEW_LINE_STRING));
 	}
 	
-	public static void codeGen_Pop(String pop) throws IOException
+	/* 
+	 * @param	printed - the pop instructions will be appended to this string builder. 
+	 *  */
+	public static void codeGen_Pop(StringBuilder printed, String pop) throws IOException
 	{
-		String printed = String.format("lw %s,0($sp)%s",pop,AssemblyFilePrinter.NEW_LINE_STRING);
-		printed = printed+"addi $sp,$sp,4"+AssemblyFilePrinter.NEW_LINE_STRING;
-		AssemblyFilePrinter.getInstance(null).write(printed);
+		printed.append(String.format("lw %s,0($sp)%s",pop,AssemblyFilePrinter.NEW_LINE_STRING));
+		printed.append(String.format("addi $sp,$sp,4%s", AssemblyFilePrinter.NEW_LINE_STRING));
 	}
 	
 	public static CodeGen_Temp codeGen_malloc(int allocationSize) throws IOException

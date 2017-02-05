@@ -25,19 +25,18 @@ public class IR_METHOD extends IR_Node
 	public void printProlog() throws IOException
 	{
 		StringBuilder printed = new StringBuilder();
-		CodeGen_Utils.codeGen_Push("$ra");
-		CodeGen_Utils.codeGen_Push("$fp");
+		CodeGen_Utils.codeGen_Push(printed, "$ra");
+		CodeGen_Utils.codeGen_Push(printed, "$fp");
 		printed.append(String.format("mov $fp, $sp%s",AssemblyFilePrinter.NEW_LINE_STRING));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
 	public void printEpilog() throws IOException
 	{
-		// TODO: Doesn't this make the pop instructions be written before the move instruction?
 		StringBuilder printed = new StringBuilder();
 		printed.append(String.format("mov $sp, $fp%s",AssemblyFilePrinter.NEW_LINE_STRING));
-		CodeGen_Utils.codeGen_Pop("$fp");
-		CodeGen_Utils.codeGen_Pop("$ra");
+		CodeGen_Utils.codeGen_Pop(printed, "$fp");
+		CodeGen_Utils.codeGen_Pop(printed, "$ra");
 		printed.append(String.format("jr $ra%s",AssemblyFilePrinter.NEW_LINE_STRING));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
