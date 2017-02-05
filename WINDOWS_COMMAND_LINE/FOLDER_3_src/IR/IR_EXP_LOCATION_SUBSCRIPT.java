@@ -29,13 +29,24 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 	 */
 	public CodeGen_Temp generateCode() throws IOException
 	{
-		StringNLBuilder printed = new StringNLBuilder();
-		
 		CodeGen_Temp resultTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp arrayBaseTemp = arrayBase.generateCode();
+		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
+		
+		// Checking that the array base isn't null
+		StringNLBuilder printed = new StringNLBuilder();
+		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
+		printed.appendNL(String.format("beq %s,%s,%s", 
+									   arrayBaseTemp.getName(), 
+									   zeroTemp.getName(),
+									   IR_Node.ERROR_LABEL_NAME));		
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
+		
+		// Checking that the index doesn't exceed array's bounds
 		CodeGen_Temp offsetTemp = index.generateCode();
 		CodeGen_Temp arrayLengthTemp = TempGenerator.getAndAddNewTemp();
 		
+		printed = new StringNLBuilder();
 		printed.appendNL(String.format("lw %s,0(%s)", 
 									   arrayLengthTemp.getName(), 
 									   arrayBaseTemp.getName()));
@@ -43,6 +54,8 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 									   offsetTemp.getName(), 
 									   arrayLengthTemp.getName(),
 									   IR_Node.ERROR_LABEL_NAME));
+		
+		// Calculating the address of the array's element
 		printed.appendNL(String.format("addi %s,%s,1", 
 									   offsetTemp.getName(), 
 									   offsetTemp.getName()));
@@ -53,7 +66,8 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 		printed.appendNL(String.format("add %s,%s,%s", 
 									   resultTemp.getName(),
 									   arrayBase));
-
+		
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		return resultTemp;
 	}
 }
