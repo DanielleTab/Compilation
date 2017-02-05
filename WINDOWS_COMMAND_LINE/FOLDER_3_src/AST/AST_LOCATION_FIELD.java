@@ -1,11 +1,6 @@
 package AST;
 
-import IR.BinOperation;
-import IR.IR_EXP_BINOP;
-import IR.IR_EXP_MEM;
-import IR.IR_LITERAL_CONST;
-import SemanticAnalysis.ClassIsNotInSymbolTableException;
-import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
+import IR.IR_EXP_LOCATION_FIELD;
 import SemanticAnalysis.ICTypeInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolInfo;
@@ -60,12 +55,12 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 	}
 	
 	@Override
-	public IR_EXP_BINOP createIR() throws SemanticAnalysisException
+	public IR_EXP_LOCATION_FIELD createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
 		VariableSymbolInfo fieldFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
 		this.var.currentClassName=this.currentClassName;
 		this.var.currentFunctionName=this.currentFunctionName;
-		return new IR_EXP_BINOP(var.createIR(),new IR_LITERAL_CONST(fieldFound.offset),BinOperation.PLUS);
+		return new IR_EXP_LOCATION_FIELD(var.createIR(), fieldFound.offset);
 	}
 }

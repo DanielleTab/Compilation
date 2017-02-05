@@ -6,13 +6,14 @@ import java.util.List;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
+import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 
 public class IR_CALL extends IR_Node
 {
 
-	public IR_EXP calledFunctionAddress; // taken from the virtual table
 	public IR_EXP callerAddress; // should be passed as first argument
+	public IR_EXP calledFunctionAddress; // taken from the virtual table
 	public IR_EXP_LIST args;
 	
 	public IR_CALL(IR_EXP calledFunctionAddress, IR_EXP callerAddress, IR_EXP_LIST args)
@@ -22,21 +23,35 @@ public class IR_CALL extends IR_Node
 		this.args = args;
 	}
 	
-	
+	/**
+	 * @brief	Generates code which calls the function, 
+	 * after validating the caller's address isn't null.
+	 *  */
 	public void generateCode() throws IOException
 	{
-		// TODO: maybe: delete this t1
-//		CodeGen_Temp t1 = TempGenerator.getAndAddNewTemp();
-		CodeGen_Temp t2 = (CodeGen_Temp) calledFunctionAddress.generateCode();
-		CodeGen_Temp t3 = (CodeGen_Temp) callerAddress.generateCode();
+		CodeGen_Temp callerAddressTemp = (CodeGen_Temp) callerAddress.generateCode();
+		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
+		
+		StringNLBuilder printed = new StringNLBuilder();
+		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
+		printed.appendNL(String.format("beq %s,%s,%s", 
+									   callerAddressTemp.getName(), 
+									   zeroTemp.getName(),
+									   IR_Node.ERROR_LABEL_NAME));
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
+		
+		CodeGen_Temp functionAddressTemp = (CodeGen_Temp) calledFunctionAddress.generateCode();
 		List<CodeGen_Temp> ts = args.generateCodeList();
+		
+		printed = new StringNLBuilder();
 		for(int i=ts.size();i>=0;i--)
 		{
 			// push the args in reverse order.
-			CodeGen_Utils.codeGen_Push(ts.get(i).getName());
+			CodeGen_Utils.codeGen_Push(printed, ts.get(i).getName());
 		}
 		
-		CodeGen_Utils.codeGen_Push(t3.getName());
-		AssemblyFilePrinter.getInstance(null).write(String.format("jal %s%s",t2.getName(), AssemblyFilePrinter.NEW_LINE_STRING));
+		CodeGen_Utils.codeGen_Push(printed, callerAddressTemp.getName());
+		printed.appendNL(String.format("jalr %s",functionAddressTemp.getName()));
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 }

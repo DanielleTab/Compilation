@@ -143,8 +143,6 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		SymbolTable.insertNewSymbol(variableInfo);
 		functionInfo.frameSize += varICTypeInfo.getTypeSize(); 
 		
-		// TODO: Should each declaration be converted to an assignment? Even 'int i;' ?
-		
 		// Converting the variable declaration into an assignment, and creating its IR node
 		AST_STMT_ASSIGN assignment = convertToAssignment();
 		bequeathClassAndFunctionNamesToAssignment(assignment);
