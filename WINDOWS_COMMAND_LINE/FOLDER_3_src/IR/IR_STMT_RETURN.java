@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
+import CodeGen.StringNLBuilder;
 
 public class IR_STMT_RETURN extends IR_STMT
 {
@@ -23,12 +24,14 @@ public class IR_STMT_RETURN extends IR_STMT
 	// 
 	public void generateCode() throws IOException
 	{
+		StringNLBuilder builder = new StringNLBuilder();
 		if (returnedExpression != null)
 		{
 			CodeGen_Temp returnValue = returnedExpression.generateCode();
-			AssemblyFilePrinter.getInstance(null).write(String.format("mov $v0,%s%s",returnValue.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
+			builder.appendNL(String.format("mov $v0,%s",returnValue.getName()));
 		}
-		AssemblyFilePrinter.getInstance(null).write(String.format("j %s%s", methodEpilogLabelName, AssemblyFilePrinter.NEW_LINE_STRING));
+		builder.appendNL(String.format("j %s", methodEpilogLabelName));
+		AssemblyFilePrinter.getInstance(null).write(builder.toString());
 		
 		// TODO: If this is unnecessary, delete it.
 		// The original code (with returnTempRegister), no check of null

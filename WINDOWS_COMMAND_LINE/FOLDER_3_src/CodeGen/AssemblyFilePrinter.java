@@ -20,7 +20,7 @@ import SemanticAnalysis.SymbolTable;
 
 public class AssemblyFilePrinter {
 	public static int labelIndex = 0;
-	public final static String NEW_LINE_STRING = "\n";
+	public final static String NEW_LINE_STRING = System.lineSeparator();
 	public static AssemblyFilePrinter instance = null;
 	private FileWriter fileWriter = null;
 	protected AssemblyFilePrinter(String filePath) throws IOException
@@ -65,6 +65,7 @@ public class AssemblyFilePrinter {
 				printed.append(",");
 			}
 		}
+		AssemblyFilePrinter.getInstance(null).write(printed.toString()+System.lineSeparator());
 	}
 	
 	public static void printVirtualFunctionsTablesAndUpdateVFTAdresses() throws IOException

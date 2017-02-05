@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
+import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 
 public class IR_EXP_BINOP extends IR_EXP {
@@ -94,11 +95,11 @@ public class IR_EXP_BINOP extends IR_EXP {
 		CodeGen_Temp t1 = left.generateCode();
 		CodeGen_Temp t2 = right.generateCode();
 		
-		StringBuilder printed = new StringBuilder();
+		StringNLBuilder printed = new StringNLBuilder();
 		
 		if(isMathematicOperation())
 		{
-			printed.append(String.format("%s %s,%s,%s,%s", findSpecificBinop(),result.getName(),t1.getName(), t2.getName(), AssemblyFilePrinter.NEW_LINE_STRING));
+			printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),result.getName(),t1.getName(), t2.getName()));
 		}
 		else
 		{
@@ -113,12 +114,12 @@ public class IR_EXP_BINOP extends IR_EXP {
 			int conditionLabelNumber = AssemblyFilePrinter.addLabelIndex();
 			String branchLabelOK = String.format("Label_binop_ok_%d", conditionLabelNumber);
 			String branchLabelEnd =  String.format("Label_binop_end_%d", conditionLabelNumber);
-			printed.append(String.format("li %s,0%s",result.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
-			printed.append(String.format("%s %s,%s,%s%s", findSpecificBinop(),t1.getName(), t2.getName(), branchLabelOK,AssemblyFilePrinter.NEW_LINE_STRING));
-			printed.append(String.format("%s %s,%s,%s%s", getOppositeConditionalOperation(),t1.getName(),t2.getName(),branchLabelEnd,AssemblyFilePrinter.NEW_LINE_STRING));
-			printed.append(String.format("%s:", branchLabelOK));
-			printed.append(String.format("addi %s,%s,1%s",result.getName(), result.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
-			printed.append(String.format("%s:%s", branchLabelEnd, AssemblyFilePrinter.NEW_LINE_STRING));
+			printed.appendNL(String.format("li %s,0",result.getName()));
+			printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),t1.getName(), t2.getName(), branchLabelOK));
+			printed.appendNL(String.format("%s %s,%s,%s", getOppositeConditionalOperation(),t1.getName(),t2.getName(),branchLabelEnd));
+			printed.appendNL(String.format("%s:", branchLabelOK));
+			printed.appendNL(String.format("addi %s,%s,1",result.getName(), result.getName()));
+			printed.appendNL(String.format("%s:", branchLabelEnd));
 		}
 		
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());

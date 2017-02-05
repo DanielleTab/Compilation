@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Utils;
+import CodeGen.StringNLBuilder;
 
 public class IR_METHOD extends IR_Node 
 {
@@ -24,20 +25,20 @@ public class IR_METHOD extends IR_Node
 	
 	public void printProlog() throws IOException
 	{
-		StringBuilder printed = new StringBuilder();
+		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Utils.codeGen_Push(printed, "$ra");
 		CodeGen_Utils.codeGen_Push(printed, "$fp");
-		printed.append(String.format("mov $fp, $sp%s",AssemblyFilePrinter.NEW_LINE_STRING));
+		printed.appendNL("mov $fp, $sp");
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
 	public void printEpilog() throws IOException
 	{
-		StringBuilder printed = new StringBuilder();
-		printed.append(String.format("mov $sp, $fp%s",AssemblyFilePrinter.NEW_LINE_STRING));
+		StringNLBuilder printed = new StringNLBuilder();
+		printed.appendNL("mov $sp, $fp");
 		CodeGen_Utils.codeGen_Pop(printed, "$fp");
 		CodeGen_Utils.codeGen_Pop(printed, "$ra");
-		printed.append(String.format("jr $ra%s",AssemblyFilePrinter.NEW_LINE_STRING));
+		printed.appendNL("jr $ra");
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
