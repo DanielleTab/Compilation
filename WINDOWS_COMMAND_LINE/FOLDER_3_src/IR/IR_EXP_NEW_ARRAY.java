@@ -19,8 +19,13 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		CodeGen_Temp generatedSize = this.size.generateCode();
-		CodeGen_Temp heapAddress = CodeGen_Utils.codeGen_malloc(generatedSize);
+		CodeGen_Temp generatedSizePlusOne = TempGenerator.getAndAddNewTemp();
 		StringNLBuilder printed = new StringNLBuilder();
+		
+		// add one to the generatedSize because we want to allocate (size+1) cells on the heap -
+		// the first cell for the size.
+		printed.appendNL(String.format("addi %s,%s,1", generatedSizePlusOne, generatedSize));
+		CodeGen_Temp heapAddress = CodeGen_Utils.codeGen_malloc(generatedSizePlusOne);
 		// put the first element in the array to be the array size.
 		printed.appendNL(String.format("sw %s,%s",generatedSize.getName(),heapAddress.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
