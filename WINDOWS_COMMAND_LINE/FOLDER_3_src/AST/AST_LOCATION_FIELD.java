@@ -23,10 +23,9 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 		this.fieldName = fieldName;
 	}
 	
-	// TODO: finish this (Ilana)
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		ICTypeInfo varInfo = var.validate(className);// TODO: is it ok?
+		ICTypeInfo varInfo = var.validate(className);
 		if(varInfo==null)
 			return null;
 		

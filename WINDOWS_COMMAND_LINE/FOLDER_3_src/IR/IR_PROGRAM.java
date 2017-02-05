@@ -13,8 +13,9 @@ public class IR_PROGRAM extends IR_Node {
 		this.classDeclList = classDeclList;
 	}
 
-	public void generateCode() throws IOException {
-
+	public void generateCode() throws IOException 
+	{
+		// TODO: jmp to main, class decl, main label, main wrap, call to our main, label end/error.
 		this.classDeclList.generateCode();
 	}
 	

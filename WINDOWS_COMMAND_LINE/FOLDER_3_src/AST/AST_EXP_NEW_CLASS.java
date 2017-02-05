@@ -22,7 +22,6 @@ public class AST_EXP_NEW_CLASS extends AST_EXP{
 			return null;
 	}
 
-	// TODO: should return IR_RXP_NEW_CLASS
 	@Override
 	public IR_EXP createIR() throws ClassOrFunctionNamesNotInitializedExecption {
 		assertClassAndFunctionNamesInitialized();

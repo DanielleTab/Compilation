@@ -34,7 +34,6 @@ public class AST_LOCATION_SUBSCRIPT extends AST_LOCATION
 		ICTypeInfo varInfo = var.validate(className);
 		ICTypeInfo subscriptInfo = subscript.validate(className);
 		
-		// TODO: is this compilation error or rum time?
 		// index is int
 		if(!subscriptInfo.isFlatICType(ICTypeInfo.IC_TYPE_INT))
 		{

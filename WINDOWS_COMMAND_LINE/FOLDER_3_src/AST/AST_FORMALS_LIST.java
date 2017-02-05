@@ -14,7 +14,7 @@ public class AST_FORMALS_LIST extends AST_Node
 	public AST_TYPE formal_type; // shouldn't be null
 	public String formal_name; // shouldn't be null
 	public AST_FORMALS_LIST tail;
-	public int formalNumber;
+	public int formalFrameOffset;
 	
 	public AST_FORMALS_LIST(AST_TYPE formal_type,String formal_name,AST_FORMALS_LIST tail)
 	{
@@ -79,14 +79,14 @@ public class AST_FORMALS_LIST extends AST_Node
 	public void createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
-		VariableSymbolInfo formalInfo=new VariableSymbolInfo(formal_name, formalICType,this.formalNumber*SymbolTable.ADDRESS_SIZE, false);
+		VariableSymbolInfo formalInfo=new VariableSymbolInfo(formal_name, formalICType,this.formalFrameOffset, false);
 		SymbolTable.addFormalToMethod(currentClassName,currentFunctionName, formalInfo);
 		SymbolTable.insertNewSymbol(formalInfo);
 		if(this.tail!=null)
 		{
 			this.tail.currentFunctionName = this.currentFunctionName;
 			this.tail.currentClassName = this.currentClassName;
-			this.tail.formalNumber=this.formalNumber+SymbolTable.ADDRESS_SIZE;
+			this.tail.formalFrameOffset=this.formalFrameOffset+SymbolTable.ADDRESS_SIZE;
 			this.tail.createIR();
 		}
 	}

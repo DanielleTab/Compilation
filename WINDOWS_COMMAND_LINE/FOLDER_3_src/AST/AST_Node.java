@@ -27,7 +27,8 @@ public abstract class AST_Node
 	public static final int FRAME_OFFSET_OF_FIRST_LOCAL = -4;
 	// in offset 0, the caller's fp is located.
 	public static final int FRAME_OFFSET_OF_RETURN_ADDRESS = 4;
-	public static final int FRAME_OFFSET_OF_FIRST_ARGUMENT = 8; 
+	public static final int FRAME_OFFSET_OF_THE_THIS_ARGUMENT = 8; 
+	public static final int FRAME_OFFSET_OF_FIRST_FORMAL = 12;
 	
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
@@ -63,7 +64,7 @@ public abstract class AST_Node
 	public IR_EXP getThisObjectHeapAddress()
 	{
 		IR_EXP fp = new IR_TEMP(TempType.fp);
-		IR_EXP firstArgumentOffset = new IR_LITERAL_CONST(FRAME_OFFSET_OF_FIRST_ARGUMENT);
+		IR_EXP firstArgumentOffset = new IR_LITERAL_CONST(FRAME_OFFSET_OF_THE_THIS_ARGUMENT);
 		
 		IR_EXP firstArgumentAddress = new IR_EXP_BINOP(fp, firstArgumentOffset, BinOperation.PLUS);
 		IR_EXP firstArgumentContent = new IR_EXP_MEM(firstArgumentAddress);

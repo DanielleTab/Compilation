@@ -118,7 +118,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		{
 			this.formalsList.currentClassName=this.currentClassName;
 			this.formalsList.currentFunctionName=this.currentFunctionName;
-			this.formalsList.formalNumber=0; // TODO: maybe it should be 4 or something like this because the first formal is "this"
+			this.formalsList.formalFrameOffset = AST_Node.FRAME_OFFSET_OF_FIRST_FORMAL; 
 			this.formalsList.createIR();
 		}
 		
