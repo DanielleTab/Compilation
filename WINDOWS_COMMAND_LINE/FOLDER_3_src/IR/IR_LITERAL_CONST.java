@@ -16,7 +16,7 @@ public class IR_LITERAL_CONST extends IR_LITERAL{
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		CodeGen_Temp register = TempGenerator.getAndAddNewTemp();
-		AssemblyFilePrinter.getInstance(null).append(String.format("li %s,%d%s", 
+		AssemblyFilePrinter.getInstance(null).write(String.format("li %s,%d%s", 
 				register.getName(),constInteger,AssemblyFilePrinter.NEW_LINE_STRING));
 		return register;
 		

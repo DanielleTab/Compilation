@@ -7,7 +7,7 @@ public class SymbolTable {
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
 	public static final String MAIN_FUNC_SYMBOL_NAME = "main";
 	public static final int ADDRESS_SIZE=4;
-
+	public static String mainFunctionLabel = null; 
 	/*
 	 *  The caller responsibility is to check whether the symbol name does exist
 	 *  in the predeccessors or locally in the hash table. 

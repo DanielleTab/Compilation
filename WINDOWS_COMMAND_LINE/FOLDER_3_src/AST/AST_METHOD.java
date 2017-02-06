@@ -18,7 +18,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	public AST_TYPE returnArgumentType;
 	public AST_FORMALS_LIST formalsList;
 	public AST_STMT_LIST body;
-
+	public boolean isMainFunc = false;
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
@@ -99,6 +99,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 				DebugPrint.print("AST_METHOD.validate: Invalid main.");
 				return null;
 			}
+			this.isMainFunc = true;
 		}
 		
 		return new ICTypeInfo();
@@ -135,8 +136,15 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		SymbolTable.closeCurrentScope();
 		
+		// save the main label for the code generation process.
+		if(isMainFunc)
+		{
+			SymbolTable.mainFunctionLabel = String.format("%s_%s", this.currentClassName,this.currentFunctionName);
+		}
+		
 		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),
 							 bodyStmtList, 
-							 methodSymbolInfo.frameSize);
+							 methodSymbolInfo.frameSize,
+							 isMainFunc);
 	}
 }

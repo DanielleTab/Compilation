@@ -18,6 +18,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		this.newExpClassName=newExpClassName;
 	}
 	
+	// initiates all fields to null.
 	public void generateNullActionForFields(ClassSymbolInfo classInfo) throws IOException
 	{
 		StringNLBuilder printed = new StringNLBuilder();
