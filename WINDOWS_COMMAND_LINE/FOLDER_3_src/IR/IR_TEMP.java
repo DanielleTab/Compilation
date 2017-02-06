@@ -20,12 +20,11 @@ public class IR_TEMP extends IR_EXP{
 		
 		if(tempType==TempType.fp)
 		{
-			printed.appendNL(String.format("lw %s,0($fp)",newTemp.getName()));			
+			printed.appendNL(String.format("mov %s,$fp",newTemp.getName()));			
 		}
-		else // tempType==TempType.temp
-		{
-			printed.appendNL(String.format("lw %s,0($temp)",newTemp.getName()));
-		}
+		
+		// TODO: add another cases of tempTypes if needed.
+	
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 
 		return newTemp;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CodeGen.CodeGen_Temp;
+import SemanticAnalysis.IRExpListGenerateCodeException;
 
 public class IR_EXP_LIST extends IR_EXP
 {
@@ -16,8 +17,15 @@ public class IR_EXP_LIST extends IR_EXP
 		this.tail=tail;
 	}
 	
+	/*
+	 * We shouldn't call this function. it is here only because it's an abstract function.
+	 */
+	public CodeGen_Temp generateCode() throws IRExpListGenerateCodeException
+	{
+		throw new IRExpListGenerateCodeException();
+	}
 	
-	public List<CodeGen_Temp> generateCodeList() throws IOException
+	public List<CodeGen_Temp> generateCodeList() throws IOException, IRExpListGenerateCodeException
 	{
 		List<CodeGen_Temp> argsList = new ArrayList<CodeGen_Temp>();
 		argsList.add(head.generateCode());
