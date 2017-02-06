@@ -141,7 +141,7 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 		int variableOffset = AST_Node.FRAME_OFFSET_OF_FIRST_LOCAL - functionInfo.frameSize;
 		VariableSymbolInfo variableInfo = new VariableSymbolInfo(varName, varICTypeInfo, variableOffset, false);
 		SymbolTable.insertNewSymbol(variableInfo);
-		functionInfo.frameSize += varICTypeInfo.getTypeSize(); 
+		functionInfo.frameSize += SymbolTable.ADDRESS_SIZE; 
 		
 		// Converting the variable declaration into an assignment, and creating its IR node
 		AST_STMT_ASSIGN assignment = convertToAssignment();

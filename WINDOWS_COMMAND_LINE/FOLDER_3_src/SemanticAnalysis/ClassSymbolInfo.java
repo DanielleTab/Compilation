@@ -80,7 +80,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 			this.fields=new ArrayList<VariableSymbolInfo>();
 		}
 		this.fields.add(field);
-		this.size+=field.variableType.getTypeSize();
+		this.size+= SymbolTable.ADDRESS_SIZE;
 	}
 
 	public int getMainFunctionsCount()
