@@ -22,9 +22,10 @@ public class IR_STMT_RETURN extends IR_STMT
 	}
 	
 	/**
-	 * @brief	Generates code for the return statement by generating code
-	 * 			for the returned expression, and then generating code which
-	 * 			moves that value into v0 and jumps to the method epilog.
+	 * @brief	Generates code for the return statement.
+	 * 			If some expression is being returned, first generates code which
+	 * 			calculates that expression and moves the result into v0.
+	 * 			In any case, finishes by generating code which jumps to the method epilog.
 	 */
 	@Override
 	public void generateCode() throws IOException
