@@ -22,33 +22,32 @@ public class CodeGen_Utils {
 		printed.appendNL("addi $sp,$sp,4");
 	}
 	
-	public static CodeGen_Temp codeGen_malloc(int allocationSize) throws IOException
+	/* 
+	 * @param	printed - the malloc instructions will be appended to this string builder. 
+	 *  */
+	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,int allocationSize) throws IOException
 	{
-		AssemblyFilePrinter.getInstance(null).write(String.format("li $a0 %d%s",allocationSize, AssemblyFilePrinter.NEW_LINE_STRING));
-		return common_codeGen_malloc();
+		printed.appendNL(String.format("li $a0 %d",allocationSize));
+		return common_codeGen_malloc(printed);
 	}
 	
-	public static CodeGen_Temp codeGen_malloc(CodeGen_Temp allocationSize) throws IOException
+	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,CodeGen_Temp allocationSize) throws IOException
 	{
-		AssemblyFilePrinter.getInstance(null).write(String.format("mov $a0 %s%s",allocationSize.getName(), AssemblyFilePrinter.NEW_LINE_STRING));
-		return common_codeGen_malloc();
+		printed.appendNL(String.format("mov $a0 %s",allocationSize.getName()));
+		return common_codeGen_malloc(printed);
 
 	}
 	
 	// The allocated space address is in $v0
-	private static CodeGen_Temp common_codeGen_malloc() throws IOException
+	private static CodeGen_Temp common_codeGen_malloc(StringNLBuilder printed) throws IOException
 	{
-		StringNLBuilder printed = new StringNLBuilder();
 		// $a0 is the argument to the syscall
 		// $v0 = 9 is the syscall number for memory allocation on the heap.
 		printed.appendNL( "li $v0 9");
 		printed.appendNL("syscall");
 		CodeGen_Temp resultAddress = TempGenerator.getAndAddNewTemp();
 		// the address is in v0 after syscall execution.
-		printed.appendNL(String.format("mov %s,$v0",resultAddress.getName()));
-		
-		AssemblyFilePrinter.getInstance(null).write(printed.toString());
-		
+		printed.appendNL(String.format("mov %s,$v0",resultAddress.getName()));		
 		return resultAddress;
 	}	
 }

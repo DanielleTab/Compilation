@@ -17,7 +17,15 @@ public class IR_EXP_CALL extends IR_EXP{
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		this.call.generateCode();
-		// TODO: Move the result in v0 to a new temp and return the temp. 
-		return null;
+		
+		CodeGen_Temp resultTemp = TempGenerator.getAndAddNewTemp();
+		StringNLBuilder printed = new StringNLBuilder();
+		
+		// Note: it should work also for void function. $v0 will keep an old and irrelevant value,
+		// but we have already validate a well use of the returned value in the semantic analysis.
+		printed.appendNL(String.format("mov %s,$v0",resultTemp.getName()));
+		
+		AssemblyFilePrinter.getInstance(null).write(printed.toString());
+		return resultTemp;
 	}
 }

@@ -34,9 +34,9 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		ClassSymbolInfo classInfo = SymbolTable.getClassSymbolInfo(newExpClassName);
-		CodeGen_Temp addressOnHeap = CodeGen_Utils.codeGen_malloc(classInfo.size);
-		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
 		StringNLBuilder printed = new StringNLBuilder();
+		CodeGen_Temp addressOnHeap = CodeGen_Utils.codeGen_malloc(printed,classInfo.size);
+		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
 		printed.appendNL(String.format("la %s, %s", newTemp.getName(),classInfo.getVFTableLabel()));
 		printed.appendNL(String.format("sw %s,%s", newTemp.getName(),addressOnHeap.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
