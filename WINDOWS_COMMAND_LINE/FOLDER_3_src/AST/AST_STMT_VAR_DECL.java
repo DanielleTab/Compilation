@@ -1,7 +1,7 @@
 package AST;
 
 import IR.IR_Node;
-import IR.IR_STMT_LOAD;
+import IR.IR_STMT_STORE;
 import SemanticAnalysis.ClassOrFunctionNamesNotInitializedExecption;
 import SemanticAnalysis.FunctionSymbolInfo;
 import SemanticAnalysis.ICTypeInfo;
@@ -134,7 +134,7 @@ public class AST_STMT_VAR_DECL extends AST_STMT
 	 * 			At last, converts the statement into an assignment statement and creates its IR node.
 	 */
 	@Override
-	public IR_STMT_LOAD createIR() throws SemanticAnalysisException 
+	public IR_STMT_STORE createIR() throws SemanticAnalysisException 
 	{
 		// Adding the variable to the symbol table
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
