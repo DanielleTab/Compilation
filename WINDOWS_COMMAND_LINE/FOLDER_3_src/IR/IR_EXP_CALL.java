@@ -17,8 +17,7 @@ public class IR_EXP_CALL extends IR_EXP{
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		this.call.generateCode();
-		
-		// TODO: decide what we should return in this generateCode.
+		// TODO: Move the result in v0 to a new temp and return the temp. 
 		return null;
 	}
 }
