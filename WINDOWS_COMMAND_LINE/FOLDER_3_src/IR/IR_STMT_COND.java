@@ -1,5 +1,7 @@
 package IR;
 
+import java.io.IOException;
+
 public class IR_STMT_COND extends IR_STMT{
 	public IR_EXP cond;
 	public IR_STMT body;
@@ -14,6 +16,13 @@ public class IR_STMT_COND extends IR_STMT{
 		this.cond=cond;
 		this.body=body;
 		this.label=label;
+	}
+	
+	// TODO: Implement.
+	@Override
+	public void generateCode() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

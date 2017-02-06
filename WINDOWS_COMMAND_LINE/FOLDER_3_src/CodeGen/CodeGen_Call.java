@@ -13,7 +13,7 @@ import IR.IR_LITERAL_CONST;
 import IR.IR_LITERAL_STRING;
 import IR.IR_METHOD;
 import IR.IR_METHOD_LIST;
-import IR.IR_STMT_MOVE;
+import IR.IR_STMT_LOAD;
 import IR.IR_STMT_WHILE;
 import IR.IR_TEMP;
 
@@ -97,7 +97,7 @@ public class CodeGen_Call {
 	}
 	
 	
-	public CodeGen_Temp codeGen_move(IR_STMT_MOVE moveStmt)
+	public CodeGen_Temp codeGen_move(IR_STMT_LOAD moveStmt)
 	{
 		return null;
 	}
