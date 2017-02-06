@@ -59,7 +59,7 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 		printed.appendNL(String.format("addi %s,%s,1", 
 									   offsetTemp.getName(), 
 									   offsetTemp.getName()));
-		// TODO: Can we do muli? (Does it exist in Oren's lexer?)
+		// TODO: Replace the 'muli' with something else.
 		printed.appendNL(String.format("muli %s,%s,4", 
 									   offsetTemp.getName(),
 									   offsetTemp.getName()));
