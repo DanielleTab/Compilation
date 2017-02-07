@@ -12,7 +12,7 @@ public class StringCollector {
 	public static String addStringAndLabelMapping(String str)
 	{
 		int stringNumber = LabelAndStringMappings.size();
-		String stringLabel = String.format("Label_%d_string_%s",AssemblyFilePrinter.addLabelIndex(),str);
+		String stringLabel = String.format("String_%d",AssemblyFilePrinter.addLabelIndex());
 		LabelAndStringMappings.add(new Pair<String,String>(stringLabel,str));
 		return stringLabel;
 	}
@@ -20,10 +20,11 @@ public class StringCollector {
 	public static void printStringsToAssembly() throws IOException
 	{
 		StringNLBuilder printed = new StringNLBuilder();
+		printed.appendNL(".data");
 		for(int i=0;i<LabelAndStringMappings.size();i++)
 		{
 			Pair<String,String> currPair = LabelAndStringMappings.get(i);
-			printed.appendNL(String.format("%s: %s", currPair.left,currPair.right));
+			printed.appendNL(String.format("%s: .asciiz \"%s\"", currPair.left,currPair.right));
 		}
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());;
 	}
