@@ -2,22 +2,25 @@ class A
 {
 	void funca()
 	{
-	
+		string a = "aaaaa";
 	}
 	void main(string[] args)
 	{
+		string c = "ccccc";
 	}
 	void funcb()
 	{
-	
+		string k = "kkkkk";
 	}
 }
 class B extends A
 {
 	void funca()
 	{
+		string h = "hhhhh";
 	}
 	void funcc()
 	{
+		string p = "ppppp";
 	}
 }
