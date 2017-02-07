@@ -62,7 +62,7 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 									   offsetTemp.getName()));
 		
 		// multiply offsetTemp by 4.
-		printed.appendNL(String.format("sw %s,4", registerForFour.getName()));
+		printed.appendNL(String.format("li %s,4", registerForFour.getName()));
 		printed.appendNL(String.format("mul %s,%s,%s", 
 									   offsetTemp.getName(),
 									   offsetTemp.getName(),
