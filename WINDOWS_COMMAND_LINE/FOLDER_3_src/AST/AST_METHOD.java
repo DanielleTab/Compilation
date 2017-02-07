@@ -149,6 +149,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		return new IR_METHOD(new IR_LABEL(methodSymbolInfo.functionLabel),
 							 bodyStmtList, 
 							 methodSymbolInfo.frameSize,
-							 isMainFunc);
+							 isMainFunc,
+							 currentFunctionName.equals("printInt"));
 	}
 }

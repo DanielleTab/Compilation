@@ -1,26 +1,11 @@
-class A
+
+class Print 
 {
-	void funca()
+	void printInt(int i) 
 	{
-		string a = "aaaaa";
+	i = i+1;
 	}
 	void main(string[] args)
 	{
-		string c = "ccccc";
-	}
-	void funcb()
-	{
-		string k = "kkkkk";
-	}
-}
-class B extends A
-{
-	void funca()
-	{
-		string h = "hhhhh";
-	}
-	void funcc()
-	{
-		string p = "ppppp";
 	}
 }
