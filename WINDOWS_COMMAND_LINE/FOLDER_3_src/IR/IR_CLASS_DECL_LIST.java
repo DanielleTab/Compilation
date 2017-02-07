@@ -19,7 +19,10 @@ public class IR_CLASS_DECL_LIST extends IR_Node {
 	public void generateCode() throws IOException
 	{
 		this.head.generateCode();
-		this.tail.generateCode();
+		if(this.tail != null)
+		{
+			this.tail.generateCode();
+		}
 	}
 	
 }

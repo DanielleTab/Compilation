@@ -13,6 +13,7 @@ public class FunctionSymbolInfo extends SymbolInfo{
 	public int offset=0;
 	public int currentIfIndex = 0;
 	public int currentWhileIndex = 0;
+	public boolean isMainFunc = false;
 	
 	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes)
 	{

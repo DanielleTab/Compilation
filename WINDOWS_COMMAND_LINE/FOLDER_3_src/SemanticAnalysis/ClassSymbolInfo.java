@@ -62,15 +62,20 @@ public class ClassSymbolInfo extends SymbolInfo{
 			this.methods=new ArrayList<FunctionSymbolInfo>();
 		}
 		this.methods.add(method);
-		if(!this.virtualFunctionsOrder.contains(method.symbolName))
-		{
-			// We have to find the offset of the new inserted function before add it to the list.
-			// each function in the list is 32 bit (of address).
-			method.offset=this.virtualFunctionsOrder.size()*SymbolTable.ADDRESS_SIZE;
-			this.virtualFunctionsOrder.add(method.symbolName);
-		}
 		
-		this.virtualFunctionsTable.put(method.symbolName, this.symbolName);
+		// main function does not appear in the vft because it's basically a static method
+		if(!method.isMainFunc)
+		{
+			if(!this.virtualFunctionsOrder.contains(method.symbolName))
+			{
+				// We have to find the offset of the new inserted function before add it to the list.
+				// each function in the list is 32 bit (of address).
+				method.offset=this.virtualFunctionsOrder.size()*SymbolTable.ADDRESS_SIZE;
+				this.virtualFunctionsOrder.add(method.symbolName);
+			}
+			
+			this.virtualFunctionsTable.put(method.symbolName, this.symbolName);
+		}
 	}
 	
 	public void addField(VariableSymbolInfo field)

@@ -9,7 +9,7 @@ import java.io.PrintStream;
 
 public class Tester 
 {
-	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//";
+	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//";
 	public static final String OUTPUT_FILE_NAME = "output.txt";
 	public static final String TESTER_OUTPUT_FILE_NAME = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//tester_output.txt";
 	public static final String OK_STRING = "OK";
@@ -80,7 +80,7 @@ public class Tester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		System.setOut(outputWriter);
 		
-		File folder = new File("WINDOWS_COMMAND_LINE//FOLDER_10_tester");
+		File folder = new File("WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//");
 		File[] folderFiles = folder.listFiles();
 
 	    for (int i = 0; i < folderFiles.length; i++) 

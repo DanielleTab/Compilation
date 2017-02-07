@@ -108,9 +108,9 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	public IR_METHOD createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
-
-		SymbolTable.addMethodToClass(currentClassName, new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null));
 		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
+		methodSymbolInfo.isMainFunc = this.isMainFunc;
+		SymbolTable.addMethodToClass(currentClassName, methodSymbolInfo);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		
 		SymbolTable.createNewScope(); // !!the formals are like local variables of the method.
@@ -139,7 +139,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		// save the main label for the code generation process.
 		if(isMainFunc)
 		{
-			SymbolTable.mainFunctionLabel = String.format("%s_%s", this.currentClassName,this.currentFunctionName);
+			SymbolTable.mainFunctionLabel = String.format("Label_%s_%s", this.currentClassName,this.currentFunctionName);
 		}
 		
 		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),
