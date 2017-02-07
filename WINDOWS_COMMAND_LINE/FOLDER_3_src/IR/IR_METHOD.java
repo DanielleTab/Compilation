@@ -55,10 +55,5 @@ public class IR_METHOD extends IR_Node
 		}
 		AssemblyFilePrinter.getInstance(null).write(String.format("%s%s:%s", this.label.name, EPILOG_LABEL_SUFFIX, System.lineSeparator()));
 		this.printEpilog();
-		if(this.isMainFunc)
-		{
-			// if the main is completed without any error, we want to jmp to the end of the program.
-			AssemblyFilePrinter.getInstance(null).write(String.format("j %s%s", END_LABEL_NAME, System.lineSeparator()));	
-		}
 	}
 }

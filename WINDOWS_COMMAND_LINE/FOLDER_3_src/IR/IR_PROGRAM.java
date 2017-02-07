@@ -22,14 +22,16 @@ public class IR_PROGRAM extends IR_Node {
 	}
 
 	/*
-	 * The main wrapper pushes this = null to the stack and then jmp to the real main function.
+	 * The main wrapper pushes this = null to the stack, call the real main function
+	 * and then jump to the end label.
 	 */
 	public void writeMainWrapper(StringNLBuilder printed) throws IOException
 	{
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Utils.codeGen_Push(printed,zeroTemp.getName());
-		printed.appendNL(String.format("j %s", SymbolTable.mainFunctionLabel));
+		printed.appendNL(String.format("jal %s", SymbolTable.mainFunctionLabel));
+		printed.appendNL(String.format("j %s", END_LABEL_NAME));
 	}
 	
 	/*
