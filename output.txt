@@ -1,81 +1,81 @@
-jmp Label_main_wrapper
-Label_Label_A_func1:
+j Label_3_main_wrapper
+Label_4_A_funca:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
 sw $fp,0($sp)
 mov $fp, $sp
-Label_Label_A_func1_epilog:
+Label_4_A_funca_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-Label_Label_A_main:
+Label_5_A_main:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
 sw $fp,0($sp)
 mov $fp, $sp
-Label_Label_A_main_epilog:
+Label_5_A_main_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-jmp Label_END
-Label_Label_A_func2:
+j Label_2_END
+Label_6_A_funcb:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
 sw $fp,0($sp)
 mov $fp, $sp
-Label_Label_A_func2_epilog:
+Label_6_A_funcb_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-Label_Label_B_func1:
+Label_7_B_funca:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
 sw $fp,0($sp)
 mov $fp, $sp
-Label_Label_B_func1_epilog:
+Label_7_B_funca_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-Label_Label_B_func3:
+Label_8_B_funcc:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
 sw $fp,0($sp)
 mov $fp, $sp
-Label_Label_B_func3_epilog:
+Label_8_B_funcc_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-Label_main_wrapper:
+Label_3_main_wrapper:
 addi $sp,$sp,-4
 sw Temp_0,0($sp)
-jmp Label_A_main
-Label_ERROR:
+j Label_5_A_main
+Label_1_ERROR:
 li $a0,666
 li $v0,1
 syscall
-jmp Label_END
-Label_END:
+j Label_2_END
+Label_2_END:
 li $v0,10
 syscall
-VFtableA: .word A_func1,A_func2
-VFtableB: .word B_func1,A_func2,B_func3
+VFTable_A: .word A_funca,A_funcb
+VFTable_B: .word B_funca,A_funcb,B_funcc

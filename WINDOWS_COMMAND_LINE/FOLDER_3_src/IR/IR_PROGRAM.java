@@ -11,7 +11,7 @@ import SemanticAnalysis.SymbolTable;
 
 public class IR_PROGRAM extends IR_Node {
 
-	private static final String MAIN_WRAPPER_LABEL = "Label_main_wrapper";
+	private static final String MAIN_WRAPPER_LABEL =String.format("Label_%d_main_wrapper",AssemblyFilePrinter.addLabelIndex());
 	// fields
 	public IR_CLASS_DECL_LIST classDeclList;
 	
@@ -29,7 +29,7 @@ public class IR_PROGRAM extends IR_Node {
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Utils.codeGen_Push(printed,zeroTemp.getName());
-		printed.appendNL(String.format("jmp %s", SymbolTable.mainFunctionLabel));
+		printed.appendNL(String.format("j %s", SymbolTable.mainFunctionLabel));
 	}
 	
 	/*
@@ -41,7 +41,7 @@ public class IR_PROGRAM extends IR_Node {
 		printed.appendNL("li $a0,666");
 		printed.appendNL("li $v0,1"); // the syscall number for printing.
 		printed.appendNL("syscall");
-		printed.appendNL(String.format("jmp %s", END_LABEL_NAME));
+		printed.appendNL(String.format("j %s", END_LABEL_NAME));
 	}
 	
 	/*
@@ -57,7 +57,7 @@ public class IR_PROGRAM extends IR_Node {
 	public void generateCode() throws IOException 
 	{
 		StringNLBuilder printed = new StringNLBuilder();
-		printed.appendNL(String.format("jmp %s", MAIN_WRAPPER_LABEL));
+		printed.appendNL(String.format("j %s", MAIN_WRAPPER_LABEL));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		this.classDeclList.generateCode();
 		printed = new StringNLBuilder();

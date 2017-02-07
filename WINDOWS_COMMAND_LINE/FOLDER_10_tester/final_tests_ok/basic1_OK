@@ -1,23 +1,23 @@
 class A
 {
-	void func1()
+	void funca()
 	{
 	
 	}
 	void main(string[] args)
 	{
 	}
-	void func2()
+	void funcb()
 	{
 	
 	}
 }
 class B extends A
 {
-	void func1()
+	void funca()
 	{
 	}
-	void func3()
+	void funcc()
 	{
 	}
 }

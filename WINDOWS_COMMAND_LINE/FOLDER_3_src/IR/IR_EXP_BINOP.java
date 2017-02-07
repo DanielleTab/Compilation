@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
+import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 
@@ -112,9 +113,9 @@ public class IR_EXP_BINOP extends IR_EXP {
 			 * Label_binop_ok_LABELNUMBER: addi result,result,1 # result = result+1
 			 * Label_binop_end_LABELNUMBER:
 			 */
-			int conditionLabelNumber = AssemblyFilePrinter.addLabelIndex();
-			String branchLabelOK = String.format("Label_binop_ok_%d", conditionLabelNumber);
-			String branchLabelEnd =  String.format("Label_binop_end_%d", conditionLabelNumber);
+			
+			String branchLabelOK = String.format("Label_%d_binop_ok", AssemblyFilePrinter.addLabelIndex());
+			String branchLabelEnd =  String.format("Label_%d_binop_end", AssemblyFilePrinter.addLabelIndex());
 			printed.appendNL(String.format("li %s,0",result.getName()));
 			printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),t1.getName(), t2.getName(), branchLabelOK));
 			printed.appendNL(String.format("%s %s,%s,%s", getOppositeConditionalOperation(),t1.getName(),t2.getName(),branchLabelEnd));

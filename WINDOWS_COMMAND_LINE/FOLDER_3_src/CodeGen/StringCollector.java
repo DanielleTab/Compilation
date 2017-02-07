@@ -12,7 +12,7 @@ public class StringCollector {
 	public static String addStringAndLabelMapping(String str)
 	{
 		int stringNumber = LabelAndStringMappings.size();
-		String stringLabel = String.format("Label_string_%d",stringNumber);
+		String stringLabel = String.format("Label_%d_string_%s",AssemblyFilePrinter.addLabelIndex(),str);
 		LabelAndStringMappings.add(new Pair<String,String>(stringLabel,str));
 		return stringLabel;
 	}

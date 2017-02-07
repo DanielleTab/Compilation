@@ -47,19 +47,18 @@ public class IR_METHOD extends IR_Node
 	
 	public void generateCode() throws IOException
 	{
-		// TODO: Doesn't the label name already start with 'Label_' prefix?
-		AssemblyFilePrinter.getInstance(null).write(String.format("Label_%s:%s", this.label.name, System.lineSeparator()));
+		this.label.generateCode();
 		this.printProlog();
 		if (body != null)
 		{
 			body.generateCode();	
 		}
-		AssemblyFilePrinter.getInstance(null).write(String.format("Label_%s%s:%s", this.label.name, EPILOG_LABEL_SUFFIX, System.lineSeparator()));
+		AssemblyFilePrinter.getInstance(null).write(String.format("%s%s:%s", this.label.name, EPILOG_LABEL_SUFFIX, System.lineSeparator()));
 		this.printEpilog();
 		if(this.isMainFunc)
 		{
 			// if the main is completed without any error, we want to jmp to the end of the program.
-			AssemblyFilePrinter.getInstance(null).write(String.format("jmp %s%s", END_LABEL_NAME, System.lineSeparator()));	
+			AssemblyFilePrinter.getInstance(null).write(String.format("j %s%s", END_LABEL_NAME, System.lineSeparator()));	
 		}
 	}
 }

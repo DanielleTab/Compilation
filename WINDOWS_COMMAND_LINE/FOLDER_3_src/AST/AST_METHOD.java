@@ -1,5 +1,7 @@
 package AST;
 
+import CodeGen.AssemblyFilePrinter;
+import CodeGen.CodeGen_Utils;
 import IR.IR_LABEL;
 import IR.IR_METHOD;
 import IR.IR_STMT_LIST;
@@ -136,13 +138,15 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		SymbolTable.closeCurrentScope();
 		
+		String functionLabel = String.format("Label_%d_%s_%s",AssemblyFilePrinter.addLabelIndex(), this.currentClassName,this.currentFunctionName);
+		
 		// save the main label for the code generation process.
 		if(isMainFunc)
 		{
-			SymbolTable.mainFunctionLabel = String.format("Label_%s_%s", this.currentClassName,this.currentFunctionName);
+			SymbolTable.mainFunctionLabel = functionLabel;
 		}
 		
-		return new IR_METHOD(new IR_LABEL(String.format("%s_%s", this.currentClassName,this.currentFunctionName)),
+		return new IR_METHOD(new IR_LABEL(functionLabel),
 							 bodyStmtList, 
 							 methodSymbolInfo.frameSize,
 							 isMainFunc);
