@@ -1,7 +1,6 @@
 package AST;
 
 import IR.IR_EXP;
-import IR.IR_LABEL;
 import IR.IR_STMT;
 import IR.IR_STMT_IF;
 import SemanticAnalysis.FunctionSymbolInfo;
@@ -37,9 +36,9 @@ public class AST_STMT_IF extends AST_STMT_COND
 		
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
 		int ifIndex = functionInfo.getNewIfIndex();
-		IR_LABEL labelIR = new IR_LABEL(String.format("%s_if_%d", getLabelPrefix(), ifIndex));
+		String labelName = String.format("%s_if_%d", getLabelPrefix(), ifIndex);
 		
-		return new IR_STMT_IF(condIR, bodyIR, labelIR);
+		return new IR_STMT_IF(condIR, bodyIR, labelName);
 	}
 	
 }
