@@ -56,8 +56,7 @@ public class AssemblyFilePrinter {
 		Hashtable<String,String> virtualFunctionsTable = classSymbolInfo.virtualFunctionsTable;
 		for(int i=0;i<virtualFunctionsOrder.size();i++)
 		{
-			printed.append(String.format("%s_%s", virtualFunctionsTable.get(virtualFunctionsOrder.get(i)), 
-								virtualFunctionsOrder.get(i)));
+			printed.append(virtualFunctionsTable.get(virtualFunctionsOrder.get(i)));
 			
 			// add comma if it's not the last element in the list
 			if(i!=virtualFunctionsOrder.size()-1)

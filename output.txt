@@ -77,5 +77,5 @@ j Label_2_END
 Label_2_END:
 li $v0,10
 syscall
-VFTable_A: .word A_funca,A_funcb
-VFTable_B: .word B_funca,A_funcb,B_funcc
+VFTable_A: .word Label_4_A_funca,Label_6_A_funcb
+VFTable_B: .word Label_7_B_funca,Label_6_A_funcb,Label_8_B_funcc

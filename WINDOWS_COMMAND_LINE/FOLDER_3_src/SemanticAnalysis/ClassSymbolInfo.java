@@ -11,7 +11,7 @@ import CodeGen.CodeGen_Temp;
 
 public class ClassSymbolInfo extends SymbolInfo{
 	public List<String> virtualFunctionsOrder;
-	public Hashtable<String,String> virtualFunctionsTable; // <key, value>: <function name,class name>
+	public Hashtable<String,String> virtualFunctionsTable; // <key, value>: <function name,functionLabel>
 	//public List<String> functionNamesInVFT; // TODO: This seems unused.
 	public String extendedClassName;
 	public List<VariableSymbolInfo> fields;
@@ -65,7 +65,8 @@ public class ClassSymbolInfo extends SymbolInfo{
 		this.methods.add(method);
 		
 		// main function does not appear in the vft because it's basically a static method
-		if(!method.isMainFunc)
+		// method.functionLabel == null if we are in the validation process, so we don't want to build now the vft.
+		if((!method.isMainFunc) && (method.functionLabel!=null))
 		{
 			if(!this.virtualFunctionsOrder.contains(method.symbolName))
 			{
@@ -75,7 +76,7 @@ public class ClassSymbolInfo extends SymbolInfo{
 				this.virtualFunctionsOrder.add(method.symbolName);
 			}
 			
-			this.virtualFunctionsTable.put(method.symbolName, this.symbolName);
+			this.virtualFunctionsTable.put(method.symbolName, method.functionLabel);
 		}
 	}
 	

@@ -52,6 +52,7 @@ public class Main
 				
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
 				// builds ir tree.
+				SymbolTable.hashTable.clear();
 				IR_PROGRAM irNode = astNode.createIR();
 				
 				// prints the strings before use them in the generate code.

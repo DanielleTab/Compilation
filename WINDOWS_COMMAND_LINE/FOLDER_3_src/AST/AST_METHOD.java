@@ -112,6 +112,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		assertClassAndFunctionNamesInitialized();
 		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		methodSymbolInfo.isMainFunc = this.isMainFunc;
+		methodSymbolInfo.functionLabel = String.format("Label_%d_%s_%s", AssemblyFilePrinter.addLabelIndex(),currentClassName,currentFunctionName);
 		SymbolTable.addMethodToClass(currentClassName, methodSymbolInfo);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		
@@ -138,15 +139,14 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		}
 		SymbolTable.closeCurrentScope();
 		
-		String functionLabel = String.format("Label_%d_%s_%s",AssemblyFilePrinter.addLabelIndex(), this.currentClassName,this.currentFunctionName);
 		
 		// save the main label for the code generation process.
 		if(isMainFunc)
 		{
-			SymbolTable.mainFunctionLabel = functionLabel;
+			SymbolTable.mainFunctionLabel = methodSymbolInfo.functionLabel;
 		}
 		
-		return new IR_METHOD(new IR_LABEL(functionLabel),
+		return new IR_METHOD(new IR_LABEL(methodSymbolInfo.functionLabel),
 							 bodyStmtList, 
 							 methodSymbolInfo.frameSize,
 							 isMainFunc);

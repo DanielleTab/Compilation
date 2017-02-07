@@ -47,14 +47,14 @@ public class Tester
 		compareToExpectedOutput(expectedOutput);
 	}
 	
-	static public void processFile(String inputFilePath)
+	static public void processFile(String inputFilePath) throws Exception
 	{
 		if (inputFilePath.endsWith("method_multipleStringArguments_OK"))
 		{
 			System.out.println("now!");
 		}
-		try
-		{
+	//	try
+	//	{
 			if (inputFilePath.endsWith(OK_STRING))
 			{
 				testSpecificFile(inputFilePath, OK_STRING);
@@ -63,8 +63,8 @@ public class Tester
 			{
 				testSpecificFile(inputFilePath, FAIL_STRING);	
 			}	
-		}
-		catch (Exception e) 
+		//}
+		/*catch (Exception e) 
 		{
 			System.setOut(outputWriter);
 			System.out.println("Failed: Caught an exception: ");
@@ -72,10 +72,10 @@ public class Tester
 			//e.printStackTrace();
 			System.out.println();
 			failedNum++;
-		}
+		}*/
 	}
 	
-	static public void main(String argv[]) throws FileNotFoundException 
+	static public void main(String argv[]) throws Exception 
 	{
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		System.setOut(outputWriter);

@@ -15,6 +15,8 @@ public class FunctionSymbolInfo extends SymbolInfo{
 	public int currentWhileIndex = 0;
 	public boolean isMainFunc = false;
 	
+	public String functionLabel;
+	
 	public FunctionSymbolInfo(String symbolName, ICTypeInfo returnType,List<ICTypeInfo> argumentsTypes)
 	{
 		super(symbolName);
