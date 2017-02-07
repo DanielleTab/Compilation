@@ -45,6 +45,7 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 		// Checking that the index doesn't exceed array's bounds
 		CodeGen_Temp offsetTemp = index.generateCode();
 		CodeGen_Temp arrayLengthTemp = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp registerForFour = TempGenerator.getAndAddNewTemp();
 		
 		printed = new StringNLBuilder();
 		printed.appendNL(String.format("lw %s,0(%s)", 
@@ -59,10 +60,14 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 		printed.appendNL(String.format("addi %s,%s,1", 
 									   offsetTemp.getName(), 
 									   offsetTemp.getName()));
-		// TODO: Replace the 'muli' with something else.
-		printed.appendNL(String.format("muli %s,%s,4", 
+		
+		// multiply offsetTemp by 4.
+		printed.appendNL(String.format("sw %s,4", registerForFour.getName()));
+		printed.appendNL(String.format("mul %s,%s,%s", 
 									   offsetTemp.getName(),
-									   offsetTemp.getName()));
+									   offsetTemp.getName(),
+									   registerForFour.getName()));
+		
 		printed.appendNL(String.format("add %s,%s,%s", 
 									   resultTemp.getName(),
 									   arrayBase));
