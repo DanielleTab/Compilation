@@ -9,7 +9,7 @@ public class CodeGen_Utils {
 	 *  */
 	public static void codeGen_Push(StringNLBuilder printed, String pushedObject) throws IOException
 	{
-		printed.appendNL("addi $sp,$sp,-4%s");
+		printed.appendNL("addi $sp,$sp,-4");
 		printed.appendNL(String.format("sw %s,0($sp)", pushedObject));
 	}
 	

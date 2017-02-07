@@ -1,1 +1,81 @@
-FAIL
+jmp Label_main_wrapper
+Label_Label_A_func1:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+Label_Label_A_func1_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_Label_A_main:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+Label_Label_A_main_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+jmp Label_END
+Label_Label_A_func2:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+Label_Label_A_func2_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_Label_B_func1:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+Label_Label_B_func1_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_Label_B_func3:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+Label_Label_B_func3_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_main_wrapper:
+addi $sp,$sp,-4
+sw Temp_0,0($sp)
+jmp Label_A_main
+Label_ERROR:
+li $a0,666
+li $v0,1
+syscall
+jmp Label_END
+Label_END:
+li $v0,10
+syscall
+VFtableA: .word A_func1,A_func2
+VFtableB: .word B_func1,A_func2,B_func3

@@ -18,6 +18,9 @@ public class IR_METHOD_LIST extends IR_Node
 	public void generateCode() throws IOException
 	{
 		head.generateCode();
-		tail.generateCode();
+		if(this.tail!=null)
+		{
+			tail.generateCode();
+		}
 	}
 }

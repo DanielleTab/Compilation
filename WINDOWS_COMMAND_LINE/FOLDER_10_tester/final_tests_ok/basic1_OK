@@ -1,0 +1,23 @@
+class A
+{
+	void func1()
+	{
+	
+	}
+	void main(string[] args)
+	{
+	}
+	void func2()
+	{
+	
+	}
+}
+class B extends A
+{
+	void func1()
+	{
+	}
+	void func3()
+	{
+	}
+}

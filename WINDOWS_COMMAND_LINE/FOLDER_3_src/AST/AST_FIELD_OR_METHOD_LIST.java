@@ -37,24 +37,55 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 	public IR_METHOD_LIST createIR() throws SemanticAnalysisException
 	{
 		assertClassNameInitialized();
+		
+		if(this.tail!=null)
+		{
+			this.tail.currentClassName = this.currentClassName;
+		}
+		
 		if(this.head instanceof AST_METHOD)
 		{
 			AST_METHOD astMethod=(AST_METHOD)this.head;
 			astMethod.currentClassName = this.currentClassName;
 			IR_METHOD temp=astMethod.createIR();
-			return new IR_METHOD_LIST(temp,tail.createIR());
+			
+			IR_METHOD_LIST tailCreateIRResult =  null;
+			
+			if(tail!=null)
+			{
+				tailCreateIRResult = tail.createIR();
+			}
+				
+			return new IR_METHOD_LIST(temp,tailCreateIRResult);
 		}
 		else // if the head is not a method, we want to iterate over the list until the first method.
 		{
 			AST_FIELD_OR_METHOD_LIST iterator=tail;
-			while(iterator.head instanceof AST_FIELD)
+			while((iterator!=null)&&(iterator.head instanceof AST_FIELD))
 			{
 				AST_FIELD astField = (AST_FIELD)iterator.head;
 				astField.currentClassName = this.currentClassName;
 				astField.createIR();
 				iterator=iterator.tail;
 			}
-			return new IR_METHOD_LIST(((AST_METHOD) iterator.head).createIR(), iterator.tail.createIR());
+			
+			IR_METHOD headCreateIRResult = null;
+			IR_METHOD_LIST tailCreateIRResult = null;
+			
+			if(iterator!=null)
+			{
+				if(iterator.head!=null)
+				{
+					headCreateIRResult = ((AST_METHOD) iterator.head).createIR();
+					if(iterator.tail!=null)
+					{
+						tailCreateIRResult =  iterator.tail.createIR();
+					}
+				}
+			}
+			
+			return new IR_METHOD_LIST(headCreateIRResult, tailCreateIRResult);
+			
 		}
 	}
 }
