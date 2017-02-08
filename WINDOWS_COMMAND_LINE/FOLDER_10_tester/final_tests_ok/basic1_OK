@@ -1,9 +1,7 @@
-
 class Print 
 {
 	void printInt(int i) 
 	{
-	
 	}
 }
 
@@ -24,17 +22,16 @@ class Rectest
 			b=b-1;
 			prevb();
 		}
+		p.printInt(0);
 	}
 }
 
 class Mainclass
 {
-
 	void main(string[] args)
 	{
 		Rectest p=new Rectest();
 		p.ctor();
 		p.prevb();
 	}
-	
 }
