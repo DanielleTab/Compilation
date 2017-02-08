@@ -7,5 +7,7 @@ class Print
 	}
 	void main(string[] args)
 	{
+	Print p = new Print();
+	p.printInt(17);
 	}
 }

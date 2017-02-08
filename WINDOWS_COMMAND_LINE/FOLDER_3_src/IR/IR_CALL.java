@@ -32,6 +32,7 @@ public class IR_CALL extends IR_Node
 		CodeGen_Temp callerAddressTemp = (CodeGen_Temp) callerAddress.generateCode();
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
 		
+		// validates the ccallerAddress!=null.
 		StringNLBuilder printed = new StringNLBuilder();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 		printed.appendNL(String.format("beq %s,%s,%s", 
@@ -44,14 +45,15 @@ public class IR_CALL extends IR_Node
 		List<CodeGen_Temp> ts = args.generateCodeList();
 		
 		printed = new StringNLBuilder();
-		for(int i=ts.size();i>=0;i--)
+		for(int i=ts.size()-1;i>=0;i--)
 		{
 			// push the args in reverse order.
 			CodeGen_Utils.codeGen_Push(printed, ts.get(i).getName());
 		}
 		
 		CodeGen_Utils.codeGen_Push(printed, callerAddressTemp.getName());
-		printed.appendNL(String.format("jalr %s",functionAddressTemp.getName()));
+		printed.appendNL(String.format("mov $t0,%s", functionAddressTemp.getName()));
+		printed.appendNL(String.format("jalr $t0",functionAddressTemp.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 }

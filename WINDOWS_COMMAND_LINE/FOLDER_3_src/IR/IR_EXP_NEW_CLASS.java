@@ -21,6 +21,11 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 	// initiates all fields to null.
 	public void generateNullActionForFields(ClassSymbolInfo classInfo) throws IOException
 	{
+		if(classInfo.fields==null)
+		{
+			return;
+		}
+		
 		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Temp temp = TempGenerator.getAndAddNewTemp();
 		printed.appendNL(String.format("mov %s,$sp", temp.getName()));
@@ -39,7 +44,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		CodeGen_Temp addressOnHeap = CodeGen_Utils.codeGen_malloc(printed,classInfo.size);
 		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
 		printed.appendNL(String.format("la %s, %s", newTemp.getName(),classInfo.getVFTableLabel()));
-		printed.appendNL(String.format("sw %s,%s", newTemp.getName(),addressOnHeap.getName()));
+		printed.appendNL(String.format("sw %s,0(%s)", newTemp.getName(),addressOnHeap.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		generateNullActionForFields(classInfo);
 		return addressOnHeap;

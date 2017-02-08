@@ -27,7 +27,7 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 		printed.appendNL(String.format("addi %s,%s,1", generatedSizePlusOne, generatedSize));
 		CodeGen_Temp heapAddress = CodeGen_Utils.codeGen_malloc(printed,generatedSizePlusOne);
 		// put the first element in the array to be the array size.
-		printed.appendNL(String.format("sw %s,%s",generatedSize.getName(),heapAddress.getName()));
+		printed.appendNL(String.format("sw %s,0(%s)",generatedSize.getName(),heapAddress.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		return heapAddress;
 	}

@@ -57,9 +57,12 @@ public class Main
 				
 				// prints the strings before use them in the generate code.
 				StringCollector.printStringsToAssembly();
+				
+				// prints vftables
+				AssemblyFilePrinter.printVirtualFunctionsTablesAndUpdateVFTAdresses();
+				
 				// codeGen
 				irNode.generateCode();
-				AssemblyFilePrinter.printVirtualFunctionsTablesAndUpdateVFTAdresses();
 				printer.close();
 			}
 			else

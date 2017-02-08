@@ -19,6 +19,10 @@ public class StringCollector {
 	
 	public static void printStringsToAssembly() throws IOException
 	{
+		if(LabelAndStringMappings.size() == 0)
+		{
+			return;
+		}
 		StringNLBuilder printed = new StringNLBuilder();
 		printed.appendNL(".data");
 		for(int i=0;i<LabelAndStringMappings.size();i++)

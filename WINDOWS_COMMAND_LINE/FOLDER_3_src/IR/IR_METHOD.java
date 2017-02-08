@@ -57,7 +57,7 @@ public class IR_METHOD extends IR_Node
 		CodeGen_Temp arg1Offset = TempGenerator.getAndAddNewTemp();
 		
 		// move the i (the first formal) into $a0 
-		printed.appendNL(String.format("addi %s,%s,%d",arg1Offset.getName(),arg1Offset.getName(), AST_Node.FRAME_OFFSET_OF_FIRST_FORMAL));
+		printed.appendNL(String.format("addi %s,$fp,%d",arg1Offset.getName(), AST_Node.FRAME_OFFSET_OF_FIRST_FORMAL));
 		printed.appendNL(String.format("lw %s,0(%s)",givenInteger.getName(),arg1Offset.getName()));
 		
 		// $a0 = i, $v0 = 1 for syscall print_int

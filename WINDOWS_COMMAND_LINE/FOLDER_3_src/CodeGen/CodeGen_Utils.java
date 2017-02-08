@@ -29,13 +29,13 @@ public class CodeGen_Utils {
 	 *  */
 	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,int allocationSize) throws IOException
 	{
-		printed.appendNL(String.format("li $a0 %d",allocationSize));
+		printed.appendNL(String.format("li $a0,%d",allocationSize));
 		return common_codeGen_malloc(printed);
 	}
 	
 	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,CodeGen_Temp allocationSize) throws IOException
 	{
-		printed.appendNL(String.format("mov $a0 %s",allocationSize.getName()));
+		printed.appendNL(String.format("mov $a0,%s",allocationSize.getName()));
 		return common_codeGen_malloc(printed);
 
 	}
@@ -45,7 +45,7 @@ public class CodeGen_Utils {
 	{
 		// $a0 is the argument to the syscall
 		// $v0 = 9 is the syscall number for memory allocation on the heap.
-		printed.appendNL( "li $v0 9");
+		printed.appendNL( "li $v0,9");
 		printed.appendNL("syscall");
 		CodeGen_Temp resultAddress = TempGenerator.getAndAddNewTemp();
 		// the address is in v0 after syscall execution.
