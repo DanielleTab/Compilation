@@ -3,46 +3,38 @@ class Print
 {
 	void printInt(int i) 
 	{
-	}
-}
-class ClassA
-{
-	Print p;
-	int a;
-	void func()
-	{
-		a=12;
-		p=new Print();
+	
 	}
 }
 
-class ClassB extends ClassA
+class Rectest
 {
-int b;
-	void funca()
+	int b;
+	Print p;
+	void ctor()
 	{
-	b=18;
-		p.printInt(a);
+	p=new Print();
+		b=3;
 	}
-	void funcb()
+	void prevb()
 	{
-		p.printInt(b);
-	}
-	void printMine(int k,int j)
-	{
-		p.printInt(k);
+		if(b>0)
+		{
+			p.printInt(b);
+			b=b-1;
+			prevb();
+		}
 	}
 }
 
 class Mainclass
 {
+
 	void main(string[] args)
 	{
-		ClassB b = new ClassB();
-		b.func();
-		b.funca();
-		b.funcb();
-		b.printMine(24,20);
+		Rectest p=new Rectest();
+		p.ctor();
+		p.prevb();
 	}
 	
 }

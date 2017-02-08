@@ -36,7 +36,7 @@ public class AST_STMT_IF extends AST_STMT_COND
 		
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
 		int ifIndex = functionInfo.getNewIfIndex();
-		String labelName = String.format("%d_if_%s", ifIndex, getLabelPrefix());
+		String labelName = String.format("Label_%d_if_%s", ifIndex, getLabelPrefix());
 		
 		return new IR_STMT_IF(condIR, bodyIR, labelName);
 	}

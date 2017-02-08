@@ -29,6 +29,7 @@ public class IR_PROGRAM extends IR_Node {
 	{
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
+		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 		CodeGen_Utils.codeGen_Push(printed,zeroTemp.getName());
 		printed.appendNL(String.format("jal %s", SymbolTable.mainFunctionLabel));
 		printed.appendNL(String.format("j %s", END_LABEL_NAME));
