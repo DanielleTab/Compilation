@@ -3,11 +3,46 @@ class Print
 {
 	void printInt(int i) 
 	{
-	i = i+1;
 	}
+}
+class ClassA
+{
+	Print p;
+	int a;
+	void func()
+	{
+		a=12;
+		p=new Print();
+	}
+}
+
+class ClassB extends ClassA
+{
+int b;
+	void funca()
+	{
+	b=18;
+		p.printInt(a);
+	}
+	void funcb()
+	{
+		p.printInt(b);
+	}
+	void printMine(int k,int j)
+	{
+		p.printInt(k);
+	}
+}
+
+class Mainclass
+{
 	void main(string[] args)
 	{
-	Print p = new Print();
-	p.printInt(17);
+		ClassB b = new ClassB();
+		b.func();
+		b.funca();
+		b.funcb();
+		b.printMine(24,20);
 	}
+	
 }

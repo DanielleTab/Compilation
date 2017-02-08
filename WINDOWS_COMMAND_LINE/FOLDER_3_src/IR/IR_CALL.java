@@ -42,13 +42,16 @@ public class IR_CALL extends IR_Node
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		
 		CodeGen_Temp functionAddressTemp = (CodeGen_Temp) calledFunctionAddress.generateCode();
-		List<CodeGen_Temp> ts = args.generateCodeList();
-		
-		printed = new StringNLBuilder();
-		for(int i=ts.size()-1;i>=0;i--)
+		if(args!=null)
 		{
-			// push the args in reverse order.
-			CodeGen_Utils.codeGen_Push(printed, ts.get(i).getName());
+			List<CodeGen_Temp> ts = args.generateCodeList();
+			
+			printed = new StringNLBuilder();
+			for(int i=ts.size()-1;i>=0;i--)
+			{
+				// push the args in reverse order.
+				CodeGen_Utils.codeGen_Push(printed, ts.get(i).getName());
+			}
 		}
 		
 		CodeGen_Utils.codeGen_Push(printed, callerAddressTemp.getName());

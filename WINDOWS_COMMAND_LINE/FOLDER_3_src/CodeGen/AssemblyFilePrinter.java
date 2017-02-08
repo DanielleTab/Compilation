@@ -51,6 +51,10 @@ public class AssemblyFilePrinter {
 	private static void printVirtualFunctionsTableForClass(ClassSymbolInfo classSymbolInfo) throws IOException
 	{
 		StringBuilder printed = new StringBuilder();
+		if(classSymbolInfo.virtualFunctionsOrder.size()==0)
+		{
+			return;
+		}
 		printed.append(String.format("%s: .word ",classSymbolInfo.getVFTableLabel()));
 		List<String> virtualFunctionsOrder = classSymbolInfo.virtualFunctionsOrder;
 		Hashtable<String,String> virtualFunctionsTable = classSymbolInfo.virtualFunctionsTable;

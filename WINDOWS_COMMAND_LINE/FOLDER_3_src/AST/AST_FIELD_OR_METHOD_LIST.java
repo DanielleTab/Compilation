@@ -43,10 +43,10 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 			this.tail.currentClassName = this.currentClassName;
 		}
 		
+		this.head.currentClassName = this.currentClassName;
 		if(this.head instanceof AST_METHOD)
 		{
 			AST_METHOD astMethod=(AST_METHOD)this.head;
-			astMethod.currentClassName = this.currentClassName;
 			IR_METHOD temp=astMethod.createIR();
 			
 			IR_METHOD_LIST tailCreateIRResult =  null;
@@ -60,10 +60,13 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 		}
 		else // if the head is not a method, we want to iterate over the list until the first method.
 		{
+			AST_FIELD astField = (AST_FIELD)this.head;
+			astField.currentClassName = this.currentClassName;
+			astField.createIR();
 			AST_FIELD_OR_METHOD_LIST iterator=tail;
 			while((iterator!=null)&&(iterator.head instanceof AST_FIELD))
 			{
-				AST_FIELD astField = (AST_FIELD)iterator.head;
+				astField = (AST_FIELD)iterator.head;
 				astField.currentClassName = this.currentClassName;
 				astField.createIR();
 				iterator=iterator.tail;
@@ -76,9 +79,11 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 			{
 				if(iterator.head!=null)
 				{
+					((AST_METHOD) iterator.head).currentClassName = this.currentClassName;
 					headCreateIRResult = ((AST_METHOD) iterator.head).createIR();
 					if(iterator.tail!=null)
 					{
+						iterator.tail.currentClassName = this.currentClassName;
 						tailCreateIRResult =  iterator.tail.createIR();
 					}
 				}
