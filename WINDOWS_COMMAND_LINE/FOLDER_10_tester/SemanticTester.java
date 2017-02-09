@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class Tester 
+public class SemanticTester 
 {
 	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//";
 	public static final String OUTPUT_FILE_NAME = "output.pmips"; // pmips = pseudo MIPS
