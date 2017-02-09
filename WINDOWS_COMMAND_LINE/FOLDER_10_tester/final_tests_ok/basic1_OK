@@ -9,11 +9,7 @@ class Rectest
 {
 	int b;
 	Print p;
-	void ctor()
-	{
-	p=new Print();
-		b=3;
-	}
+
 	void prevb()
 	{
 		if(b>0)
@@ -30,8 +26,9 @@ class Mainclass
 {
 	void main(string[] args)
 	{
-		Rectest p=new Rectest();
-		p.ctor();
-		p.prevb();
+		Rectest r=new Rectest();
+		r.p=new Print();
+		r.b=12;
+		r.prevb();
 	}
 }

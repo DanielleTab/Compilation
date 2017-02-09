@@ -36,6 +36,7 @@ public class IR_METHOD extends IR_Node
 		CodeGen_Utils.codeGen_Push(printed, "$ra");
 		CodeGen_Utils.codeGen_Push(printed, "$fp");
 		printed.appendNL("mov $fp, $sp");
+		printed.appendNL(String.format("addi $sp,$sp,%d", (this.frameSize)*(-1)));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	

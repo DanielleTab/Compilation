@@ -19,7 +19,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 	}
 	
 	// initiates all fields to null.
-	public void generateNullActionForFields(ClassSymbolInfo classInfo) throws IOException
+	public void generateNullActionForFields(ClassSymbolInfo classInfo,CodeGen_Temp addressOnHeap) throws IOException
 	{
 		if(classInfo.fields==null)
 		{
@@ -28,11 +28,13 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		
 		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Temp temp = TempGenerator.getAndAddNewTemp();
-		printed.appendNL(String.format("mov %s,$sp", temp.getName()));
+		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
+		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
+		printed.appendNL(String.format("mov %s,%s", temp.getName(), addressOnHeap.getName()));
 		for(int i=0;i<classInfo.fields.size();i++)
 		{
 			printed.appendNL(String.format("addi %s,%s,%d", temp.getName(), temp.getName(),SymbolTable.ADDRESS_SIZE));
-			printed.appendNL(String.format("li %s,0", temp.getName()));
+			printed.appendNL(String.format("sw %s,0(%s)", zeroTemp.getName(),temp.getName()));
 		}
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
@@ -46,7 +48,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		printed.appendNL(String.format("la %s, %s", newTemp.getName(),classInfo.getVFTableLabel()));
 		printed.appendNL(String.format("sw %s,0(%s)", newTemp.getName(),addressOnHeap.getName()));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
-		generateNullActionForFields(classInfo);
+		generateNullActionForFields(classInfo,addressOnHeap);
 		return addressOnHeap;
 	}
 }
