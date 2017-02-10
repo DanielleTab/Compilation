@@ -70,7 +70,8 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 		
 		printed.appendNL(String.format("add %s,%s,%s", 
 									   resultTemp.getName(),
-									   arrayBase));
+									   offsetTemp.getName(),
+									   arrayBaseTemp.getName()));
 		
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		return resultTemp;

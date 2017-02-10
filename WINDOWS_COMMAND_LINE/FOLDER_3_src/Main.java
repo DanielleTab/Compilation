@@ -61,6 +61,7 @@ public class Main
 				// prints vftables
 				AssemblyFilePrinter.printVirtualFunctionsTablesAndUpdateVFTAdresses();
 				
+				AssemblyFilePrinter.getInstance(null).write(String.format(".text%s", System.lineSeparator()));
 				// codeGen
 				irNode.generateCode();
 				printer.close();
