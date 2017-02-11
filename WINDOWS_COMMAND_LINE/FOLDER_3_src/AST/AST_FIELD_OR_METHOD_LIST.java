@@ -6,8 +6,8 @@ import SemanticAnalysis.SemanticAnalysisException;
 
 public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 {
-	public AST_FIELD_OR_METHOD head;
-	public AST_FIELD_OR_METHOD_LIST tail;
+	public AST_FIELD_OR_METHOD head;	  // might be null if the class is empty
+	public AST_FIELD_OR_METHOD_LIST tail; // might be null
 	
 	public AST_FIELD_OR_METHOD_LIST(AST_FIELD_OR_METHOD head, AST_FIELD_OR_METHOD_LIST tail)
 	{
@@ -38,6 +38,10 @@ public class AST_FIELD_OR_METHOD_LIST extends AST_Node
 	{
 		assertClassNameInitialized();
 		
+		if (head == null)
+		{
+			return new IR_METHOD_LIST(null, null);
+		}
 		if(this.tail!=null)
 		{
 			this.tail.currentClassName = this.currentClassName;

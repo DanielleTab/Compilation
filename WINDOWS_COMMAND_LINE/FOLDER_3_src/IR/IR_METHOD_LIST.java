@@ -7,8 +7,8 @@ import SemanticAnalysis.SemanticAnalysisException;
 public class IR_METHOD_LIST extends IR_Node 
 {
 	// fields
-	public IR_METHOD head;
-	public IR_METHOD_LIST tail;
+	public IR_METHOD head;		// might be null if the class doesn't have any methods
+	public IR_METHOD_LIST tail; // might be null
 	
 	// C'tor
 	public IR_METHOD_LIST(IR_METHOD head, IR_METHOD_LIST tail)
@@ -19,10 +19,13 @@ public class IR_METHOD_LIST extends IR_Node
 	
 	public void generateCode() throws IOException, SemanticAnalysisException
 	{
-		head.generateCode();
-		if(this.tail!=null)
+		if (head != null)
 		{
-			tail.generateCode();
+			head.generateCode();
+			if(this.tail!=null)
+			{
+				tail.generateCode();
+			}
 		}
 	}
 }

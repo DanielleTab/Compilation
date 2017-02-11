@@ -18,6 +18,9 @@ public class IR_CLASS_DECL extends IR_Node
 	
 	public void generateCode() throws IOException, SemanticAnalysisException
 	{
-		methods.generateCode();
+		if (methods != null)
+		{
+			methods.generateCode();	
+		}
 	}
 }
