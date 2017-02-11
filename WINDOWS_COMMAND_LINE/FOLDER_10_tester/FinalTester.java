@@ -94,7 +94,7 @@ public class FinalTester
 		return (!pseudoMipsFirstLine.equals(SEMANTIC_ERROR_OUTPUT));
 	}
 	
-	static public void testSpecificFile(String icFileName) throws Exception
+	static public void runSpecificTest(String icFileName) throws Exception
 	{
 		System.out.println("Running " + icFileName + ":");
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
@@ -110,11 +110,8 @@ public class FinalTester
 		}	
 	}
 	
-	static public void main(String argv[]) throws Exception 
+	static private void runAllTests() throws Exception
 	{
-		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
-		//System.setOut(outputWriter);
-		
 		File folder = new File(IC_FILES_DIR);
 		File[] folderFiles = folder.listFiles();
 
@@ -122,13 +119,22 @@ public class FinalTester
 	    {
 	    	if (folderFiles[i].isFile()) 
 	    	{
-	    		testSpecificFile(folderFiles[i].getName());
+	    		runSpecificTest(folderFiles[i].getName());
 	    	} 
 	    }
 		    
 	    System.out.println();
 		System.out.println("Total passed: " + passedNum);
 		System.out.println("Total failed: " + failedNum); 
+	}
+	
+	static public void main(String argv[]) throws Exception 
+	{
+		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
+		//System.setOut(outputWriter);
+		
+		//runSpecificTest("specificTestName");
+		runAllTests();
 	}
 	
 }
