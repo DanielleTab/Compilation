@@ -16,15 +16,13 @@ class PrimesPrinter
 		Print printer = new Print();
 		
 		int i = 2;
-		int iSquare = i * i;
-		while (iSquare <= num)
+		while ((i * i) <= num)
 		{
 			//printer.printInt(i);	
 			int j = i;
 			while (j < num)
 			{
-				int product = i * j;
-				if (product == num)
+				if ((i * j) == num)
 				{
 					// num isn't prime
 					return 0;
@@ -33,7 +31,6 @@ class PrimesPrinter
 			}
 			
 			i = i + 1;
-			iSquare = i * i; 
 		}
 		
 		// No factors found, therefore num is prime
