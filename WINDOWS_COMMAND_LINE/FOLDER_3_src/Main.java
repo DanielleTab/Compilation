@@ -50,6 +50,7 @@ public class Main
 				outputWriter.write(OK_STRING);
 				outputWriter.close();
 				
+				AssemblyFilePrinter.instance = null;
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
 				// builds ir tree.
 				SymbolTable.hashTable.clear();
