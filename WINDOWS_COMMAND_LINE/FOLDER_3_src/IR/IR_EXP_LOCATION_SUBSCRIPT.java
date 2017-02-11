@@ -6,6 +6,7 @@ import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 /* 
  * This class extends IR_EXP since it calculates a value.
@@ -24,10 +25,12 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code which calculates the address of the array's subscript,
 	 * 			after validating it doesn't exceed the array's bounds. 
 	 */
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp resultTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp arrayBaseTemp = arrayBase.generateCode();

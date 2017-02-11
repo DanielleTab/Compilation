@@ -8,6 +8,7 @@ import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_METHOD extends IR_Node 
 {
@@ -68,7 +69,7 @@ public class IR_METHOD extends IR_Node
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public void generateCode() throws IOException
+	public void generateCode() throws IOException, SemanticAnalysisException
 	{
 		this.label.generateCode();
 		this.printProlog();

@@ -6,6 +6,7 @@ import java.util.List;
 
 import CodeGen.CodeGen_Temp;
 import SemanticAnalysis.IRExpListGenerateCodeException;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_EXP_LIST extends IR_EXP
 {
@@ -25,7 +26,7 @@ public class IR_EXP_LIST extends IR_EXP
 		throw new IRExpListGenerateCodeException();
 	}
 	
-	public List<CodeGen_Temp> generateCodeList() throws IOException, IRExpListGenerateCodeException
+	public List<CodeGen_Temp> generateCodeList() throws IOException, IRExpListGenerateCodeException, SemanticAnalysisException
 	{
 		List<CodeGen_Temp> argsList = new ArrayList<CodeGen_Temp>();
 		argsList.add(head.generateCode());

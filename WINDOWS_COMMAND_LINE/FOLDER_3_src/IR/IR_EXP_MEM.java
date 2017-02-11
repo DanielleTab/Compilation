@@ -5,6 +5,7 @@ import java.io.IOException;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_EXP_MEM extends IR_EXP 
 {
@@ -17,7 +18,8 @@ public class IR_EXP_MEM extends IR_EXP
 		this.address = address;
 	}
 	
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp result = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp t1= this.address.generateCode();

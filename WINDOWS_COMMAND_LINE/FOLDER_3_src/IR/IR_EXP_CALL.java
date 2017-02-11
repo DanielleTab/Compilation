@@ -6,6 +6,7 @@ import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_EXP_CALL extends IR_EXP{
 	public IR_CALL call;
@@ -14,7 +15,8 @@ public class IR_EXP_CALL extends IR_EXP{
 		this.call=call;
 	}
 	
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		this.call.generateCode();
 		

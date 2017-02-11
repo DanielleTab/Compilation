@@ -136,8 +136,11 @@ public class AST_STMT_RETURN extends AST_STMT
 			returnedExpressionIR = returnedExpression.createIR();	
 		}
 		
-		String methodEpilogLabelName = String.format("Label_%d_%s_%s%s", 
-				AssemblyFilePrinter.addLabelIndex(),currentClassName, currentFunctionName, IR_METHOD.EPILOG_LABEL_SUFFIX);
+		String methodEpilogLabelName = String.format("%s%s_%s%s", 
+													 AST_METHOD.METHOD_LABEL_PREFIX, 
+													 currentClassName, 
+													 currentFunctionName, 
+													 IR_METHOD.EPILOG_LABEL_SUFFIX);
 		
 		return new IR_STMT_RETURN(returnedExpressionIR, methodEpilogLabelName);
 	}

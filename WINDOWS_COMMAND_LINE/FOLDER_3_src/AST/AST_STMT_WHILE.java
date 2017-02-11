@@ -35,7 +35,7 @@ public class AST_STMT_WHILE extends AST_STMT_COND
 		SymbolTable.closeCurrentScope();
 		
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
-		int whileIndex = functionInfo.getNewIfIndex();
+		int whileIndex = functionInfo.getNewWhileIndex();
 		String labelName = String.format("Label_%d_while_%s", whileIndex, getLabelPrefix());
 		
 		return new IR_STMT_WHILE(condIR, bodyIR, labelName);

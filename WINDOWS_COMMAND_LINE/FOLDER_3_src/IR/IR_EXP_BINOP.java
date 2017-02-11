@@ -7,6 +7,8 @@ import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.UnsupportedBinOpException;
 
 public class IR_EXP_BINOP extends IR_EXP {
 	public IR_EXP left;
@@ -72,7 +74,7 @@ public class IR_EXP_BINOP extends IR_EXP {
 	 * returns the opposite of the operation.
 	 * for example: if op = GT (>) it returns ble(<=)
 	 */
-	private String getOppositeConditionalOperation()
+	private String getOppositeConditionalOperation() throws UnsupportedBinOpException
 	{
 		switch(this.operation)
 		{
@@ -84,13 +86,18 @@ public class IR_EXP_BINOP extends IR_EXP {
 			return "bge";
 		case LTE:
 			return "bgt";
+		case EQUAL:
+			return "bne";
+		case NEQUAL:
+			return "beq";
 		default:
 			break;
 		}
-		return null;
+		throw new UnsupportedBinOpException();
 	}
 	
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp result = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp t1 = left.generateCode();

@@ -6,6 +6,7 @@ import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_STMT_WHILE extends IR_STMT_COND
 {
@@ -15,12 +16,13 @@ public class IR_STMT_WHILE extends IR_STMT_COND
 	}
 
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code for the while-statement. The generated code
 	 * 			branches to the end-label if the condition equals zero,
 	 * 			otherwise it executes the body and jumps back to the start-label.
 	 */
 	@Override
-	public void generateCode() throws IOException 
+	public void generateCode() throws IOException, SemanticAnalysisException 
 	{
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
 		

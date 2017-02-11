@@ -8,6 +8,7 @@ import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
 
 public class IR_CALL extends IR_Node
@@ -25,10 +26,11 @@ public class IR_CALL extends IR_Node
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code which calls the function, 
 	 * after validating the caller's address isn't null.
 	 *  */
-	public void generateCode() throws IOException
+	public void generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp callerAddressTemp = (CodeGen_Temp) callerAddress.generateCode();
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();

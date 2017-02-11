@@ -5,6 +5,7 @@ import java.io.IOException;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
+import SemanticAnalysis.SemanticAnalysisException;
 
 public class IR_STMT_RETURN extends IR_STMT
 {
@@ -22,13 +23,14 @@ public class IR_STMT_RETURN extends IR_STMT
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code for the return statement.
 	 * 			If some expression is being returned, first generates code which
 	 * 			calculates that expression and moves the result into v0.
 	 * 			In any case, finishes by generating code which jumps to the method epilog.
 	 */
 	@Override
-	public void generateCode() throws IOException
+	public void generateCode() throws IOException, SemanticAnalysisException
 	{
 		StringNLBuilder builder = new StringNLBuilder();
 		if (returnedExpression != null)

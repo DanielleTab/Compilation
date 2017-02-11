@@ -5,6 +5,7 @@ import java.io.IOException;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
+import SemanticAnalysis.SemanticAnalysisException;
 
 /**
  * This statement stores the source value in the destination address.
@@ -23,12 +24,13 @@ public class IR_STMT_STORE extends IR_STMT
 	}
 
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code for the store statement, by generating code 
 	 * 			which calculates the source value and the destination address and
 	 * 			then stores the value in the address. 
 	 */
 	@Override
-	public void generateCode() throws IOException 
+	public void generateCode() throws IOException, SemanticAnalysisException 
 	{
 		// Generating code for calculating the source value
 		CodeGen_Temp srcValueTemp = srcValue.generateCode();

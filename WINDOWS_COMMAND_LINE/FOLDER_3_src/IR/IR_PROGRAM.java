@@ -7,6 +7,7 @@ import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
 
 public class IR_PROGRAM extends IR_Node {
@@ -57,7 +58,7 @@ public class IR_PROGRAM extends IR_Node {
 		printed.appendNL("syscall");
 	}
 	
-	public void generateCode() throws IOException 
+	public void generateCode() throws IOException, SemanticAnalysisException 
 	{
 		StringNLBuilder printed = new StringNLBuilder();
 		printed.appendNL(String.format("j %s", MAIN_WRAPPER_LABEL));

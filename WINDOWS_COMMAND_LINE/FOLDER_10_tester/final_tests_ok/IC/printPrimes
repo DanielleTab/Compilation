@@ -1,0 +1,81 @@
+class Print 
+{
+	void printInt(int i) 
+	{
+	}
+}
+
+class PrimesPrinter
+{
+	/*
+	* Returns 1 if the number is prime, 0 otherwise.
+	* This implementation doesn't use / or %, and therefore isn't efficient.
+	*/
+	int isPrime(int num)
+	{
+		Print printer = new Print();
+		
+		int i = 2;
+		int iSquare = i * i;
+		while (iSquare <= num)
+		{
+			//printer.printInt(i);	
+			int j = i;
+			while (j < num)
+			{
+				int product = i * j;
+				if (product == num)
+				{
+					// num isn't prime
+					return 0;
+				}
+				j = j + 1;
+			}
+			
+			i = i + 1;
+			iSquare = i * i; 
+		}
+		
+		// No factors found, therefore num is prime
+		return 1;
+	}
+
+	/*
+	* Prints all primes beneath the given max value.
+	*/
+	void printPrimes(int max)
+	{
+		Print printer = new Print();
+		
+		// Printing '9999' to mark we entered this method
+		printer.printInt(9999);
+		
+		// Printing the argument
+		printer.printInt(max);
+		
+		// Printing all primes beneath max
+		int i = 2;
+		while (i < max)
+		{
+			if (isPrime(i))
+			{
+				printer.printInt(i);
+			}
+			i = i + 1;
+		}
+	}
+}
+
+class Mainclass
+{
+	void main(string[] args)
+	{
+		Print printer = new Print();
+	
+		PrimesPrinter primesPrinter = new PrimesPrinter();
+		primesPrinter.printPrimes(50);
+		
+		// Printing '1111' to mark we ended main.
+		printer.printInt(1111);
+	}
+}

@@ -5,6 +5,7 @@ import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.SemanticAnalysisException;
 
 /* 
  * This class extends IR_EXP since it calculates a value.
@@ -23,10 +24,12 @@ public class IR_EXP_LOCATION_FIELD extends IR_EXP
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code which calculates the field's address, 
 	 * 			after validating that the object's address isn't null.
 	 */
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp resultTemp = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp objTemp = obj.generateCode();

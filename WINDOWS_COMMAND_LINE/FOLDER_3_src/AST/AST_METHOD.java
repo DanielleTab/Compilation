@@ -21,6 +21,9 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	public AST_FORMALS_LIST formalsList;
 	public AST_STMT_LIST body;
 	public boolean isMainFunc = false;
+	
+	public static final String METHOD_LABEL_PREFIX = "Label_0_";
+	
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
@@ -112,7 +115,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		assertClassAndFunctionNamesInitialized();
 		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		methodSymbolInfo.isMainFunc = this.isMainFunc;
-		methodSymbolInfo.functionLabel = String.format("Label_%d_%s_%s", AssemblyFilePrinter.addLabelIndex(),currentClassName,currentFunctionName);
+		methodSymbolInfo.functionLabel = String.format("%s%s_%s", METHOD_LABEL_PREFIX,currentClassName,currentFunctionName);
 		SymbolTable.addMethodToClass(currentClassName, methodSymbolInfo);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
 		

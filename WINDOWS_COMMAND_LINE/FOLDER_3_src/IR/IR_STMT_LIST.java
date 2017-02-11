@@ -2,6 +2,8 @@ package IR;
 
 import java.io.IOException;
 
+import SemanticAnalysis.SemanticAnalysisException;
+
 public class IR_STMT_LIST extends IR_STMT 
 {
 	// fields
@@ -16,11 +18,12 @@ public class IR_STMT_LIST extends IR_STMT
 	}
 	
 	/**
+	 * @throws SemanticAnalysisException 
 	 * @brief	Generates the code for the statement list by generating 
 	 * 			code for the head and for the tail (if they exist).
 	 */
 	@Override
-	public void generateCode() throws IOException
+	public void generateCode() throws IOException, SemanticAnalysisException
 	{
 		if (head != null)
 		{

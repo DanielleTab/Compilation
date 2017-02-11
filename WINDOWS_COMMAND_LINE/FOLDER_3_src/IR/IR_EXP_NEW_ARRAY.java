@@ -9,6 +9,7 @@ import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 import SemanticAnalysis.ClassSymbolInfo;
+import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
 
 public class IR_EXP_NEW_ARRAY extends IR_EXP{
@@ -61,8 +62,8 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 			
 		}
 		
-	
-	public CodeGen_Temp generateCode() throws IOException
+	@Override
+	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
 		CodeGen_Temp generatedNumOfElements = this.size.generateCode();
 		CodeGen_Temp generatedNumOfElementsPlusOne = TempGenerator.getAndAddNewTemp();

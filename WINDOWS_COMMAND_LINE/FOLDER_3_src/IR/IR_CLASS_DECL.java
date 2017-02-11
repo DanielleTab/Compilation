@@ -2,6 +2,8 @@ package IR;
 
 import java.io.IOException;
 
+import SemanticAnalysis.SemanticAnalysisException;
+
 public class IR_CLASS_DECL extends IR_Node 
 {
 	// fields
@@ -14,7 +16,7 @@ public class IR_CLASS_DECL extends IR_Node
 		this.methods = methods;
 	}
 	
-	public void generateCode() throws IOException
+	public void generateCode() throws IOException, SemanticAnalysisException
 	{
 		methods.generateCode();
 	}
