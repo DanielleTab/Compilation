@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
@@ -13,6 +16,7 @@ public class FinalTester
 	public static String TESTER_OUTPUT_FILE_NAME = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tester_output.txt";
 	private static PrintStream outputWriter;
 	
+	private static final String SEMANTIC_ERROR_OUTPUT = "FAIL";
 	private static final String IC_FILES_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//IC//";
 	private static final String EXPECTED_OUTPUTS_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//ExpectedOutput//";
 	private static final String EXPECTED_OUTPUT_SUFFIX = "_EO.txt";
@@ -29,10 +33,15 @@ public class FinalTester
 	 */
 	static private void compileICToPseudoMips(String icFilePath) throws Exception
 	{
+		// TODO:
+		// Deleting the old pseudo-MIPS file
+		
 		String[] args = new String[3];
 		args[0] = icFilePath;
 		args[1] = PSEUDO_MIPS_PATH;
-		Main.main(args);	
+		Main.main(args);
+		
+		
 	}
 	
 	/**
@@ -71,12 +80,34 @@ public class FinalTester
 		}
 	}
 	
+	/**
+	 * Checks if the compilation of the IC file created a valid pseudo-MIPS file
+	 * by checking it doesn't begin with "FAIL". 
+	 * @throws IOException 
+	 */
+	static private boolean isPseudoMipsValid() throws IOException
+	{
+		BufferedReader pseudoMipsFile = new BufferedReader(new FileReader(new File(PSEUDO_MIPS_PATH)));
+		String pseudoMipsFirstLine = pseudoMipsFile.readLine();
+		pseudoMipsFile.close();
+		
+		return (!pseudoMipsFirstLine.equals(SEMANTIC_ERROR_OUTPUT));
+	}
+	
 	static public void testSpecificFile(String icFileName) throws Exception
 	{
-		System.out.println("Running " + icFileName + " :");
+		System.out.println("Running " + icFileName + ":");
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
-		convertPseudoMipsToExeAndRun();
-		compareToExpectedOutput(EXPECTED_OUTPUTS_DIR + icFileName + EXPECTED_OUTPUT_SUFFIX);
+		if (isPseudoMipsValid())
+		{
+			convertPseudoMipsToExeAndRun();
+			compareToExpectedOutput(EXPECTED_OUTPUTS_DIR + icFileName + EXPECTED_OUTPUT_SUFFIX);	
+		}
+		else
+		{
+			System.out.println("Failed.\nError in compilation.");
+			failedNum++;
+		}	
 	}
 	
 	static public void main(String argv[]) throws Exception 
@@ -95,6 +126,7 @@ public class FinalTester
 	    	} 
 	    }
 		    
+	    System.out.println();
 		System.out.println("Total passed: " + passedNum);
 		System.out.println("Total failed: " + failedNum); 
 	}
