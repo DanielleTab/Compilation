@@ -45,6 +45,8 @@ public class FinalTester
 	{
 		System.out.println("Converting the pseudo mips to EXE and running. This might take a few seconds.");
 		Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s", BATCH_SCRIPT_PATH));
+		// Use this line if you don't want the CMD to close automatically.
+		//Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s", BATCH_SCRIPT_PATH));
 		cmdProcess.waitFor();
 	}
 	

@@ -1,6 +1,8 @@
 tester_exe_output.txt
 tester_pseudoMips.pmips
 CompiSln/Debug/
+CompiSln/.vs/
+CompiSln/CompiSln.sdf
 CompiSln/CompiSln/main.c
 CompiSln/CompiSln/Debug/
 convert_pseudoMips_to_exe_and_run.bat
