@@ -1,0 +1,29 @@
+class Print 
+{
+	void printInt(int i) 
+	{
+	}
+}
+
+class EmptyClass
+{
+}
+
+class MainClass
+{
+	void main(string[] args)
+	{
+		Print printer = new Print();
+		
+		printer.printInt(1);
+		EmptyClass emptyObj;
+		
+		printer.printInt(2);
+		emptyObj = new EmptyClass();
+		
+		printer.printInt(3);
+		EmptyClass emptyObj2 = new EmptyClass();
+		
+		printer.printInt(4);
+	}
+}
