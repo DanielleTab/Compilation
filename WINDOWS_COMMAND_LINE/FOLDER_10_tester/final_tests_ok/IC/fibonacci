@@ -1,0 +1,40 @@
+class Print
+{
+void printInt(int i)
+{
+}
+}
+
+class Fibonacci
+{
+int calcFib(int n)
+{
+int k=0;
+if(n==0)
+{
+k=0;
+}
+if(n==1)
+{
+k=1;
+}
+if(n>1)
+{
+k = calcFib(n-1)+calcFib(n-2);
+
+}
+return k;
+}
+
+}
+class Mainc
+{
+void main(string[] args)
+{
+Print p = new Print();
+Fibonacci f = new Fibonacci();
+
+p.printInt(f.calcFib(4));
+}
+
+}

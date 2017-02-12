@@ -1,0 +1,34 @@
+class Print 
+{
+	void printInt(int i) 
+	{
+	}
+}
+
+class Rectest
+{
+	int b;
+	Print p;
+
+	void prevb()
+	{
+		if(b>0)
+		{
+			p.printInt(b);
+			b=b-1;
+			prevb();
+		}
+		p.printInt(0);
+	}
+}
+
+class Mainclass
+{
+	void main(string[] args)
+	{
+		Rectest r=new Rectest();
+		r.p=new Print();
+		r.b=12;
+		r.prevb();
+	}
+}

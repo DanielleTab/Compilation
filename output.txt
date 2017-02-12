@@ -1,0 +1,121 @@
+VFTable_Print: .word Label_4_Print_printInt
+.text
+j Label_3_main_wrapper
+Label_4_Print_printInt:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+addi $sp,$sp,0
+addi Temp_1,$fp,12
+lw Temp_0,0(Temp_1)
+mov $a0,Temp_0
+li $v0,1
+syscall
+Label_4_Print_printInt_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_5_Mainclass_main:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $sp,$sp,-4
+sw $fp,0($sp)
+mov $fp, $sp
+addi $sp,$sp,-8
+li Temp_2,6
+li Temp_4,4
+addi Temp_3,Temp_2,1
+mul Temp_5,Temp_3,Temp_4
+mov $a0,Temp_5
+li $v0,9
+syscall
+mov Temp_6,$v0
+sw Temp_2,0(Temp_6)
+Label_6_init_array:
+li Temp_9,0
+li Temp_7,1
+mov Temp_8,Temp_6
+addi Temp_8,Temp_8,4
+Label_7_start_loop:
+bgt Temp_7,Temp_2,Label_8_end_loop
+sw Temp_9,0(Temp_8)
+addi Temp_8,Temp_8,4
+addi Temp_7,Temp_7,1
+j Label_7_start_loop
+Label_8_end_loop:
+mov Temp_11,$fp
+li Temp_12,-4
+add Temp_10,Temp_11,Temp_12
+sw Temp_6,0(Temp_10)
+li $a0,4
+li $v0,9
+syscall
+mov Temp_13,$v0
+la Temp_14, VFTable_Print
+sw Temp_14,0(Temp_13)
+mov Temp_16,$fp
+li Temp_17,-8
+add Temp_15,Temp_16,Temp_17
+sw Temp_13,0(Temp_15)
+mov Temp_20,$fp
+li Temp_21,-8
+add Temp_19,Temp_20,Temp_21
+lw Temp_18,0(Temp_19)
+li Temp_22,0
+beq Temp_18,Temp_22,Label_1_ERROR
+mov Temp_28,$fp
+li Temp_29,-8
+add Temp_27,Temp_28,Temp_29
+lw Temp_26,0(Temp_27)
+lw Temp_25,0(Temp_26)
+li Temp_30,0
+add Temp_24,Temp_25,Temp_30
+lw Temp_23,0(Temp_24)
+mov Temp_35,$fp
+li Temp_36,-4
+add Temp_34,Temp_35,Temp_36
+lw Temp_33,0(Temp_34)
+li Temp_37,0
+beq Temp_33,Temp_37,Label_1_ERROR
+li Temp_38,4
+lw Temp_39,0(Temp_33)
+bge Temp_38,Temp_39,Label_1_ERROR
+addi Temp_38,Temp_38,1
+li Temp_40,4
+mul Temp_38,Temp_38,Temp_40
+add Temp_32,Temp_38,Temp_33
+lw Temp_31,0(Temp_32)
+addi $sp,$sp,-4
+sw Temp_31,0($sp)
+addi $sp,$sp,-4
+sw Temp_18,0($sp)
+mov $t0,Temp_23
+jalr $t0
+li Temp_41,8
+add $sp,$sp,Temp_41
+Label_5_Mainclass_main_epilog:
+mov $sp, $fp
+lw $fp,0($sp)
+addi $sp,$sp,4
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+Label_3_main_wrapper:
+li Temp_42,0
+addi $sp,$sp,-4
+sw Temp_42,0($sp)
+jal Label_5_Mainclass_main
+j Label_2_END
+Label_1_ERROR:
+li $a0,666
+li $v0,1
+syscall
+j Label_2_END
+Label_2_END:
+li $v0,10
+syscall
