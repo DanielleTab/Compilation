@@ -11,6 +11,7 @@ import CodeGen.TempGenerator;
 import SemanticAnalysis.ClassSymbolInfo;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
+import SemanticAnalysis.TooManyTempsException;
 
 public class IR_EXP_NEW_ARRAY extends IR_EXP{
 	public IR_EXP size;
@@ -22,7 +23,7 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 	// initiates all the allocated array elements to null / 0. it's the same in the memory.
 	// the given array size is the basic size, before add it 1 for the arrayLength element.
 	// the given array has already have the arrayLength in it's first element.
-		public void generateNullForArrayElements(CodeGen_Temp addressOnHeap,CodeGen_Temp arraySize,StringNLBuilder printed) throws IOException
+		public void generateNullForArrayElements(CodeGen_Temp addressOnHeap,CodeGen_Temp arraySize,StringNLBuilder printed) throws IOException, TooManyTempsException
 		{
 			// TODO: what if the array length = 0?
 			// TODO: build loop.

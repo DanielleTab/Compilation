@@ -2,6 +2,8 @@ package CodeGen;
 
 import java.io.IOException;
 
+import SemanticAnalysis.TooManyTempsException;
+
 public class CodeGen_Utils {
 	
 
@@ -27,13 +29,13 @@ public class CodeGen_Utils {
 	/* 
 	 * @param	printed - the malloc instructions will be appended to this string builder. 
 	 *  */
-	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,int allocationSize) throws IOException
+	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,int allocationSize) throws IOException, TooManyTempsException
 	{
 		printed.appendNL(String.format("li $a0,%d",allocationSize));
 		return common_codeGen_malloc(printed);
 	}
 	
-	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,CodeGen_Temp allocationSize) throws IOException
+	public static CodeGen_Temp codeGen_malloc(StringNLBuilder printed,CodeGen_Temp allocationSize) throws IOException, TooManyTempsException
 	{
 		printed.appendNL(String.format("mov $a0,%s",allocationSize.getName()));
 		return common_codeGen_malloc(printed);
@@ -41,7 +43,7 @@ public class CodeGen_Utils {
 	}
 	
 	// The allocated space address is in $v0
-	private static CodeGen_Temp common_codeGen_malloc(StringNLBuilder printed) throws IOException
+	private static CodeGen_Temp common_codeGen_malloc(StringNLBuilder printed) throws IOException, TooManyTempsException
 	{
 		// $a0 is the argument to the syscall
 		// $v0 = 9 is the syscall number for memory allocation on the heap.

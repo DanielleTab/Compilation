@@ -9,6 +9,7 @@ import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 import SemanticAnalysis.ClassSymbolInfo;
 import SemanticAnalysis.SymbolTable;
+import SemanticAnalysis.TooManyTempsException;
 
 public class IR_EXP_NEW_CLASS extends IR_EXP{
 	public String newExpClassName;
@@ -19,7 +20,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 	}
 	
 	// initiates all fields to null.
-	public void generateNullActionForFields(ClassSymbolInfo classInfo,CodeGen_Temp addressOnHeap) throws IOException
+	public void generateNullActionForFields(ClassSymbolInfo classInfo,CodeGen_Temp addressOnHeap) throws IOException, TooManyTempsException
 	{
 		if(classInfo.fields==null)
 		{
@@ -40,13 +41,14 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 	}
 	
 	/**
+	 * @throws TooManyTempsException 
 	 * @brief	Generates code for storing the VFTable address at the beginning of the object.
 	 * 			If the object's class doesn't have a VFTable (if it doesn't have any methods),
 	 * 			generates code for storing null instead.	
 	 */
 	private void generateCodeForStoringVFTableAddress(ClassSymbolInfo classInfo, 
 													  CodeGen_Temp addressOnHeap, 
-													  StringNLBuilder printed)
+													  StringNLBuilder printed) throws TooManyTempsException
 	{
 		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
 		
@@ -64,7 +66,7 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		printed.appendNL(String.format("sw %s,0(%s)", newTemp.getName(),addressOnHeap.getName()));
 	}
 	
-	public CodeGen_Temp generateCode() throws IOException
+	public CodeGen_Temp generateCode() throws IOException, TooManyTempsException
 	{
 		ClassSymbolInfo classInfo = SymbolTable.getClassSymbolInfo(newExpClassName);
 		StringNLBuilder printed = new StringNLBuilder();

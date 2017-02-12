@@ -9,6 +9,7 @@ import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 import SemanticAnalysis.SemanticAnalysisException;
 import SemanticAnalysis.SymbolTable;
+import SemanticAnalysis.TooManyTempsException;
 
 public class IR_PROGRAM extends IR_Node {
 
@@ -26,7 +27,7 @@ public class IR_PROGRAM extends IR_Node {
 	 * The main wrapper pushes this = null to the stack, call the real main function
 	 * and then jump to the end label.
 	 */
-	public void writeMainWrapper(StringNLBuilder printed) throws IOException
+	public void writeMainWrapper(StringNLBuilder printed) throws IOException, TooManyTempsException
 	{
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();

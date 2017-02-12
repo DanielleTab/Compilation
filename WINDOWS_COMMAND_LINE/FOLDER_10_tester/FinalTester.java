@@ -23,6 +23,7 @@ public class FinalTester
 	private static final String PSEUDO_MIPS_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_pseudoMips.pmips";
 	private static final String BATCH_SCRIPT_PATH = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\testerUtils\\convert_pseudoMips_to_exe_and_run.bat";
 	private static final String EXE_OUTPUT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_exe_output.txt";
+	private static final String DO_NOT_RUN_SUFFIX = "DoNotRun";
 	
 	/**
 	 * @brief	Compiles the specified IC file to pseudo-MIPS, 
@@ -50,20 +51,23 @@ public class FinalTester
 	 * @brief	Converts the pseudo MIPS file to an EXE file and runs that EXE,
 	 * 			using a batch script.
 	 */
-	static private void convertPseudoMipsToExeAndRun() throws IOException, InterruptedException
+	static private void convertPseudoMipsToExeAndRun(String icFileName) throws IOException, InterruptedException
 	{
 		System.out.println("Converting the pseudo mips to EXE and running. This might take a few seconds.");
+		System.out.println("Reminder: running " + icFileName);
 		Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s", BATCH_SCRIPT_PATH));
 		// Use this line if you don't want the CMD to close automatically.
 		//Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s", BATCH_SCRIPT_PATH));
 		cmdProcess.waitFor();
 	}
 	
-	static public void compareToExpectedOutput(String expectedOutputFilePath) throws IOException
+	static public void compareToExpectedOutput(String icFileName) throws IOException
 	{	
+		String expectedOutputFilePath = EXPECTED_OUTPUTS_DIR + icFileName + EXPECTED_OUTPUT_SUFFIX;
 		byte[] outputBytes = Files.readAllBytes(Paths.get(EXE_OUTPUT_PATH));
 		byte[] expectedOutputBytes = Files.readAllBytes(Paths.get(expectedOutputFilePath));
 		
+		System.out.println(icFileName + " result:");
 		if (Arrays.equals(outputBytes, expectedOutputBytes))
 		{
 			System.out.println("Passed.\n");
@@ -100,12 +104,13 @@ public class FinalTester
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
 		if (isPseudoMipsValid())
 		{
-			convertPseudoMipsToExeAndRun();
-			compareToExpectedOutput(EXPECTED_OUTPUTS_DIR + icFileName + EXPECTED_OUTPUT_SUFFIX);	
+			convertPseudoMipsToExeAndRun(icFileName);
+			compareToExpectedOutput(icFileName);	
 		}
 		else
 		{
-			System.out.println("Failed.\nError in compilation.");
+			System.out.println(icFileName + " result:");
+			System.out.println("Failed.\nError in compiling to pseudo-MIPS.");
 			failedNum++;
 		}	
 	}
@@ -119,7 +124,11 @@ public class FinalTester
 	    {
 	    	if (folderFiles[i].isFile()) 
 	    	{
-	    		runSpecificTest(folderFiles[i].getName());
+	    		String icFileName = folderFiles[i].getName();
+	    		if (!icFileName.endsWith(DO_NOT_RUN_SUFFIX))
+	    		{
+	    			runSpecificTest(icFileName);	
+	    		}
 	    	} 
 	    }
 		    

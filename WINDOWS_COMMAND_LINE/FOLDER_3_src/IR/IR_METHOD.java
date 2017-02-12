@@ -9,6 +9,7 @@ import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.TooManyTempsException;
 
 public class IR_METHOD extends IR_Node 
 {
@@ -51,7 +52,7 @@ public class IR_METHOD extends IR_Node
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public void generatePrintIntCode() throws IOException
+	public void generatePrintIntCode() throws IOException, TooManyTempsException
 	{
 		StringNLBuilder printed = new StringNLBuilder();
 

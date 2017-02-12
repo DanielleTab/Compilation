@@ -5,6 +5,7 @@ import java.io.IOException;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.TempGenerator;
+import SemanticAnalysis.TooManyTempsException;
 
 public class IR_LITERAL_CONST extends IR_LITERAL{
 	int constInteger;
@@ -13,7 +14,7 @@ public class IR_LITERAL_CONST extends IR_LITERAL{
 		this.constInteger=i;
 	}
 	
-	public CodeGen_Temp generateCode() throws IOException
+	public CodeGen_Temp generateCode() throws IOException, TooManyTempsException
 	{
 		CodeGen_Temp register = TempGenerator.getAndAddNewTemp();
 		AssemblyFilePrinter.getInstance(null).write(String.format("li %s,%d%s", 

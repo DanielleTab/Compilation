@@ -16,6 +16,7 @@ import IR.IR_METHOD_LIST;
 import IR.IR_STMT_STORE;
 import IR.IR_STMT_WHILE;
 import IR.IR_TEMP;
+import SemanticAnalysis.TooManyTempsException;
 
 public class CodeGen_Call {
 	
@@ -47,7 +48,7 @@ public class CodeGen_Call {
 		return null;
 	}
 	
-	public CodeGen_Temp codeGen_exp(IR_EXP_BINOP binopExp)
+	public CodeGen_Temp codeGen_exp(IR_EXP_BINOP binopExp) throws TooManyTempsException
 	{
 		CodeGen_Temp t1 = TempGenerator.getAndAddNewTemp();
 		//Temp_temp t2 = codeGen_exp(binopExp.left);

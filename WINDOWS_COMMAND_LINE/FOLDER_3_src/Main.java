@@ -5,6 +5,7 @@ import java.io.*;
 import AST.*;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.StringCollector;
+import CodeGen.TempGenerator;
 import IR.IR_PROGRAM;
 import SemanticAnalysis.SymbolTable;
 import java_cup.runtime.Symbol;
@@ -52,6 +53,7 @@ public class Main
 				
 				AssemblyFilePrinter.instance = null;
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
+				TempGenerator.reset();
 				// builds ir tree.
 				SymbolTable.hashTable.clear();
 				IR_PROGRAM irNode = astNode.createIR();
