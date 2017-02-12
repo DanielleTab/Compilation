@@ -39,14 +39,37 @@ public class IR_EXP_NEW_CLASS extends IR_EXP{
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
+	/**
+	 * @brief	Generates code for storing the VFTable address at the beginning of the object.
+	 * 			If the object's class doesn't have a VFTable (if it doesn't have any methods),
+	 * 			generates code for storing null instead.	
+	 */
+	private void generateCodeForStoringVFTableAddress(ClassSymbolInfo classInfo, 
+													  CodeGen_Temp addressOnHeap, 
+													  StringNLBuilder printed)
+	{
+		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
+		
+		if (classInfo.virtualFunctionsOrder.size() > 0)
+		{
+			// Using the VFTable address
+			printed.appendNL(String.format("la %s, %s", newTemp.getName(),classInfo.getVFTableLabel()));	
+		}
+		else
+		{
+			// There isn't a VFTable, therefore using null
+			printed.appendNL(String.format("li %s, 0", newTemp.getName()));
+		}
+		
+		printed.appendNL(String.format("sw %s,0(%s)", newTemp.getName(),addressOnHeap.getName()));
+	}
+	
 	public CodeGen_Temp generateCode() throws IOException
 	{
 		ClassSymbolInfo classInfo = SymbolTable.getClassSymbolInfo(newExpClassName);
 		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Temp addressOnHeap = CodeGen_Utils.codeGen_malloc(printed,classInfo.size);
-		CodeGen_Temp newTemp = TempGenerator.getAndAddNewTemp();
-		printed.appendNL(String.format("la %s, %s", newTemp.getName(),classInfo.getVFTableLabel()));
-		printed.appendNL(String.format("sw %s,0(%s)", newTemp.getName(),addressOnHeap.getName()));
+		generateCodeForStoringVFTableAddress(classInfo, addressOnHeap, printed);
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		generateNullActionForFields(classInfo,addressOnHeap);
 		return addressOnHeap;
