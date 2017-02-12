@@ -18,11 +18,23 @@ import SemanticAnalysis.SymbolTable;
  * 
  */
 
-public class AssemblyFilePrinter {
-	public static int labelIndex = 0;
-	public final static String NEW_LINE_STRING = System.lineSeparator();
-	public static AssemblyFilePrinter instance = null;
+public class AssemblyFilePrinter 
+{
 	private FileWriter fileWriter = null;
+	public static AssemblyFilePrinter instance;
+	public static int labelIndex;
+	
+	public final static String NEW_LINE_STRING = System.lineSeparator();
+	
+	/**
+	 * Resets static members.
+	 */
+	public static void reset()
+	{
+		instance = null;
+		labelIndex = 0;
+	}
+	
 	protected AssemblyFilePrinter(String filePath) throws IOException
 	{
 		fileWriter = new FileWriter(filePath);

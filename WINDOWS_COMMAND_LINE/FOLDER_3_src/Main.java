@@ -51,11 +51,12 @@ public class Main
 				outputWriter.write(OK_STRING);
 				outputWriter.close();
 				
-				AssemblyFilePrinter.instance = null;
+				AssemblyFilePrinter.reset();
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
 				TempGenerator.reset();
 				// builds ir tree.
 				SymbolTable.hashTable.clear();
+				StringCollector.reset();
 				IR_PROGRAM irNode = astNode.createIR();
 				
 				// prints the strings before use them in the generate code.
