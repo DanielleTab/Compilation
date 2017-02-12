@@ -25,13 +25,13 @@ set EXE_OUTPUT_PATH=%LOCAL_BASE_DIR%\tester_exe_output.txt
 %PLINK_PATH% -ssh %NOVA_USER_NAME%@nova.cs.tau.ac.il -pw %NOVA_PASSWORD% "rm %NOVA_C_PATH%;" "%NOVA_SIMULATOR_PATH% %NOVA_PSEUDO_MIPS_PATH% %NOVA_C_PATH%"
 
 :: Downloading the C file from nova
-if exist %LOCAL_C_PATH% del %LOCAL_C_PATH%
+del %LOCAL_C_PATH%
 %WINSCP_COM_PATH% /command "open sftp://%NOVA_USER_NAME%:%NOVA_PASSWORD%@%NOVA_SERVER%/" "get %NOVA_C_PATH% %LOCAL_C_PATH%" "exit"
 
 :: Compiling the C file with Visual Studio
-if exist %EXE_PATH% del %EXE_PATH%
+del %EXE_PATH%
 %VS_DEV_ENV_EXE_PATH% %SLN_PATH% /rebuild
 
 :: Running the EXE
-if exist %EXE_OUTPUT_PATH% del %EXE_OUTPUT_PATH%
+del %EXE_OUTPUT_PATH%
 %EXE_PATH% > %EXE_OUTPUT_PATH%
