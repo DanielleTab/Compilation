@@ -142,7 +142,7 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("objectsArray");
+		runSpecificTest("arrayAccessViolation7");
 		//runAllTests();
 	}
 	

@@ -51,7 +51,7 @@ public class Main
 				outputWriter.write(OK_STRING);
 				outputWriter.close();
 				
-			/*	AssemblyFilePrinter.reset();
+				AssemblyFilePrinter.reset();
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
 				TempGenerator.reset();
 				// builds ir tree.
@@ -68,7 +68,7 @@ public class Main
 				AssemblyFilePrinter.getInstance(null).write(String.format(".text%s", System.lineSeparator()));
 				// codeGen
 				irNode.generateCode();
-				printer.close();*/
+				printer.close();
 			}
 			else
 			{
