@@ -9,7 +9,6 @@ class Fibonacci
 {
 	int calcFib(int n)
 	{
-		int k=0;
 		if(n==0)
 		{
 			return 0;
@@ -18,7 +17,10 @@ class Fibonacci
 		{
 			return 1;
 		}
-		return ((calcFib(n-1)) + (calcFib(n-2)));
+		int prev=calcFib(n-1);
+		int prev2=calcFib(n-2);
+		int sum=prev+prev2;
+		return sum;
 	}
 
 }
@@ -29,6 +31,6 @@ class Mainc
 		Print p = new Print();
 		Fibonacci f = new Fibonacci();
 		
-		p.printInt(f.calcFib(4));
+		p.printInt(f.calcFib(6));
 	}
 }
