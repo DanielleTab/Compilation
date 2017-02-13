@@ -30,7 +30,7 @@ public class AST_FIELD extends AST_FIELD_OR_METHOD
 			return null;
 		}
 		
-		if(SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className,fieldName) != null)
+		if(SymbolTable.searchSymbolInfoInClassAndUp(className,fieldName) != null)
 		{
 			// This fieldName already exists in the current class or in its predeccessors. so add new field with the same name is prohibited.
 			return null;

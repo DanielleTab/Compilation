@@ -25,8 +25,8 @@ public class Main
 		String assemblyOutput = argv[1];
 		
 		// TODO: Surround with try-catch
-		//try
-		//{
+		try
+		{
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
@@ -51,7 +51,7 @@ public class Main
 				outputWriter.write(OK_STRING);
 				outputWriter.close();
 				
-				AssemblyFilePrinter.reset();
+			/*	AssemblyFilePrinter.reset();
 				FileWriter printer = AssemblyFilePrinter.getInstance(assemblyOutput);
 				TempGenerator.reset();
 				// builds ir tree.
@@ -68,7 +68,7 @@ public class Main
 				AssemblyFilePrinter.getInstance(null).write(String.format(".text%s", System.lineSeparator()));
 				// codeGen
 				irNode.generateCode();
-				printer.close();
+				printer.close();*/
 			}
 			else
 			{
@@ -78,19 +78,19 @@ public class Main
 			outputWriter.close();
 			}
 			
-    //	}     
-	//	catch (Exception e)
-	//	{
-	//		try
-	//		{
-	//			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
-	//			outputWriter.write(FAIL_STRING);
-	//			outputWriter.close();
-	//		}
-	//		catch (Exception e2)
-	//		{
-	//		}
-	//	}
+    	}     
+		catch (Exception e)
+		{
+			try
+			{
+				BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
+				outputWriter.write(FAIL_STRING);
+				outputWriter.close();
+			}
+			catch (Exception e2)
+			{
+			}
+		}
 		
 	}
 }

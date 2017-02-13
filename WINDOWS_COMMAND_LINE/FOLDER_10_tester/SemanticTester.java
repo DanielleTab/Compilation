@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 public class SemanticTester 
 {
-	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//";
+	public static final String INPUT_FILE_PREFIX = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//semanticTests//";
 	public static final String OUTPUT_FILE_NAME = "tester_pseudoMips.pmips"; // pmips = pseudo MIPS
 	public static final String TESTER_OUTPUT_FILE_NAME = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//tester_output.txt";
 	public static final String OK_STRING = "OK";
@@ -19,7 +19,7 @@ public class SemanticTester
 	
 	static public void compareToExpectedOutput(String expectedOutput) throws IOException
 	{	
-		BufferedReader outputFile = new BufferedReader(new FileReader(new File(OUTPUT_FILE_NAME)));
+		BufferedReader outputFile = new BufferedReader(new FileReader(new File(TESTER_OUTPUT_FILE_NAME)));
 		String output = outputFile.readLine();
 		outputFile.close();
 		
@@ -40,7 +40,7 @@ public class SemanticTester
 		System.out.println("Running " + inputFilePath + " :");
 		String[] args = new String[3];
 		args[0] = INPUT_FILE_PREFIX + inputFilePath;
-		args[1] = OUTPUT_FILE_NAME;
+		args[1] = TESTER_OUTPUT_FILE_NAME;
 		Main.main(args);	
 		compareToExpectedOutput(expectedOutput);
 	}
@@ -51,8 +51,8 @@ public class SemanticTester
 		{
 			System.out.println("now!");
 		}
-	//	try
-	//	{
+		try
+		{
 			if (inputFilePath.endsWith(OK_STRING))
 			{
 				testSpecificFile(inputFilePath, OK_STRING);
@@ -61,8 +61,8 @@ public class SemanticTester
 			{
 				testSpecificFile(inputFilePath, FAIL_STRING);	
 			}	
-		//}
-		/*catch (Exception e) 
+		}
+		catch (Exception e) 
 		{
 			System.setOut(outputWriter);
 			System.out.println("Failed: Caught an exception: ");
@@ -70,15 +70,15 @@ public class SemanticTester
 			//e.printStackTrace();
 			System.out.println();
 			failedNum++;
-		}*/
+		}
 	}
 	
 	static public void main(String argv[]) throws Exception 
 	{
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
-		System.setOut(outputWriter);
+		//System.setOut(outputWriter);
 		
-		File folder = new File("WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//");
+		File folder = new File("WINDOWS_COMMAND_LINE//FOLDER_10_tester//semanticTests//");
 		File[] folderFiles = folder.listFiles();
 
 	    for (int i = 0; i < folderFiles.length; i++) 
