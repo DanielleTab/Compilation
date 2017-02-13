@@ -38,7 +38,7 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 		}
 		
 		this.varClass = varInfo.ICType;
-		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
+		SymbolInfo fieldFound = SymbolTable.searchSymbolInfoInClassAndUp(varClass,fieldName);
 
 		// field must exist + must be a variable
 		if(fieldFound==null  ||  (!(fieldFound instanceof VariableSymbolInfo)))
@@ -57,7 +57,7 @@ public class AST_LOCATION_FIELD extends AST_LOCATION
 	public IR_EXP_LOCATION_FIELD createIR() throws SemanticAnalysisException
 	{
 		assertClassAndFunctionNamesInitialized();
-		VariableSymbolInfo fieldFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(varClass,fieldName);
+		VariableSymbolInfo fieldFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoInClassAndUp(varClass,fieldName);
 		this.var.currentClassName=this.currentClassName;
 		this.var.currentFunctionName=this.currentFunctionName;
 		return new IR_EXP_LOCATION_FIELD(var.createIR(), fieldFound.offset);

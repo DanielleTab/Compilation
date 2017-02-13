@@ -47,7 +47,7 @@ public class AST_ID_LIST extends AST_Node
 		}
 		
 		VariableSymbolInfo fieldInfo = new VariableSymbolInfo(head, type);
-		if(SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, head)!=null)
+		if(SymbolTable.searchSymbolInfoInClassAndUp(className, head)!=null)
 		{
 			// can't declare variable with the same name again.
 			return null;

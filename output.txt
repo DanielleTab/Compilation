@@ -1,7 +1,7 @@
-VFTable_Print: .word Label_4_Print_printInt
+VFTable_Print: .word Label_0_Print_printInt
 .text
 j Label_3_main_wrapper
-Label_4_Print_printInt:
+Label_0_Print_printInt:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
@@ -13,14 +13,14 @@ lw Temp_0,0(Temp_1)
 mov $a0,Temp_0
 li $v0,1
 syscall
-Label_4_Print_printInt_epilog:
+Label_0_Print_printInt_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
 lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
-Label_5_Mainclass_main:
+Label_0_Mainclass_main:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 addi $sp,$sp,-4
@@ -36,18 +36,18 @@ li $v0,9
 syscall
 mov Temp_6,$v0
 sw Temp_2,0(Temp_6)
-Label_6_init_array:
+Label_4_init_array:
 li Temp_9,0
 li Temp_7,1
 mov Temp_8,Temp_6
 addi Temp_8,Temp_8,4
-Label_7_start_loop:
-bgt Temp_7,Temp_2,Label_8_end_loop
+Label_5_start_loop:
+bgt Temp_7,Temp_2,Label_6_end_loop
 sw Temp_9,0(Temp_8)
 addi Temp_8,Temp_8,4
 addi Temp_7,Temp_7,1
-j Label_7_start_loop
-Label_8_end_loop:
+j Label_5_start_loop
+Label_6_end_loop:
 mov Temp_11,$fp
 li Temp_12,-4
 add Temp_10,Temp_11,Temp_12
@@ -98,7 +98,7 @@ mov $t0,Temp_23
 jalr $t0
 li Temp_41,8
 add $sp,$sp,Temp_41
-Label_5_Mainclass_main_epilog:
+Label_0_Mainclass_main_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
 addi $sp,$sp,4
@@ -109,7 +109,7 @@ Label_3_main_wrapper:
 li Temp_42,0
 addi $sp,$sp,-4
 sw Temp_42,0($sp)
-jal Label_5_Mainclass_main
+jal Label_0_Mainclass_main
 j Label_2_END
 Label_1_ERROR:
 li $a0,666

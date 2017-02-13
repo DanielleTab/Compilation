@@ -1,0 +1,17 @@
+class Print
+{
+	void printInt(int i)
+	{
+		
+	}
+}
+
+class Mainclass
+{
+	void main(string[] args)
+	{
+	 	Print p =new Print();
+		int[] a = new int[3];
+		p.printInt(a[3]);
+	}
+}

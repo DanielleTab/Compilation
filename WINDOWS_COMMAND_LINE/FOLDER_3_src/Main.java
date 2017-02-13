@@ -25,8 +25,8 @@ public class Main
 		String assemblyOutput = argv[1];
 		
 		// TODO: Surround with try-catch
-		//try
-		//{
+		try
+		{
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
@@ -78,19 +78,19 @@ public class Main
 			outputWriter.close();
 			}
 			
-    //	}     
-	//	catch (Exception e)
-	//	{
-	//		try
-	//		{
-	//			BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
-	//			outputWriter.write(FAIL_STRING);
-	//			outputWriter.close();
-	//		}
-	//		catch (Exception e2)
-	//		{
-	//		}
-	//	}
+    	}     
+		catch (Exception e)
+		{
+			try
+			{
+				BufferedWriter outputWriter = new BufferedWriter(new FileWriter(new File(outputFileName)));
+				outputWriter.write(FAIL_STRING);
+				outputWriter.close();
+			}
+			catch (Exception e2)
+			{
+			}
+		}
 		
 	}
 }

@@ -32,6 +32,6 @@ class Mainc
 		Print p = new Print();
 		Fibonacci f = new Fibonacci();
 		
-		p.printInt(f.calcFib(4));
+		p.printInt(f.calcFib(6));
 	}
 }
