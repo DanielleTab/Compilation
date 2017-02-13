@@ -32,23 +32,33 @@ public class IR_METHOD extends IR_Node
 		this.isPrintIntFunc = isPrintIntFunc;
 	}
 	
-	public void printProlog() throws IOException
+	public static void appendProlog(StringNLBuilder printed, int funcFrameSize) throws IOException
 	{
-		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Utils.codeGen_Push(printed, "$ra");
 		CodeGen_Utils.codeGen_Push(printed, "$fp");
 		printed.appendNL("mov $fp, $sp");
-		printed.appendNL(String.format("addi $sp,$sp,%d", (this.frameSize)*(-1)));
+		printed.appendNL(String.format("addi $sp,$sp,%d", funcFrameSize*(-1)));
+	}
+	
+	public void printProlog() throws IOException
+	{
+		StringNLBuilder printed = new StringNLBuilder();
+		appendProlog(printed, this.frameSize);
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
+	}
+	
+	public static void appendEpilog(StringNLBuilder printed) throws IOException
+	{
+		printed.appendNL("mov $sp, $fp");
+		CodeGen_Utils.codeGen_Pop(printed, "$fp");
+		CodeGen_Utils.codeGen_Pop(printed, "$ra");
+		printed.appendNL("jr $ra");
 	}
 	
 	public void printEpilog() throws IOException
 	{
 		StringNLBuilder printed = new StringNLBuilder();
-		printed.appendNL("mov $sp, $fp");
-		CodeGen_Utils.codeGen_Pop(printed, "$fp");
-		CodeGen_Utils.codeGen_Pop(printed, "$ra");
-		printed.appendNL("jr $ra");
+		appendEpilog(printed);
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	

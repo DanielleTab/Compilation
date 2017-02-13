@@ -2,6 +2,8 @@ package IR;
 
 import java.io.IOException;
 
+import AST.AST_METHOD;
+import AST.AST_Node;
 import CodeGen.AssemblyFilePrinter;
 import CodeGen.CodeGen_Temp;
 import CodeGen.CodeGen_Utils;
@@ -16,6 +18,14 @@ public class IR_PROGRAM extends IR_Node {
 	private static final String MAIN_WRAPPER_LABEL =String.format("Label_%d_main_wrapper",AssemblyFilePrinter.addLabelIndex());
 	// fields
 	public IR_CLASS_DECL_LIST classDeclList;
+	
+	public static final String STRLEN_FUNCTION_LABEL = AST_METHOD.METHOD_LABEL_PREFIX + "strlen";
+	public static final String STRLEN_WHILE_START_LABEL = STRLEN_FUNCTION_LABEL + "_while_start";
+	public static final String STRLEN_WHILE_END_LABEL = STRLEN_FUNCTION_LABEL + "_while_end";
+	
+	// A static function doesn't have 'this' argument, therefore its first argument has the
+	// same offset as 'this' argument in non-static functions.
+	public static final int STATIC_FUNC_FIRST_ARG_OFFSET = AST_Node.FRAME_OFFSET_OF_THE_THIS_ARGUMENT;
 	
 	// C'tor
 	public IR_PROGRAM(IR_CLASS_DECL_LIST classDeclList)
@@ -59,13 +69,76 @@ public class IR_PROGRAM extends IR_Node {
 		printed.appendNL("syscall");
 	}
 	
-	// TODO: Implement.
-	private void writeStaticStrlen(StringNLBuilder printed)
-	{	
+	/**
+	 * @brief	Writes the code of the static function strlen (which returns
+	 * 			the length of the given string).
+	 */
+	private void writeStaticStrlen(StringNLBuilder printed) throws TooManyTempsException, IOException
+	{
+		CodeGen_Temp zero = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp argAddress = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp strAddress = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp strByte = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp index = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp strByteAddress = TempGenerator.getAndAddNewTemp();
+		
+		// Printing function label and prolog
+		printed.appendNL(String.format("%s:", STRLEN_FUNCTION_LABEL));
+		IR_METHOD.appendProlog(printed, 0); // no local variables - frame size is 0
+		
+		/*
+		 * initialization code
+		 * 
+		 * li zero, 0
+		 * addi argAddress, $fp, FIRST_ARG_FRAME_OFFSET
+		 * lw strAddress, 0(argAddress)
+		 * 
+		 * lb strByte, (strAddress)
+		 * li index, 0
+		 */
+		printed.appendNL(String.format("li %s, 0", zero.getName()));
+		printed.appendNL(String.format("addi %s, $fp, %d", 
+									   argAddress.getName(), 
+									   STATIC_FUNC_FIRST_ARG_OFFSET));
+		printed.appendNL(String.format("lw %s, 0(%s)", 
+									   strAddress.getName(),
+									   argAddress.getName()));
+		printed.appendNL(String.format("lb %s, (%s)", 
+									   strByte.getName(), 
+									   strAddress.getName()));
+		
+		/*
+		 * while code
+		 * 
+		 * Label_0_strlen_while_start:
+		 * 		beq strByte, zero, label_0_strlen_while_end // while condition
+		 * 		addi index, index, 1
+		 * 		add strByteAddress, strAddress, index
+		 * 		lb strByte, (strByteAddress)
+		 * 		j Label_0_strlen_while_start
+		 * Label_0_strlen_while_end:
+		 */
+		printed.appendNL(String.format("%s:", STRLEN_WHILE_START_LABEL));
+		printed.appendNL(String.format("beq %s, %s, %s",
+									    strByte.getName(),
+									    zero.getName(),
+									    STRLEN_WHILE_END_LABEL));
+		printed.appendNL(String.format("addi %s, %s, 1", index.getName(), index.getName()));
+		printed.appendNL(String.format("add %s, %s, %s", 
+									   strByteAddress.getName(),
+									   strAddress.getName(),
+									   index.getName()));
+		printed.appendNL(String.format("lb %s, (%s)", strByte.getName(), strByteAddress.getName()));
+		printed.appendNL(String.format("j %s", STRLEN_WHILE_START_LABEL));
+		printed.appendNL(String.format("%s:", STRLEN_WHILE_END_LABEL));
+		
+		// Storing length in v0 and returning
+		printed.appendNL(String.format("mov $v0, %s", index.getName()));
+		IR_METHOD.appendEpilog(printed);
 	}
 	
 	// TODO: Implement.
-	private void writeStaticUtilityFunctions(StringNLBuilder printed)
+	private void writeStaticUtilityFunctions(StringNLBuilder printed) throws TooManyTempsException, IOException
 	{
 		writeStaticStrlen(printed);
 	}

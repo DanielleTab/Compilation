@@ -1,0 +1,36 @@
+class Print
+{
+void printInt(int i)
+{
+}
+}
+
+class ReturnClass
+{
+	int returnFunc(int n)
+	{
+		if(n==0)
+		{
+			return 0;
+		}
+		if(n==1)
+		{
+			return 1;
+		}
+	
+		return 2;
+	}
+
+}
+class MainClass
+{
+	void main(string[] args)
+	{
+		Print p = new Print();
+		ReturnClass ret = new ReturnClass();
+	
+		p.printInt(ret.returnFunc(0));
+		p.printInt(ret.returnFunc(1));
+		p.printInt(ret.returnFunc(2));
+	}
+}
