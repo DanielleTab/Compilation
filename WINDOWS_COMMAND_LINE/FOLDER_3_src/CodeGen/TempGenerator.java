@@ -17,6 +17,7 @@ public class TempGenerator
 	
 	public static CodeGen_Temp getAndAddNewTemp() throws TooManyTempsException
 	{
+		// TODO: Delete this exception before submitting.
 		if (temps.size() == MAX_TEMP_SIZE)
 		{
 			throw new TooManyTempsException();

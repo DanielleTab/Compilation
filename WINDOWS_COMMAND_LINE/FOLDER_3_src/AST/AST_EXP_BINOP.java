@@ -16,6 +16,8 @@ public class AST_EXP_BINOP extends AST_EXP
 	public AST_EXP left;
 	public AST_EXP right;
 	
+	public boolean isStrConcat = false;
+	
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
@@ -44,7 +46,10 @@ public class AST_EXP_BINOP extends AST_EXP
 			
 			// two strings
 			if(leftInfo.isFlatICType(ICTypeInfo.IC_TYPE_STRING) && rightInfo.isFlatICType(ICTypeInfo.IC_TYPE_STRING))
+			{
+				isStrConcat = true;
 				return new ICTypeInfo(ICTypeInfo.IC_TYPE_STRING,0);
+			}
 			
 			// illegal
 			String debugMessage = String.format("AST_EXP_BINOP.validate: %s + %s is undefined.", leftInfo, rightInfo);
@@ -149,6 +154,6 @@ public class AST_EXP_BINOP extends AST_EXP
 		
 		IR_EXP leftExp  = left.createIR();
 		IR_EXP rightExp = right.createIR();
-		return new IR_EXP_BINOP(leftExp,rightExp,currentOP);
+		return new IR_EXP_BINOP(leftExp, rightExp, currentOP, isStrConcat);
 	}
 }

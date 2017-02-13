@@ -304,7 +304,8 @@ public class AST_CALL extends AST_Node
 		IR_EXP calledFunctionOffset = getFunctionOffsetInCallerVirtualTable();
 		IR_EXP virtualTableEntryAddress = new IR_EXP_BINOP(callerVirtualTableAddress, 
 				   										   calledFunctionOffset, 
-				   										   BinOperation.PLUS);
+				   										   BinOperation.PLUS,
+				   										   false);
 		
 		IR_EXP virtualTableEntryContent = new IR_EXP_MEM(virtualTableEntryAddress);
 		return virtualTableEntryContent;

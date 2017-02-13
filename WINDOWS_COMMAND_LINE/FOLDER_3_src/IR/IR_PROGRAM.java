@@ -59,12 +59,26 @@ public class IR_PROGRAM extends IR_Node {
 		printed.appendNL("syscall");
 	}
 	
+	// TODO: Implement.
+	private void writeStaticStrlen(StringNLBuilder printed)
+	{	
+	}
+	
+	// TODO: Implement.
+	private void writeStaticUtilityFunctions(StringNLBuilder printed)
+	{
+		writeStaticStrlen(printed);
+	}
+	
 	public void generateCode() throws IOException, SemanticAnalysisException 
 	{
 		StringNLBuilder printed = new StringNLBuilder();
 		printed.appendNL(String.format("j %s", MAIN_WRAPPER_LABEL));
+		writeStaticUtilityFunctions(printed);
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
+		
 		this.classDeclList.generateCode();
+		
 		printed = new StringNLBuilder();
 		writeMainWrapper(printed);
 		writeErrorTreatment(printed);
