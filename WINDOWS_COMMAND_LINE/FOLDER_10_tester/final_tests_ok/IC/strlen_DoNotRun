@@ -1,0 +1,20 @@
+class PRINT
+{
+	void printInt(int i)
+	{
+	}
+}
+
+class MainClass
+{
+	void main(string[] args)
+	{
+		int i = 0;
+		string str = "123456ab9";
+		
+		// add call to strlen here
+		
+		PRINT printer = new PRINT();
+		printer.printInt(i);
+	}
+}
