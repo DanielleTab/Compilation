@@ -17,9 +17,10 @@ class Fibonacci
 		{
 			return 1;
 		}
-		int prev=calcFib(n-1);
-		int prev2=calcFib(n-2);
-		int sum=prev+prev2;
+		
+		int prev = calcFib(n-1);
+		int prev2 = calcFib(n-2);
+		int sum = prev + prev2;
 		return sum;
 	}
 

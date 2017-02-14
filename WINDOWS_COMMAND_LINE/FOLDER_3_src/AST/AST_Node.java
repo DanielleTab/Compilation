@@ -66,7 +66,7 @@ public abstract class AST_Node
 		IR_EXP fp = new IR_TEMP(TempType.fp);
 		IR_EXP firstArgumentOffset = new IR_LITERAL_CONST(FRAME_OFFSET_OF_THE_THIS_ARGUMENT);
 		
-		IR_EXP firstArgumentAddress = new IR_EXP_BINOP(fp, firstArgumentOffset, BinOperation.PLUS);
+		IR_EXP firstArgumentAddress = new IR_EXP_BINOP(fp, firstArgumentOffset, BinOperation.PLUS, false);
 		IR_EXP firstArgumentContent = new IR_EXP_MEM(firstArgumentAddress);
 		
 		return firstArgumentContent; // the first argument is the address of 'this' object.

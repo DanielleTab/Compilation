@@ -64,7 +64,10 @@ public class AST_LOCATION_SIMPLE extends AST_LOCATION
 		assertClassAndFunctionNamesInitialized();
 		VariableSymbolInfo symbolFound = (VariableSymbolInfo)SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(this.currentClassName,name);
 	
-		return new IR_EXP_BINOP(getLocationStartingOffset(symbolFound),new IR_LITERAL_CONST(symbolFound.offset),BinOperation.PLUS);
+		return new IR_EXP_BINOP(getLocationStartingOffset(symbolFound),
+								new IR_LITERAL_CONST(symbolFound.offset),
+								BinOperation.PLUS,
+								false);
 		
 	}
 }

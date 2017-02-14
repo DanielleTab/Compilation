@@ -14,12 +14,14 @@ public class IR_EXP_BINOP extends IR_EXP {
 	public IR_EXP left;
 	public IR_EXP right;
 	public BinOperation operation;
+	public boolean isStrConcat;
 	
-	public IR_EXP_BINOP(IR_EXP left, IR_EXP right, BinOperation operation)
+	public IR_EXP_BINOP(IR_EXP left, IR_EXP right, BinOperation operation, boolean isStrConcat)
 	{
-		this.left=left;
-		this.right=right;
-		this.operation=operation;
+		this.left = left;
+		this.right = right;
+		this.operation = operation;
+		this.isStrConcat = isStrConcat;
 	}
 	
 	private boolean isMathematicOperation()
@@ -96,6 +98,31 @@ public class IR_EXP_BINOP extends IR_EXP {
 		throw new UnsupportedBinOpException();
 	}
 	
+	// TODO: Implement.
+	private CodeGen_Temp generateCodeForFindingStrLength(CodeGen_Temp strTemp)
+	{
+		return null;
+	}
+	
+	// TODO: Implement.
+	/**
+	 * @brief	Generates code which concatenates the strings by calculating their lengths,
+	 * 			allocating memory for their concatenation, and copying the strings into
+	 * 			that memory.
+	 * 
+	 * @param 	str1Temp - holds the address of the first string. 
+	 * @param 	str2Temp - holds the address of the second string.
+	 * @param 	resultTemp - the generated code writes the address of the result string
+	 * 						into this temp.
+	 * @param 	printed - the string builder to which the generated code is written.
+	 */
+	private void generateCodeForStrConcat(CodeGen_Temp str1Temp, 
+										  CodeGen_Temp str2Temp, 
+										  CodeGen_Temp resultTemp,
+										  StringNLBuilder printed)
+	{
+	}
+	
 	@Override
 	public CodeGen_Temp generateCode() throws IOException, SemanticAnalysisException
 	{
@@ -107,8 +134,15 @@ public class IR_EXP_BINOP extends IR_EXP {
 		
 		if(isMathematicOperation())
 		{
-			// TODO: division by zero!
-			printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),result.getName(),t1.getName(), t2.getName()));
+			if (isStrConcat)
+			{
+				generateCodeForStrConcat(t1, t2, result, printed);
+			}
+			else
+			{
+				// TODO: division by zero!
+				printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),result.getName(),t1.getName(), t2.getName()));				
+			}
 		}
 		else
 		{
