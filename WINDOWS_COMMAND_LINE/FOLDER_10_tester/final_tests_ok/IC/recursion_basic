@@ -18,9 +18,9 @@ class Rectest
 			b=b-1;
 			prevb();
 		}
-		PRINT ps;
-		int j=0;
-		ps.printInt(j);
+	
+		p.printInt(0);
+		
 	}
 }
 

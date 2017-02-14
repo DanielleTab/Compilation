@@ -48,11 +48,11 @@ public class IR_CALL extends IR_Node
 			CodeGen_Utils.codeGen_Push(printed, ts.get(0).getName());
 			CodeGen_Utils.codeGen_Push(printed, zeroTemp.getName());
 			printed.appendNL(String.format("jal %s", PRINTINT_FUNC_LABEL));
-			AssemblyFilePrinter.getInstance(null).write(printed.toString());
 			CodeGen_Temp spOffsetTemp = TempGenerator.getAndAddNewTemp();
 			printed.appendNL(String.format("li %s,%d",spOffsetTemp.getName(), SymbolTable.ADDRESS_SIZE*2 ));
 			printed.appendNL(String.format("add $sp,$sp,%s", spOffsetTemp.getName()));
-			
+			AssemblyFilePrinter.getInstance(null).write(printed.toString());
+
 			return;
 		}
 		
