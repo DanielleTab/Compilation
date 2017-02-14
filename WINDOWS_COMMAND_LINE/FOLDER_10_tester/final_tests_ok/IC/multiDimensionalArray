@@ -1,4 +1,4 @@
-class Print 
+class PRINT 
 {
 	void printInt(int i) 
 	{
@@ -21,7 +21,7 @@ class Mainclass
 		b[1] = 1;
 		b[2]=2;
 		b[3]=3;
-		Print p = new Print();
+		PRINT p;
 		p.printInt(a[0][2]);
 		p.printInt(a[1][1]);
 		

@@ -6,6 +6,9 @@ public class SymbolTable {
 	public static Hashtable<String,SymbolInfoNode> hashTable=new Hashtable<String,SymbolInfoNode>();
 	public static final String SCOPE_SYMBOL_NAME="<<BSCOPE>>";
 	public static final String MAIN_FUNC_SYMBOL_NAME = "main";
+	public static final String PRINTINT_FUNC_SYMBOL_NAME = "printInt"; 
+	public static final String PRINT_CLASS_SYMBOL_NAME = "PRINT"; 
+
 	public static final int ADDRESS_SIZE=4;
 	public static String mainFunctionLabel = null; 
 	/*

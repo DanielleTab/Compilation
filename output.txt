@@ -1,4 +1,3 @@
-VFTable_Print: .word Label_0_Print_printInt
 .text
 j Label_3_main_wrapper
 Label_0_Print_printInt:
@@ -56,48 +55,29 @@ li $a0,4
 li $v0,9
 syscall
 mov Temp_13,$v0
-la Temp_14, VFTable_Print
+li Temp_14, 0
 sw Temp_14,0(Temp_13)
 mov Temp_16,$fp
 li Temp_17,-8
 add Temp_15,Temp_16,Temp_17
 sw Temp_13,0(Temp_15)
-mov Temp_20,$fp
-li Temp_21,-8
-add Temp_19,Temp_20,Temp_21
+mov Temp_22,$fp
+li Temp_23,-4
+add Temp_21,Temp_22,Temp_23
+lw Temp_20,0(Temp_21)
+li Temp_24,0
+beq Temp_20,Temp_24,Label_1_ERROR
+li Temp_25,4
+lw Temp_26,0(Temp_20)
+bge Temp_25,Temp_26,Label_1_ERROR
+addi Temp_25,Temp_25,1
+li Temp_27,4
+mul Temp_25,Temp_25,Temp_27
+add Temp_19,Temp_25,Temp_20
 lw Temp_18,0(Temp_19)
-li Temp_22,0
-beq Temp_18,Temp_22,Label_1_ERROR
-mov Temp_28,$fp
-li Temp_29,-8
-add Temp_27,Temp_28,Temp_29
-lw Temp_26,0(Temp_27)
-lw Temp_25,0(Temp_26)
-li Temp_30,0
-add Temp_24,Temp_25,Temp_30
-lw Temp_23,0(Temp_24)
-mov Temp_35,$fp
-li Temp_36,-4
-add Temp_34,Temp_35,Temp_36
-lw Temp_33,0(Temp_34)
-li Temp_37,0
-beq Temp_33,Temp_37,Label_1_ERROR
-li Temp_38,4
-lw Temp_39,0(Temp_33)
-bge Temp_38,Temp_39,Label_1_ERROR
-addi Temp_38,Temp_38,1
-li Temp_40,4
-mul Temp_38,Temp_38,Temp_40
-add Temp_32,Temp_38,Temp_33
-lw Temp_31,0(Temp_32)
-addi $sp,$sp,-4
-sw Temp_31,0($sp)
 addi $sp,$sp,-4
 sw Temp_18,0($sp)
-mov $t0,Temp_23
-jalr $t0
-li Temp_41,8
-add $sp,$sp,Temp_41
+jal Label_0_Print_printInt
 Label_0_Mainclass_main_epilog:
 mov $sp, $fp
 lw $fp,0($sp)
@@ -106,9 +86,9 @@ lw $ra,0($sp)
 addi $sp,$sp,4
 jr $ra
 Label_3_main_wrapper:
-li Temp_42,0
+li Temp_28,0
 addi $sp,$sp,-4
-sw Temp_42,0($sp)
+sw Temp_28,0($sp)
 jal Label_0_Mainclass_main
 j Label_2_END
 Label_1_ERROR:

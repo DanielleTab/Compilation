@@ -1,4 +1,4 @@
-class Print 
+class PRINT 
 {
 	void printInt(int i) 
 	{
@@ -8,17 +8,19 @@ class Print
 class Rectest
 {
 	int b;
-	Print p;
 
 	void prevb()
 	{
+		PRINT p;
 		if(b>0)
 		{
 			p.printInt(b);
 			b=b-1;
 			prevb();
 		}
-		p.printInt(0);
+		PRINT ps;
+		int j=0;
+		ps.printInt(j);
 	}
 }
 
@@ -26,8 +28,8 @@ class Mainclass
 {
 	void main(string[] args)
 	{
+	
 		Rectest r=new Rectest();
-		r.p=new Print();
 		r.b=12;
 		r.prevb();
 	}

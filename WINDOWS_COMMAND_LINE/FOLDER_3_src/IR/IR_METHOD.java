@@ -72,6 +72,10 @@ public class IR_METHOD extends IR_Node
 	
 	public void generateCode() throws IOException, SemanticAnalysisException
 	{
+		if(isPrintIntFunc)
+		{
+			this.label = new IR_LABEL(PRINTINT_FUNC_LABEL);
+		}
 		this.label.generateCode();
 		this.printProlog();
 		if(isPrintIntFunc)

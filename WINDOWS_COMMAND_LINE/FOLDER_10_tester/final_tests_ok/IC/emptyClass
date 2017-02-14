@@ -1,10 +1,9 @@
-class Print 
+class PRINT
 {
-	void printInt(int i) 
+	void printInt(int i)
 	{
 	}
 }
-
 class EmptyClass
 {
 }
@@ -13,7 +12,7 @@ class MainClass
 {
 	void main(string[] args)
 	{
-		Print printer = new Print();
+		PRINT printer;
 		
 		printer.printInt(1);
 		EmptyClass emptyObj;

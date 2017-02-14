@@ -65,8 +65,9 @@ public class ClassSymbolInfo extends SymbolInfo{
 		this.methods.add(method);
 		
 		// main function does not appear in the vft because it's basically a static method
+		// printInt in PRINT class does not appear in the vft - as Oren's request.
 		// method.functionLabel == null if we are in the validation process, so we don't want to build now the vft.
-		if((!method.isMainFunc) && (method.functionLabel!=null))
+		if((!method.isMainFunc) && (method.functionLabel!=null)&&(!method.isPrintFunc))
 		{
 			if(!this.virtualFunctionsOrder.contains(method.symbolName))
 			{

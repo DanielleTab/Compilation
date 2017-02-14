@@ -319,6 +319,20 @@ public class AST_CALL extends AST_Node
 	{
 		bequeathClassAndFunctionNamesToChildren();
 		
+		/*
+		 * It means the special case of printInt.
+		 */
+		if(calledFunctionName.equals(SymbolTable.PRINTINT_FUNC_SYMBOL_NAME))
+		{
+			IR_EXP_LIST argumentsIR = null;
+			if (args != null)
+			{
+				argumentsIR = args.createIR();
+			}
+			
+			return new IR_CALL(argumentsIR,true);
+		}
+		
 		IR_EXP callerAddress = getCallerAddress();
 		IR_EXP calledFunctionAddress = getCalledFunctionAddress(callerAddress);
 		

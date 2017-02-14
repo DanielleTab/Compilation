@@ -21,6 +21,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 	public AST_FORMALS_LIST formalsList;
 	public AST_STMT_LIST body;
 	public boolean isMainFunc = false;
+	public boolean isPrintFunc = false;
 	
 	public static final String METHOD_LABEL_PREFIX = "Label_0_";
 	
@@ -106,7 +107,10 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 			}
 			this.isMainFunc = true;
 		}
-		
+		if(currentFunctionName.equals(SymbolTable.PRINTINT_FUNC_SYMBOL_NAME) && (className.equals(SymbolTable.PRINT_CLASS_SYMBOL_NAME)))
+		{
+			this.isPrintFunc = true;
+		}
 		return new ICTypeInfo();
 	}
 	
@@ -115,6 +119,7 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 		assertClassAndFunctionNamesInitialized();
 		FunctionSymbolInfo methodSymbolInfo = new FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		methodSymbolInfo.isMainFunc = this.isMainFunc;
+		methodSymbolInfo.isPrintFunc = this.isPrintFunc;
 		methodSymbolInfo.functionLabel = String.format("%s%s_%s", METHOD_LABEL_PREFIX,currentClassName,currentFunctionName);
 		SymbolTable.addMethodToClass(currentClassName, methodSymbolInfo);
 		SymbolTable.insertNewSymbol(methodSymbolInfo);
@@ -153,6 +158,6 @@ public class AST_METHOD extends AST_FIELD_OR_METHOD
 							 bodyStmtList, 
 							 methodSymbolInfo.frameSize,
 							 isMainFunc,
-							 currentFunctionName.equals("printInt"));
+							 isPrintFunc);
 	}
 }

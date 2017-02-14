@@ -5,12 +5,13 @@ class PRINT
 	}
 }
 
-class Mainclass
+class Mainc
 {
 	void main(string[] args)
 	{
-	 	PRINT p;
-		int[] a = new int[3];
-		p.printInt(a[3]);
+	PRINT p;
+	int i=1;
+	p.printInt(i);
+
 	}
 }

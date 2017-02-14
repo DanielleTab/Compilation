@@ -17,6 +17,7 @@ public class IR_CALL extends IR_Node
 	public IR_EXP callerAddress; // should be passed as first argument
 	public IR_EXP calledFunctionAddress; // taken from the virtual table
 	public IR_EXP_LIST args;
+	public boolean isPrintIntCall= false;
 	
 	public IR_CALL(IR_EXP calledFunctionAddress, IR_EXP callerAddress, IR_EXP_LIST args)
 	{
@@ -24,7 +25,12 @@ public class IR_CALL extends IR_Node
 		this.callerAddress = callerAddress;
 		this.args = args;
 	}
-	
+
+	public IR_CALL(IR_EXP_LIST args, boolean isPrintIntCall)
+	{
+		this.args = args;
+		this.isPrintIntCall = isPrintIntCall;
+	}
 	/**
 	 * @throws SemanticAnalysisException 
 	 * @brief	Generates code which calls the function, 
@@ -32,6 +38,24 @@ public class IR_CALL extends IR_Node
 	 *  */
 	public void generateCode() throws IOException, SemanticAnalysisException
 	{
+		if(isPrintIntCall)
+		{
+			StringNLBuilder printed = new StringNLBuilder();
+			CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
+			printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
+			// args is not null here because it's a semantic error.
+			List<CodeGen_Temp> ts = args.generateCodeList();
+			CodeGen_Utils.codeGen_Push(printed, ts.get(0).getName());
+			CodeGen_Utils.codeGen_Push(printed, zeroTemp.getName());
+			printed.appendNL(String.format("jal %s", PRINTINT_FUNC_LABEL));
+			AssemblyFilePrinter.getInstance(null).write(printed.toString());
+			CodeGen_Temp spOffsetTemp = TempGenerator.getAndAddNewTemp();
+			printed.appendNL(String.format("li %s,%d",spOffsetTemp.getName(), SymbolTable.ADDRESS_SIZE*2 ));
+			printed.appendNL(String.format("add $sp,$sp,%s", spOffsetTemp.getName()));
+			
+			return;
+		}
+		
 		CodeGen_Temp callerAddressTemp = (CodeGen_Temp) callerAddress.generateCode();
 		CodeGen_Temp zeroTemp = TempGenerator.getAndAddNewTemp();
 		

@@ -1,4 +1,4 @@
-class Print
+class PRINT
 {
 	void printInt(int i)
 	{
@@ -33,7 +33,7 @@ class Mainclass
 {
 	void main(string[] args)
 	{
-	 	Print p =new Print();
+	 	PRINT p;
 		A[][] a = new A[][4];
 		
 		a[0]=new A[3];
