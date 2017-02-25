@@ -51,13 +51,30 @@ public class FinalTester
 	 * @brief	Converts the pseudo MIPS file to an EXE file and runs that EXE,
 	 * 			using a batch script.
 	 */
-	static private void convertPseudoMipsToExeAndRun(String icFileName) throws IOException, InterruptedException
+	static private void convertPseudoMipsToExeAndRun(String icFileName, TesterMode mode) throws IOException, InterruptedException
 	{
+		Process cmdProcess = null;
+		
 		System.out.println("Converting the pseudo mips to EXE and running. This might take a few seconds.");
 		System.out.println("Reminder: running " + icFileName);
-		Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s", BATCH_SCRIPT_PATH));
-		// Use this line if you don't want the CMD to close automatically.
-		//Process cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s", BATCH_SCRIPT_PATH));
+		
+		switch (mode)
+		{
+		
+		case MANUALY_CLOSE:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s", BATCH_SCRIPT_PATH));
+			break;
+			
+		case AUTO_CLOSE:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s", BATCH_SCRIPT_PATH));
+			break;
+			
+		case AUTO_CLOSE_MINIMIZE_CMD:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait /min cmd.exe /C %s", BATCH_SCRIPT_PATH));
+			break;
+			
+		}
+		
 		cmdProcess.waitFor();
 	}
 	
@@ -98,13 +115,13 @@ public class FinalTester
 		return (!pseudoMipsFirstLine.equals(SEMANTIC_ERROR_OUTPUT));
 	}
 	
-	static public void runSpecificTest(String icFileName) throws Exception
+	static public void runSpecificTest(String icFileName, TesterMode mode) throws Exception
 	{
 		System.out.println("Running " + icFileName + ":");
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
 		if (isPseudoMipsValid())
 		{
-			convertPseudoMipsToExeAndRun(icFileName);
+			convertPseudoMipsToExeAndRun(icFileName, mode);
 			compareToExpectedOutput(icFileName);	
 		}
 		else
@@ -115,7 +132,7 @@ public class FinalTester
 		}	
 	}
 	
-	static private void runAllTests() throws Exception
+	static private void runAllTests(TesterMode mode) throws Exception
 	{
 		File folder = new File(IC_FILES_DIR);
 		File[] folderFiles = folder.listFiles();
@@ -127,7 +144,7 @@ public class FinalTester
 	    		String icFileName = folderFiles[i].getName();
 	    		if (!icFileName.endsWith(DO_NOT_RUN_SUFFIX))
 	    		{
-	    			runSpecificTest(icFileName);	
+	    			runSpecificTest(icFileName, mode);	
 	    		}
 	    	} 
 	    }
@@ -137,13 +154,20 @@ public class FinalTester
 		System.out.println("Total failed: " + failedNum); 
 	}
 	
+	enum TesterMode
+	{
+		MANUALY_CLOSE,
+		AUTO_CLOSE,
+		AUTO_CLOSE_MINIMIZE_CMD,
+	}
+	
 	static public void main(String argv[]) throws Exception 
 	{
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		//runSpecificTest("recursion_basic");
-	    runAllTests();
+		runSpecificTest("memcpy_DoNotRun", TesterMode.MANUALY_CLOSE);
+	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	
 }

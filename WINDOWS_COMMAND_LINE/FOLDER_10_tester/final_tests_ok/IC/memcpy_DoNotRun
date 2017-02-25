@@ -1,0 +1,44 @@
+class PRINT
+{
+	void printInt(int i)
+	{
+	}
+}
+
+class MainClass
+{
+	void main(string[] args)
+	{
+		int[] arr = new int[5];
+		int[] arr2 = new int[5];
+		
+		arr[0] = 105;
+		arr[1] = 106;
+		arr[2] = 107;
+		arr[3] = 108;
+		arr[4] = 109;
+		
+		// add call to memcpy here by adding the following lines 
+		// in line 209 of the pseudo MIPS file:
+		/*
+			addi $sp, $sp, -4
+			li Temp_200, 24
+			sw Temp_200, 0($sp)
+			addi $sp, $sp, -4
+			mov Temp_200, Temp_20
+			sw Temp_200, 0($sp)
+			addi $sp, $sp, -4
+			mov Temp_200, Temp_31
+			sw Temp_200, 0($sp)
+			jal Label_0_memcpy
+			addi $sp, $sp, 12
+		*/
+		
+		PRINT printer;
+		printer.printInt(arr2[0]);
+		printer.printInt(arr2[1]);
+		printer.printInt(arr2[2]);
+		printer.printInt(arr2[3]);
+		printer.printInt(arr2[4]);
+	}
+}

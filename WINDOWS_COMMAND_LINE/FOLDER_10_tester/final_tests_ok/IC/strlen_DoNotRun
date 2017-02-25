@@ -14,7 +14,7 @@ class MainClass
 		
 		// add call to strlen here
 		
-		PRINT printer = new PRINT();
+		PRINT printer;
 		printer.printInt(i);
 	}
 }
