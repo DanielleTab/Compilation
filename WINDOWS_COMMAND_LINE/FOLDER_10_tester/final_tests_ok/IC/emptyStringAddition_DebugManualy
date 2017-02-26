@@ -1,0 +1,19 @@
+class PRINT
+{
+	void printInt(int i)
+	{
+	}
+}
+
+class MainClass
+{
+	void main(string[] args)
+	{
+		string str = "";
+		string str2 = "Lalala";
+		string strConcat = str + str2;
+		
+		PRINT printer;
+		printer.printInt(1);
+	}
+}
