@@ -166,7 +166,7 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("memcpy_DoNotRun", TesterMode.MANUALY_CLOSE);
+		runSpecificTest("strcat_DoNotRun", TesterMode.MANUALY_CLOSE);
 	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	

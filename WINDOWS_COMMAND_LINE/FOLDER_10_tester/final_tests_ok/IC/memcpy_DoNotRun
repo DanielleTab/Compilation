@@ -9,20 +9,19 @@ class MainClass
 {
 	void main(string[] args)
 	{
-		int[] arr = new int[5];
-		int[] arr2 = new int[5];
+		int[] arr = new int[4];
+		int[] arr2 = new int[4];
 		
-		arr[0] = 105;
-		arr[1] = 106;
-		arr[2] = 107;
-		arr[3] = 108;
-		arr[4] = 109;
+		arr[0] = 437365282;
+		arr[1] = 439593540;
+		arr[2] = 441821798;
+		arr[3] = 444050056;
 		
 		// add call to memcpy here by adding the following lines 
 		// in line 209 of the pseudo MIPS file:
 		/*
 			addi $sp, $sp, -4
-			li Temp_200, 24
+			li Temp_200, 6
 			sw Temp_200, 0($sp)
 			addi $sp, $sp, -4
 			mov Temp_200, Temp_20
@@ -39,6 +38,5 @@ class MainClass
 		printer.printInt(arr2[1]);
 		printer.printInt(arr2[2]);
 		printer.printInt(arr2[3]);
-		printer.printInt(arr2[4]);
 	}
 }
