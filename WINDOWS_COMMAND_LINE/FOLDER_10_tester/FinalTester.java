@@ -166,8 +166,8 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("strcat_DoNotRun", TesterMode.MANUALY_CLOSE);
-	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
+		//runSpecificTest("emptyStringAddition3_DebugManualy", TesterMode.MANUALY_CLOSE);
+	    runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	
 }

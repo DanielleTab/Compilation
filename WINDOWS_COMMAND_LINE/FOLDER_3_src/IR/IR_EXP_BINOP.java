@@ -8,6 +8,7 @@ import CodeGen.CodeGen_Utils;
 import CodeGen.StringNLBuilder;
 import CodeGen.TempGenerator;
 import SemanticAnalysis.SemanticAnalysisException;
+import SemanticAnalysis.SymbolTable;
 import SemanticAnalysis.UnsupportedBinOpException;
 
 public class IR_EXP_BINOP extends IR_EXP {
@@ -98,29 +99,30 @@ public class IR_EXP_BINOP extends IR_EXP {
 		throw new UnsupportedBinOpException();
 	}
 	
-	// TODO: Implement.
-	private CodeGen_Temp generateCodeForFindingStrLength(CodeGen_Temp strTemp)
-	{
-		return null;
-	}
-	
-	// TODO: Implement.
 	/**
-	 * @brief	Generates code which concatenates the strings by calculating their lengths,
-	 * 			allocating memory for their concatenation, and copying the strings into
-	 * 			that memory.
+	 * @brief	Generates code which concatenates the strings by calling the static 
+	 * 			function strcat.
 	 * 
 	 * @param 	str1Temp - holds the address of the first string. 
 	 * @param 	str2Temp - holds the address of the second string.
 	 * @param 	resultTemp - the generated code writes the address of the result string
-	 * 						into this temp.
-	 * @param 	printed - the string builder to which the generated code is written.
+	 *			into this temp.
+	 * @param 	printed - the string builder to which the generated code is appended.
+	 * @throws IOException 
 	 */
 	private void generateCodeForStrConcat(CodeGen_Temp str1Temp, 
 										  CodeGen_Temp str2Temp, 
 										  CodeGen_Temp resultTemp,
-										  StringNLBuilder printed)
+										  StringNLBuilder printed) throws IOException
 	{
+		// Pushing the arguments of strcat from last to first
+		CodeGen_Utils.codeGen_Push(printed, str2Temp.getName());
+		CodeGen_Utils.codeGen_Push(printed, str1Temp.getName());
+		
+		// Calling strcat
+		printed.appendNL(String.format("jal %s", IR_PROGRAM.STRCAT_FUNCTION_LABEL));
+		printed.appendNL(String.format("addi $sp, $sp, %d", 2 * SymbolTable.ADDRESS_SIZE));
+		printed.appendNL(String.format("mov %s, $v0", resultTemp.getName()));
 	}
 	
 	@Override
