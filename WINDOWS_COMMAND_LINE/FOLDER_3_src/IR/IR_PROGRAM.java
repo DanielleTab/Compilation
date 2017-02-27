@@ -72,69 +72,85 @@ public class IR_PROGRAM extends IR_Node {
 	}
 	
 	/**
-	 * @brief	Writes the code of the static function strlen (which returns
-	 * 			the length of the given string).
+	 * Writes the initialization code for strlen, which loads the argument into a register
+	 * and initializes the other registers in use.
 	 */
-	private void writeStrlen(StringNLBuilder printed) throws TooManyTempsException, IOException
+	private void writeStrlenInitialization(StringNLBuilder printed,
+										   CodeGen_Temp zero,
+										   CodeGen_Temp strAddress,
+										   CodeGen_Temp strByte,
+										   CodeGen_Temp index) throws TooManyTempsException
 	{
-		CodeGen_Temp zero = TempGenerator.getAndAddNewTemp();
 		CodeGen_Temp argAddress = TempGenerator.getAndAddNewTemp();
-		CodeGen_Temp strAddress = TempGenerator.getAndAddNewTemp();
-		CodeGen_Temp strByte = TempGenerator.getAndAddNewTemp();
-		CodeGen_Temp index = TempGenerator.getAndAddNewTemp();
-		CodeGen_Temp strByteAddress = TempGenerator.getAndAddNewTemp();
 		
-		// Printing function label and prolog
-		printed.appendNL(String.format("%s:", STRLEN_FUNCTION_LABEL));
-		IR_METHOD.appendProlog(printed, 0); // no local variables - frame size is 0
-		
-		/*
-		 * initialization code
-		 * 
-		 * li zero, 0
-		 * addi argAddress, $fp, FIRST_ARG_FRAME_OFFSET
-		 * lw strAddress, 0(argAddress)
-		 * 
-		 * lb strByte, (strAddress)
-		 * li index, 0
-		 */
-		printed.appendNL(String.format("li %s, 0", zero.getName()));
+		// Loading the argument into a register
 		printed.appendNL(String.format("addi %s, $fp, %d", 
 									   argAddress.getName(), 
 									   STATIC_FUNC_FIRST_ARG_OFFSET));
 		printed.appendNL(String.format("lw %s, 0(%s)", 
 									   strAddress.getName(),
 									   argAddress.getName()));
+		
+		// Initializing strByte, index and zero
 		printed.appendNL(String.format("lb %s, (%s)", 
 									   strByte.getName(), 
 									   strAddress.getName()));
-		
-		/*
-		 * while code
-		 * 
-		 * Label_0_strlen_while_start:
-		 * 		beq strByte, zero, label_0_strlen_while_end // while condition
-		 * 		addi index, index, 1
-		 * 		add strByteAddress, strAddress, index
-		 * 		lb strByte, (strByteAddress)
-		 * 		j Label_0_strlen_while_start
-		 * Label_0_strlen_while_end:
-		 */
+		printed.appendNL(String.format("li %s, 0", index.getName()));
+		printed.appendNL(String.format("li %s, 0", zero.getName()));
+	}
+	
+	/**
+	 * Writes the main loop of strlen, which iterates the characters until it reaches
+	 * the null-terminator.
+	 */
+	private void writeStrlenLoop(StringNLBuilder printed,
+			 					 CodeGen_Temp zero,
+			 					 CodeGen_Temp strAddress,
+			 					 CodeGen_Temp strByte,
+			 					 CodeGen_Temp index) throws TooManyTempsException
+	{
+		CodeGen_Temp strByteAddress = TempGenerator.getAndAddNewTemp();
 		String whileStartLabel = STRLEN_FUNCTION_LABEL + WHILE_START_LABEL_SUFFIX;
 		String whileEndLabel = STRLEN_FUNCTION_LABEL + WHILE_END_LABEL_SUFFIX;
+		
+		// loop's start - label and stopping condition
 		printed.appendNL(String.format("%s:", whileStartLabel));
 		printed.appendNL(String.format("beq %s, %s, %s",
-									    strByte.getName(),
-									    zero.getName(),
-									    whileEndLabel));
+									   strByte.getName(),
+									   zero.getName(),
+									   whileEndLabel));
+		
+		// loop's body - promoting the index and loading the current byte
 		printed.appendNL(String.format("addi %s, %s, 1", index.getName(), index.getName()));
 		printed.appendNL(String.format("add %s, %s, %s", 
 									   strByteAddress.getName(),
 									   strAddress.getName(),
 									   index.getName()));
 		printed.appendNL(String.format("lb %s, (%s)", strByte.getName(), strByteAddress.getName()));
+		
+		// loop's end - jump to the start and end-label
 		printed.appendNL(String.format("j %s", whileStartLabel));
 		printed.appendNL(String.format("%s:", whileEndLabel));
+	}
+	
+	/**
+	 * @brief	Writes the code of the static function strlen (which returns
+	 * 			the length of the given string).
+	 */
+	private void writeStrlen(StringNLBuilder printed) throws TooManyTempsException, IOException
+	{
+		CodeGen_Temp zero = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp strAddress = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp strByte = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp index = TempGenerator.getAndAddNewTemp();
+		
+		// Printing function label and prolog
+		printed.appendNL(String.format("%s:", STRLEN_FUNCTION_LABEL));
+		IR_METHOD.appendProlog(printed, 0); // no local variables - frame size is 0
+		
+		// Initialization and main loop
+		writeStrlenInitialization(printed, zero, strAddress, strByte, index);
+		writeStrlenLoop(printed, zero, strAddress, strByte, index);
 		
 		// Storing length in v0 and returning
 		printed.appendNL(String.format("mov $v0, %s", index.getName()));
