@@ -44,7 +44,10 @@ public class IR_STMT_WHILE extends IR_STMT_COND
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		
 		// Generating code for the body and for the jump back to the start-label
-		body.generateCode();
+		if (body != null)
+		{
+			body.generateCode();	
+		}
 		
 		printed = new StringNLBuilder();
 		printed.appendNL(String.format("j %s", startLabel.name));

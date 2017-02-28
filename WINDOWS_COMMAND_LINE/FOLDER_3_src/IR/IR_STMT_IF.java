@@ -43,8 +43,11 @@ public class IR_STMT_IF extends IR_STMT_COND{
 									   endLabel.name));
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		
-		// Generating code for the body
-		body.generateCode();
+		// Generating code for the body if exists
+		if (body != null)
+		{
+			body.generateCode();
+		}
 		
 		endLabel.generateCode();
 	}

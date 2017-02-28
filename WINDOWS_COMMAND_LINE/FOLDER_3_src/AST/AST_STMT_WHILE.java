@@ -31,7 +31,7 @@ public class AST_STMT_WHILE extends AST_STMT_COND
 		IR_EXP condIR = cond.createIR();
 		
 		SymbolTable.createNewScope();
-		IR_STMT bodyIR = body.createIR();
+		IR_STMT bodyIR = body.createIR(); // might be null
 		SymbolTable.closeCurrentScope();
 		
 		FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
