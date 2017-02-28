@@ -166,7 +166,7 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("funcArgsEvaluationOrder", TesterMode.AUTO_CLOSE);
+		runSpecificTest("scoping_all", TesterMode.AUTO_CLOSE);
 	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	

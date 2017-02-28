@@ -1,0 +1,18 @@
+
+class MyClass
+{
+	int fieldA;
+	
+	void init()
+	{
+		fieldA = 1;
+	}
+
+}
+
+class MainClass
+{
+	void main(string[] args)
+	{
+	}
+}
