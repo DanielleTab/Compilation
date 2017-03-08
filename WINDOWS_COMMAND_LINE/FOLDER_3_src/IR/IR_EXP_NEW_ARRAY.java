@@ -70,6 +70,12 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 		CodeGen_Temp generatedNumOfElementsPlusOne = TempGenerator.getAndAddNewTemp();
 		StringNLBuilder printed = new StringNLBuilder();
 		CodeGen_Temp fourTemp = TempGenerator.getAndAddNewTemp();
+		CodeGen_Temp oneTemp = TempGenerator.getAndAddNewTemp();
+		printed.appendNL(String.format("li %s,1",oneTemp.getName()));
+		
+		// Add test of array size >=1. if <1 then throw an error. 
+		printed.appendNL(String.format("blt %s,%s,%s", generatedNumOfElements.getName(),oneTemp.getName(),IR_Node.ERROR_LABEL_NAME));
+		
 		printed.appendNL(String.format("li %s,4",fourTemp.getName()));
 		// add one to the generatedSize because we want to allocate (size+1) cells on the heap -
 		// the first cell for the size.
