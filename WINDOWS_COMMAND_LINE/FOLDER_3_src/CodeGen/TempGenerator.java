@@ -8,7 +8,7 @@ import SemanticAnalysis.TooManyTempsException;
 public class TempGenerator 
 { 
 	public static List<CodeGen_Temp> temps;
-	public static final int MAX_TEMP_SIZE = 1000;
+	public static final int MAX_TEMP_SIZE = 4000;
 	
 	public static void reset()
 	{

@@ -17,13 +17,16 @@ public class FinalTester
 	private static PrintStream outputWriter;
 	
 	private static final String SEMANTIC_ERROR_OUTPUT = "FAIL";
-	private static final String IC_FILES_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//IC//";
-	private static final String EXPECTED_OUTPUTS_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests_ok//ExpectedOutput//";
+	private static final String IC_FILES_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests//IC//";
+	private static final String EXPECTED_OUTPUTS_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests//ExpectedOutput//";
 	private static final String EXPECTED_OUTPUT_SUFFIX = "_EO.txt";
 	private static final String PSEUDO_MIPS_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_pseudoMips.pmips";
 	private static final String BATCH_SCRIPT_PATH = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\testerUtils\\convert_pseudoMips_to_exe_and_run.bat";
 	private static final String EXE_OUTPUT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_exe_output.txt";
 	private static final String DO_NOT_RUN_SUFFIX = "DoNotRun";
+	
+	private static final String ENCRYPTION_TEST_NAME = "Encryption";
+	private static final String ENCRYPTION_RANDOM_GENERATOR_SCRIPT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//generateRandomArrayInitCodeAndEO.py";
 	
 	/**
 	 * @brief	Compiles the specified IC file to pseudo-MIPS, 
@@ -115,9 +118,20 @@ public class FinalTester
 		return (!pseudoMipsFirstLine.equals(SEMANTIC_ERROR_OUTPUT));
 	}
 	
+	static private void handleEncryptionTest(String icFileName) throws IOException, InterruptedException
+	{
+		if (icFileName.equals(ENCRYPTION_TEST_NAME))
+		{
+			System.out.println("Running random-generator script for the encryption test...");
+			Process cmdProcess = Runtime.getRuntime().exec(String.format("python %s", ENCRYPTION_RANDOM_GENERATOR_SCRIPT_PATH));
+			cmdProcess.waitFor();
+		}
+	}
+	
 	static public void runSpecificTest(String icFileName, TesterMode mode) throws Exception
 	{
 		System.out.println("Running " + icFileName + ":");
+		handleEncryptionTest(icFileName);
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
 		if (isPseudoMipsValid())
 		{
@@ -166,8 +180,8 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("emptyWhile", TesterMode.AUTO_CLOSE);
-	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
+		//runSpecificTest("Encryption", TesterMode.AUTO_CLOSE);
+	    runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	
 }
