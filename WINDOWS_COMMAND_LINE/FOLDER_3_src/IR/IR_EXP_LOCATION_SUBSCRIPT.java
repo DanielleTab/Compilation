@@ -59,6 +59,11 @@ public class IR_EXP_LOCATION_SUBSCRIPT extends IR_EXP
 									   arrayLengthTemp.getName(),
 									   IR_Node.ERROR_LABEL_NAME));
 		
+		printed.appendNL(String.format("blt %s,%s,%s", 
+				   offsetTemp.getName(), 
+				   zeroTemp.getName(),
+				   IR_Node.ERROR_LABEL_NAME));
+
 		// Calculating the address of the array's element
 		printed.appendNL(String.format("addi %s,%s,1", 
 									   offsetTemp.getName(), 

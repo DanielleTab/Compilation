@@ -180,7 +180,7 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		//runSpecificTest("Encryption", TesterMode.AUTO_CLOSE);
+		//runSpecificTest("newArrayNegativeSize", TesterMode.AUTO_CLOSE);
 	    runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	

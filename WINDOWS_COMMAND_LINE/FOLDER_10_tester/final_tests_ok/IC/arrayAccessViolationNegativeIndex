@@ -1,0 +1,9 @@
+
+class Mainclass
+{
+	void main(string[] args)
+	{
+		int[] arr = new int[4];
+		int x = arr[(1-2)];
+	}
+}

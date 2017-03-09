@@ -1,0 +1,16 @@
+
+class A
+{
+	int func()
+	{
+		int x = 0-8;
+		return x;
+	}
+	void main(string[] args)
+	{
+		A a = new A();
+		
+		int[] arr = new int[4];
+		int x = arr[a.func()];
+	}
+}
