@@ -24,10 +24,7 @@ public class IR_EXP_NEW_ARRAY extends IR_EXP{
 	// the given array size is the basic size, before add it 1 for the arrayLength element.
 	// the given array has already have the arrayLength in it's first element.
 		public void generateNullForArrayElements(CodeGen_Temp addressOnHeap,CodeGen_Temp arraySize,StringNLBuilder printed) throws IOException, TooManyTempsException
-		{
-			// TODO: what if the array length = 0?
-			// TODO: build loop.
-			
+		{			
 			/*
 			 * Label_num_init_array:
 			 * li tempIndex,1

@@ -24,9 +24,8 @@ public class Main
 		String outputFileName = argv[1];
 		String assemblyOutput = argv[1];
 		
-		// TODO: Surround with try-catch
-	//	try
-	//	{
+		try
+		{
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
@@ -78,7 +77,7 @@ public class Main
 			outputWriter.close();
 			}
 			
-    /*	}     
+    	}     
 		catch (Exception e)
 		{
 			try
@@ -91,7 +90,6 @@ public class Main
 			{
 			}
 		}
-		*/
 	}
 }
 

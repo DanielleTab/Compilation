@@ -142,7 +142,6 @@ public class IR_EXP_BINOP extends IR_EXP {
 			}
 			else
 			{
-				// TODO: division by zero!
 				printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),result.getName(),t1.getName(), t2.getName()));				
 			}
 		}

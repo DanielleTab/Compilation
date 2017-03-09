@@ -12,10 +12,6 @@ public class IR_STMT_RETURN extends IR_STMT
 	public IR_EXP returnedExpression; // might be null
 	public String methodEpilogLabelName;
 	
-	// TODO: If this is unnecessary, delete it.
-	// public CodeGen_Temp returnTempRegister; // might be null
-	
-
 	public IR_STMT_RETURN(IR_EXP returnedExpression, String methodEpilogLabelName)
 	{
 		this.returnedExpression = returnedExpression;
@@ -40,12 +36,5 @@ public class IR_STMT_RETURN extends IR_STMT
 		}
 		builder.appendNL(String.format("j %s", methodEpilogLabelName));
 		AssemblyFilePrinter.getInstance(null).write(builder.toString());
-		
-		// TODO: If this is unnecessary, delete it.
-		// The original code (with returnTempRegister), no check of null
-		/*
-		CodeGen_Temp returnValue = returnTempRegister.generateCode();
-		AssemblyFilePrinter.getInstance(null).write(String.format("mov $v0,%s%s",returnValue.getName(),AssemblyFilePrinter.NEW_LINE_STRING));
-		*/
 	}
 }

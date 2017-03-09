@@ -12,7 +12,6 @@ import CodeGen.CodeGen_Temp;
 public class ClassSymbolInfo extends SymbolInfo{
 	public List<String> virtualFunctionsOrder;
 	public Hashtable<String,String> virtualFunctionsTable; // <key, value>: <function name,functionLabel>
-	//public List<String> functionNamesInVFT; // TODO: This seems unused.
 	public String extendedClassName;
 	public List<VariableSymbolInfo> fields;
 	public List<FunctionSymbolInfo> methods;

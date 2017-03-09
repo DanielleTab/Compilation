@@ -23,8 +23,6 @@ public class IR_TEMP extends IR_EXP{
 		{
 			printed.appendNL(String.format("mov %s,$fp",newTemp.getName()));			
 		}
-		
-		// TODO: add another cases of tempTypes if needed.
 	
 		AssemblyFilePrinter.getInstance(null).write(printed.toString());
 

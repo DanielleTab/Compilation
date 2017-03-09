@@ -30,9 +30,9 @@ public abstract class AST_Node
 	public static final int FRAME_OFFSET_OF_THE_THIS_ARGUMENT = 8; 
 	public static final int FRAME_OFFSET_OF_FIRST_FORMAL = 12;
 	
+	// Should be overriden
 	public ICTypeInfo validate(String className) throws SemanticAnalysisException
 	{
-		// TODO: delete the implementation. This method should be implemented in each inherited class.
 		return null;
 	}
 	
