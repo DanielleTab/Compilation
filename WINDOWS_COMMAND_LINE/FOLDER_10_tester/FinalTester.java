@@ -26,7 +26,8 @@ public class FinalTester
 	private static final String DO_NOT_RUN_SUFFIX = "DoNotRun";
 	
 	private static final String ENCRYPTION_TEST_NAME = "Encryption";
-	private static final String ENCRYPTION_RANDOM_GENERATOR_SCRIPT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//generateRandomArrayInitCodeAndEO.py";
+	private static final String QUICKSORT_TEST_NAME = "Quicksort";
+	private static final String RANDOM_GENERATOR_SCRIPT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//generateRandomArrayInitCodeAndEO.py";
 	
 	/**
 	 * @brief	Compiles the specified IC file to pseudo-MIPS, 
@@ -118,12 +119,16 @@ public class FinalTester
 		return (!pseudoMipsFirstLine.equals(SEMANTIC_ERROR_OUTPUT));
 	}
 	
-	static private void handleEncryptionTest(String icFileName) throws IOException, InterruptedException
+	static private void handleRandomTests(String icFileName) throws IOException, InterruptedException
 	{
-		if (icFileName.equals(ENCRYPTION_TEST_NAME))
+		if (icFileName.equals(ENCRYPTION_TEST_NAME) ||
+			icFileName.equals(QUICKSORT_TEST_NAME))
 		{
-			System.out.println("Running random-generator script for the encryption test...");
-			Process cmdProcess = Runtime.getRuntime().exec(String.format("python %s", ENCRYPTION_RANDOM_GENERATOR_SCRIPT_PATH));
+			System.out.println(String.format("Running random-generator script for the %s test...",
+											 icFileName));
+			Process cmdProcess = Runtime.getRuntime().exec(String.format("python %s %s", 
+																		 RANDOM_GENERATOR_SCRIPT_PATH, 
+																		 icFileName));
 			cmdProcess.waitFor();
 		}
 	}
@@ -131,7 +136,7 @@ public class FinalTester
 	static public void runSpecificTest(String icFileName, TesterMode mode) throws Exception
 	{
 		System.out.println("Running " + icFileName + ":");
-		handleEncryptionTest(icFileName);
+		handleRandomTests(icFileName);
 		compileICToPseudoMips(IC_FILES_DIR + icFileName);
 		if (isPseudoMipsValid())
 		{
@@ -180,8 +185,8 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		//runSpecificTest("newArrayNegativeSize", TesterMode.AUTO_CLOSE);
-	    runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
+		runSpecificTest("Quicksort", TesterMode.AUTO_CLOSE);
+	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	
 }

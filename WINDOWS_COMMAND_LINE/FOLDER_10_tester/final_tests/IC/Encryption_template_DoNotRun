@@ -1,0 +1,442 @@
+
+class PRINT
+{
+	void printInt(int i)
+	{
+	}
+}
+
+/**
+ * @brief	Interface for processing bytes.
+ */
+class ByteProcessor 
+{
+	/**
+	 * @brief	Processes the given byte, returning a byte which is the result of that processing.
+	 */
+	 // Default implementation, shouldn't be use (this is an interface).
+	int processByte(int byteToProcess)
+	{
+		return 111;
+	}
+	
+	/**
+	 * 
+	 * @brief	Returns a string describing the type of the processor.
+	 */
+	 // Default implementation, shouldn't be use (this is an interface).
+	string getProcessorType()
+	{
+		return "Default";
+	}
+}
+
+
+/**
+ * @brief	Interface for encrypting bytes.	 
+ */
+class ByteEncryptor
+{
+	/**
+	 * @brief	Returns the result of encrypting the given byte.
+	 */
+	 // Default implementation, shouldn't be use (this is an interface).
+	int encryptByte(int byteToEncrypt)
+	{
+		return 111;
+	}
+}
+
+/**
+ * @brief	Interface for decrypting bytes.	 
+ */
+class ByteDecryptor 
+{
+	/**
+	 * @brief	Returns the result of decrypting the given byte.
+	 */
+	 // Default implementation, shouldn't be use (this is an interface).
+	int decryptByte(int byteToDecrypt)
+	{
+		return 111;
+	}
+}
+
+
+/**
+ * @brief	Implementation for the ByteProcessor interface which processes the byte by encrypting it.
+ */
+class EncryptionByteProcessor extends ByteProcessor 
+{
+	ByteEncryptor encryptor;
+
+	void init(ByteEncryptor encryptorArg)
+	{
+		encryptor = encryptorArg;
+	}
+	
+	/**
+	 * @brief	Processes the given byte by encrypting it, using the encryptor given in C'tor.
+	 * @return	the encrypted byte.
+	 */
+	int processByte(int byteToProcess) 
+	{
+		return encryptor.encryptByte(byteToProcess);
+	}
+	
+	/**
+	 * @brief	Returns a string describing this processor type (encryption).
+	 */
+	string getProcessorType() 
+	{
+		return "Encryption";
+	}
+}
+
+
+/**
+ * @brief	Implementation for the ByteProcessor interface which processes the byte by decrypting it.
+ */
+class DecryptionByteProcessor extends ByteProcessor 
+{
+	ByteDecryptor decryptor;
+
+	void init(ByteDecryptor decryptorArg)
+	{
+		decryptor = decryptorArg;
+	}
+	
+	/**
+	 * @brief	Processes the given byte by decrypting it, using the decryptor given in C'tor.
+	 */
+	int processByte(int byteToProcess) 
+	{
+		return decryptor.decryptByte(byteToProcess);
+	}
+
+	/**
+	 * @brief	Returns a string describing this processor type (decryption).
+	 */
+	string getProcessorType() 
+	{
+		return "Decryption";
+	}
+}
+
+
+/**
+ * @brief	Dummy implementation for the interface ByteEncryptor which
+ * 			doesn't do anything to the given byte.
+ */
+class DummyByteEncryptor extends ByteEncryptor 
+{
+	/**
+	 * @brief	Returns the given byte.
+	 */
+	int encryptByte(int byteToEncrypt) 
+	{
+		return byteToEncrypt;
+	}	
+}
+
+/**
+ * @brief	Dummy implementation for the interface ByteDecryptor which
+ * 			doesn't do anything to the given byte.
+ */
+class DummyByteDecryptor extends ByteDecryptor 
+{
+	/**
+	 * @brief	Returns the given byte.
+	 */
+	int decryptByte(int byteToDecrypt) 
+	{
+		return byteToDecrypt;
+	}
+}
+
+
+/**
+ * @brief	Implementation for the ByteEncryptor interface,
+ * 			which encrypts the bytes by shifting it by one.
+ */
+class ShiftEncryptor extends ByteEncryptor
+{
+	// Constants
+	int rangeLength;
+	int shiftNum;
+	
+	// Methods
+	
+	void init(int shiftNumArg)
+	{
+		rangeLength = 256;
+		shiftNum = shiftNumArg;
+	}
+	
+	/**
+	 * @brief	Shifts the given byte.	
+	 */
+	int encryptByte(int byteToEncrypt) 
+	{
+		int encryptedByte = byteToEncrypt + shiftNum;
+		if (encryptedByte >= rangeLength)
+		{
+			encryptedByte = encryptedByte - rangeLength;
+		}
+		return encryptedByte;
+	}
+}
+
+/**
+ * @brief	Implementation for the ByteEncryptor interface,
+ * 			which encrypts the bytes by shifting it by one.
+ */
+class ShiftDecryptor extends ByteDecryptor
+{
+	// Constants
+	int rangeLength;
+	int shiftNum;
+	
+	// Methods
+	
+	void init(int shiftNumArg)
+	{
+		rangeLength = 256;
+		shiftNum = shiftNumArg;
+	}
+
+	/**
+	 * @brief	Shifts backwards the given byte.
+	 */
+	int decryptByte(int byteToDecrypt) 
+	{
+		int decryptedByte = byteToDecrypt - shiftNum;
+		if (decryptedByte < 0)
+		{
+			decryptedByte = decryptedByte + rangeLength;
+		}
+		return decryptedByte;
+	}
+}
+
+
+/**
+ * @brief	Implementation for the ByteEncryptor interface,
+ * 			which uses a set of different encryptors.
+ */
+class ComplexEncryptor extends ByteEncryptor 
+{
+	// Members
+	ByteEncryptor[] encryptors;
+	int encryptorsNum;
+	int encryptionIndex;
+	
+	// Methods
+	
+	/**
+	 * @brief	C'tor.
+	 * 
+	 * @param	byteEncryptors - an array of encryptors, that will be used alternately.
+	 */
+	void init(ByteEncryptor[] byteEncryptors, int encryptorsNumArg)
+	{
+		encryptors = byteEncryptors;
+		encryptorsNum = encryptorsNumArg;
+	}
+	
+	/**
+	 * @brief	Encrypts the given byte by using the encryptor in the current encryption-index,
+	 * 			and updated the current encryption-index;
+	 */
+	int encryptByte(int byteToEncrypt) 
+	{
+		int encryptedByte = encryptors[encryptionIndex].encryptByte(byteToEncrypt);
+		encryptionIndex = (encryptionIndex + 1);
+		if (encryptionIndex >= encryptorsNum)
+		{
+			encryptionIndex = encryptionIndex - encryptorsNum;
+		}
+		return encryptedByte;
+	}
+}
+
+/**
+ * @brief	Implementation for the ByteDecryptor interface,
+ * 			which uses a set of different decryptors.
+ */
+class ComplexDecryptor extends ByteDecryptor 
+{
+	// Members
+	ByteDecryptor[] decryptors;
+	int decryptorsNum;
+	int decryptionIndex;
+	
+	// Methods
+	
+	/**
+	 * @brief	C'tor.
+	 * 
+	 * @param	byteDecryptors - an array of decryptors, that will be used alternately.
+	 */
+	void init(ByteDecryptor[] byteDecryptors, int decryptorsNumArg)
+	{
+		decryptors = byteDecryptors;
+		decryptorsNum = decryptorsNumArg;
+	}
+	
+	/**
+	 * @brief	Encrypts the given byte by using the decryptor in the current decryption-index,
+	 * 			and updated the current decryption-index;
+	 */
+	int decryptByte(int byteToDecrypt) 
+	{
+		int decryptedByte = decryptors[decryptionIndex].decryptByte(byteToDecrypt);
+		decryptionIndex = (decryptionIndex + 1);
+		if (decryptionIndex >= decryptorsNum)
+		{
+			decryptionIndex = decryptionIndex - decryptorsNum;
+		}
+		return decryptedByte;
+	}
+}
+
+
+
+class MainClass
+{
+	int[] processBytes(int[] inputBytes, int arrLen, ByteProcessor processor)
+	{
+		int[] outputBytes = new int[arrLen];
+		
+		int i = 0;
+		while (i < arrLen)
+		{
+			outputBytes[i] = processor.processByte(inputBytes[i]);
+			i = i + 1;
+		}
+		
+		return outputBytes;
+	}
+	
+	int[] encryptBytes(int[] inputBytes, int arrLen, ByteEncryptor encryptor)
+	{
+		EncryptionByteProcessor encByteProcessor = new EncryptionByteProcessor();
+		encByteProcessor.init(encryptor);
+		return processBytes(inputBytes, arrLen, encByteProcessor);
+	}
+	
+	
+	int[] decryptBytes(int[] inputBytes, int arrLen, ByteDecryptor decryptor)
+	{
+		DecryptionByteProcessor decByteProcessor = new DecryptionByteProcessor();
+		decByteProcessor.init(decryptor);
+		return processBytes(inputBytes, arrLen, decByteProcessor);
+	}
+	
+	void printArr(int[] arr, int arrLen)
+	{
+		PRINT p;
+		
+		int i = 0;
+		while (i < arrLen)
+		{
+			p.printInt(arr[i]);
+			i = i + 1;
+		}
+		
+		p.printInt(555);
+	}
+	
+	void encDecDummy(int[] inputBytes, int arrLen)
+	{
+		// Encrypting
+		DummyByteEncryptor dummyEncryptor = new DummyByteEncryptor();
+		int[] encryptedBytes = encryptBytes(inputBytes, arrLen, dummyEncryptor);
+		printArr(encryptedBytes, arrLen);
+		
+		// Decrypting
+		DummyByteDecryptor dummyDecryptor = new DummyByteDecryptor();
+		int[] decryptedBytes = decryptBytes(encryptedBytes, arrLen, dummyDecryptor);
+		printArr(decryptedBytes, arrLen);
+	}
+	
+	void encDecShift(int[] inputBytes, int arrLen, int randomShift)
+	{
+		// Encrypting
+		ShiftEncryptor shiftEnc = new ShiftEncryptor();
+		shiftEnc.init(randomShift);
+		int[] encryptedBytes = encryptBytes(inputBytes, arrLen, shiftEnc);
+		printArr(encryptedBytes, arrLen);
+		
+		// Decrypting
+		ShiftDecryptor shiftDec = new ShiftDecryptor();
+		shiftDec.init(randomShift);
+		int[] decryptedBytes = decryptBytes(encryptedBytes, arrLen, shiftDec);
+		printArr(decryptedBytes, arrLen);
+	}
+	
+	void encDecComplex(int[] inputBytes, int arrLen, int[] randomShifts)
+	{
+		int innerArrLen = 4;
+		ByteEncryptor[] encryptors = new ByteEncryptor[innerArrLen];
+		ByteDecryptor[] decryptors = new ByteDecryptor[innerArrLen];
+		
+		// dummy
+		encryptors[0] = new DummyByteEncryptor();
+		decryptors[0] = new DummyByteDecryptor();
+		
+		// zero shift (the same as dummy)
+		encryptors[1] = new ShiftEncryptor();
+		decryptors[1] = new ShiftDecryptor();
+		
+		 // random shift
+		ShiftEncryptor randomShiftEncryptor = new ShiftEncryptor();
+		ShiftDecryptor randomShiftDecryptor = new ShiftDecryptor();
+		randomShiftEncryptor.init(randomShifts[1]);
+		randomShiftDecryptor.init(randomShifts[1]);
+		encryptors[2] = randomShiftEncryptor;
+		decryptors[2] = randomShiftDecryptor;
+		
+		// another random shift
+		ShiftEncryptor anotherRandomShiftEncryptor = new ShiftEncryptor();
+		ShiftDecryptor anotherRandomShiftDecryptor = new ShiftDecryptor();
+		anotherRandomShiftEncryptor.init(randomShifts[2]);
+		anotherRandomShiftDecryptor.init(randomShifts[2]);
+		encryptors[3] = anotherRandomShiftEncryptor;
+		decryptors[3] = anotherRandomShiftDecryptor;
+		
+		// Creating the complex encryptor and decryptor
+		ComplexEncryptor complexEncryptor = new ComplexEncryptor();
+		complexEncryptor.init(encryptors, innerArrLen);
+		ComplexDecryptor complexDecryptor = new ComplexDecryptor();
+		complexDecryptor.init(decryptors, innerArrLen);		
+		
+		// Encrypting
+		int[] encryptedBytes = encryptBytes(inputBytes, arrLen, complexEncryptor);
+		printArr(encryptedBytes, arrLen);
+		
+		// Decrypting
+		int[] decryptedBytes = decryptBytes(encryptedBytes, arrLen, complexDecryptor);
+		printArr(decryptedBytes, arrLen);
+	}
+	
+	// Returns random-shifts array
+	int[] initArr(int[] a)
+	{
+        /* ---------------------------------- REPLACE THIS LINE WITH INIT ---------------------------------- */
+	}
+
+	void main(string[] args)
+	{
+		MainClass obj = new MainClass();
+		
+		int arrLen = 20;
+		int[] inputBytes = new int[arrLen];
+		int[] randomShifts = obj.initArr(inputBytes);
+		obj.printArr(inputBytes, arrLen);
+		
+		obj.encDecDummy(inputBytes, arrLen);
+		obj.encDecShift(inputBytes, arrLen, randomShifts[0]);
+		obj.encDecComplex(inputBytes, arrLen, randomShifts);
+	}
+}
