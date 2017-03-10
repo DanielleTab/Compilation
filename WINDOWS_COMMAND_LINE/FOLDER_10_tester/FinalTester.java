@@ -204,8 +204,8 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		//runSpecificTest("Quicksort", TesterMode.AUTO_CLOSE);
-	    runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
+		runSpecificTest("printPrimes", TesterMode.AUTO_CLOSE);
+	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
 	}
 	
 }
