@@ -1,0 +1,4 @@
+rm -rf FOLDER_4_bin/*.class FOLDER_4_bin/AST/*.class FOLDER_4_bin/SemanticAnalysis/*.class FOLDER_4_bin/Utils/*.class FOLDER_4_bin/CodeGen/*.class FOLDER_4_bin/IR/*.class
+javac -cp ./FOLDER_5_CUP_JARS/java-cup-11b-runtime.jar -d FOLDER_4_bin src/*.java src/AST/*.java src/Utils/*.java src/SemanticAnalysis/*.java src/CodeGen/*.java src/IR/*.java 
+jar cfm COMPILER ./FOLDER_9_MANIFEST/MANIFEST.MF -C ./FOLDER_4_bin/ .
+chmod 777 COMPILER
