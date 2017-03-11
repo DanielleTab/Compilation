@@ -1,0 +1,42 @@
+
+echo off
+set NOVA_USER_NAME=
+set NOVA_PASSWORD=
+set NOVA_SERVER=nova.cs.tau.ac.il
+set WINSCP_COM_PATH="C:\Program Files (x86)\WinSCP\WinSCP.com"
+set LOCAL_BASE_DIR=WINDOWS_COMMAND_LINE\FOLDER_10_tester\testerUtils
+set LOCAL_IC_PATH=%1
+set NOVA_TESTER_DIR=./COMPILATION/Tester
+set NOVA_IC_PATH=%NOVA_TESTER_DIR%/tester_IC.ic
+set NOVA_COMPILER_PATH=./COMPILATION/EX5/COMPILER
+set NOVA_PSEUDO_MIPS_PATH=%NOVA_TESTER_DIR%/tester_pseudoMips.pmips
+set NOVA_C_PATH=%NOVA_TESTER_DIR%/tester_C.c
+set LOCAL_C_PROJECT_NAME=CompiSln
+set LOCAL_C_PATH=%LOCAL_BASE_DIR%\%LOCAL_C_PROJECT_NAME%\%LOCAL_C_PROJECT_NAME%\main.c
+set PLINK_PATH=%LOCAL_BASE_DIR%\plink.exe
+set NOVA_SIMULATOR_PATH=%NOVA_TESTER_DIR%/simulator
+set VS_DEV_ENV_EXE_PATH="C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe"
+set SLN_PATH=%LOCAL_BASE_DIR%\%LOCAL_C_PROJECT_NAME%\%LOCAL_C_PROJECT_NAME%.sln
+set EXE_PATH=%LOCAL_BASE_DIR%\%LOCAL_C_PROJECT_NAME%\Debug\%LOCAL_C_PROJECT_NAME%.exe
+set EXE_OUTPUT_PATH=%LOCAL_BASE_DIR%\tester_exe_output.txt
+
+:: Uploading the IC file to nova
+%WINSCP_COM_PATH% /command "open sftp://%NOVA_USER_NAME%:%NOVA_PASSWORD%@%NOVA_SERVER%/" "put %LOCAL_IC_PATH% %NOVA_IC_PATH%" "exit"
+
+:: Running the COMPILER in nova, to create the pseudo mips
+%PLINK_PATH% -ssh %NOVA_USER_NAME%@nova.cs.tau.ac.il -pw %NOVA_PASSWORD% "rm %NOVA_PSEUDO_MIPS_PATH%;" "java -jar %NOVA_COMPILER_PATH% %NOVA_IC_PATH% %NOVA_PSEUDO_MIPS_PATH%"
+
+:: Running the simulator in nova
+%PLINK_PATH% -ssh %NOVA_USER_NAME%@nova.cs.tau.ac.il -pw %NOVA_PASSWORD% "rm %NOVA_C_PATH%;" "%NOVA_SIMULATOR_PATH% %NOVA_PSEUDO_MIPS_PATH% %NOVA_C_PATH%"
+
+:: Downloading the C file from nova
+if exist %LOCAL_C_PATH% del %LOCAL_C_PATH%
+%WINSCP_COM_PATH% /command "open sftp://%NOVA_USER_NAME%:%NOVA_PASSWORD%@%NOVA_SERVER%/" "get %NOVA_C_PATH% %LOCAL_C_PATH%" "exit"
+
+:: Compiling the C file with Visual Studio
+if exist %EXE_PATH% del %EXE_PATH%
+%VS_DEV_ENV_EXE_PATH% %SLN_PATH% /rebuild
+
+:: Running the EXE
+if exist %EXE_OUTPUT_PATH% del %EXE_OUTPUT_PATH%
+%EXE_PATH% > %EXE_OUTPUT_PATH%

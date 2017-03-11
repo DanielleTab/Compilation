@@ -6,3 +6,4 @@ CompiSln/CompiSln.sdf
 CompiSln/CompiSln/main.c
 CompiSln/CompiSln/Debug/
 convert_pseudoMips_to_exe_and_run.bat
+convert_ic_to_exe_and_run.bat

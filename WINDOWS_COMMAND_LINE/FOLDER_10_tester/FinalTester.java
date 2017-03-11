@@ -17,11 +17,12 @@ public class FinalTester
 	private static PrintStream outputWriter;
 	
 	private static final String SEMANTIC_ERROR_OUTPUT = "FAIL";
-	private static final String IC_FILES_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests//IC//";
+	private static final String IC_FILES_DIR = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\final_tests\\IC\\";
 	private static final String EXPECTED_OUTPUTS_DIR = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//final_tests//ExpectedOutput//";
 	private static final String EXPECTED_OUTPUT_SUFFIX = "_EO.txt";
 	private static final String PSEUDO_MIPS_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_pseudoMips.pmips";
-	private static final String BATCH_SCRIPT_PATH = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\testerUtils\\convert_pseudoMips_to_exe_and_run.bat";
+	private static final String PMIPS_TO_EXE_SCRIPT_PATH = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\testerUtils\\convert_pseudoMips_to_exe_and_run.bat";
+	private static final String IC_TO_EXE_SCRIPT_PATH = "WINDOWS_COMMAND_LINE\\FOLDER_10_tester\\testerUtils\\convert_ic_to_exe_and_run.bat";
 	private static final String EXE_OUTPUT_PATH = "WINDOWS_COMMAND_LINE//FOLDER_10_tester//testerUtils//tester_exe_output.txt";
 	private static final String DO_NOT_RUN_SUFFIX = "DoNotRun";
 	
@@ -49,37 +50,41 @@ public class FinalTester
 		
 	}
 	
+	static private void runBatchScript(String batchScriptPath, String scriptArgument, CmdMode cmdMode) throws IOException, InterruptedException
+	{
+		Process cmdProcess = null;
+		
+		switch (cmdMode)
+		{
+		
+		case MANUALY_CLOSE:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s %s", batchScriptPath, scriptArgument));
+			break;
+			
+		case AUTO_CLOSE:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s %s", batchScriptPath, scriptArgument));
+			break;
+			
+		case AUTO_CLOSE_MINIMIZE_CMD:
+			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait /min cmd.exe /C %s %s", batchScriptPath, scriptArgument));
+			break;
+			
+		}
+		
+		cmdProcess.waitFor();
+	}
+	
 	/**
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 * @brief	Converts the pseudo MIPS file to an EXE file and runs that EXE,
 	 * 			using a batch script.
 	 */
-	static private void convertPseudoMipsToExeAndRun(String icFileName, TesterMode mode) throws IOException, InterruptedException
+	static private void convertPseudoMipsToExeAndRun(String icFileName, CmdMode cmdMode) throws IOException, InterruptedException
 	{
-		Process cmdProcess = null;
-		
 		System.out.println("Converting the pseudo mips to EXE and running. This might take a few seconds.");
 		System.out.println("Reminder: running " + icFileName);
-		
-		switch (mode)
-		{
-		
-		case MANUALY_CLOSE:
-			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait %s", BATCH_SCRIPT_PATH));
-			break;
-			
-		case AUTO_CLOSE:
-			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait cmd.exe /C %s", BATCH_SCRIPT_PATH));
-			break;
-			
-		case AUTO_CLOSE_MINIMIZE_CMD:
-			cmdProcess = Runtime.getRuntime().exec(String.format("cmd.exe /C start /wait /min cmd.exe /C %s", BATCH_SCRIPT_PATH));
-			break;
-			
-		}
-		
-		cmdProcess.waitFor();
+		runBatchScript(PMIPS_TO_EXE_SCRIPT_PATH, "", cmdMode);
 	}
 	
 	static public void compareToExpectedOutput(String icFileName) throws IOException
@@ -133,22 +138,47 @@ public class FinalTester
 		}
 	}
 	
-	static public void runSpecificTest(String icFileName, TesterMode mode) throws Exception
+	static private void convertIcToExeAndRun(String icFileName, CmdMode cmdMode) throws IOException, InterruptedException
+	{
+		System.out.println("Converting the IC to EXE and running. This might take a few seconds.");
+		System.out.println("Reminder: running " + icFileName);
+		String icFilePath = IC_FILES_DIR + icFileName;
+		runBatchScript(IC_TO_EXE_SCRIPT_PATH, icFilePath, cmdMode);
+	}
+	
+	static public void runSpecificTest(String icFileName, CmdMode cmdMode, CompilationMode compilationMode) throws Exception
 	{
 		System.out.println("Running " + icFileName + ":");
 		handleRandomTests(icFileName);
-		compileICToPseudoMips(IC_FILES_DIR + icFileName);
-		if (isPseudoMipsValid())
+		switch (compilationMode)
 		{
-			convertPseudoMipsToExeAndRun(icFileName, mode);
-			compareToExpectedOutput(icFileName);	
+		
+		case COMPILE_IN_ECLIPSE:
+		{
+			compileICToPseudoMips(IC_FILES_DIR + icFileName);
+			if (isPseudoMipsValid())
+			{
+				convertPseudoMipsToExeAndRun(icFileName, cmdMode);
+			}
+			else
+			{
+				System.out.println(icFileName + " result:");
+				System.out.println("Failed.\nError in compiling to pseudo-MIPS.");
+				failedNum++;
+				return;
+			}
 		}
-		else
+		break;
+		
+		case COMPILE_IN_NOVA:
 		{
-			System.out.println(icFileName + " result:");
-			System.out.println("Failed.\nError in compiling to pseudo-MIPS.");
-			failedNum++;
-		}	
+			convertIcToExeAndRun(icFileName, cmdMode);
+		}
+		break;
+		
+		}
+		
+		compareToExpectedOutput(icFileName);
 	}
 	
 	static private void deleteAutoGeneratedTests()
@@ -160,13 +190,13 @@ public class FinalTester
 		quicksortICFile.delete();
 	}
 	
-	static private void runRandomTests(TesterMode mode) throws Exception
+	static private void runRandomTests(CmdMode cmdMode, CompilationMode compilationMode) throws Exception
 	{
-		runSpecificTest(FinalTester.ENCRYPTION_TEST_NAME, mode);
-		runSpecificTest(FinalTester.QUICKSORT_TEST_NAME, mode);
+		runSpecificTest(FinalTester.ENCRYPTION_TEST_NAME, cmdMode, compilationMode);
+		runSpecificTest(FinalTester.QUICKSORT_TEST_NAME, cmdMode, compilationMode);
 	}
 	
-	static private void runAllTests(TesterMode mode) throws Exception
+	static private void runAllTests(CmdMode cmdMode, CompilationMode compilationMode) throws Exception
 	{
 		deleteAutoGeneratedTests();
 		
@@ -180,11 +210,11 @@ public class FinalTester
 	    		String icFileName = folderFiles[i].getName();
 	    		if (!icFileName.endsWith(DO_NOT_RUN_SUFFIX))
 	    		{
-	    			runSpecificTest(icFileName, mode);	
+	    			runSpecificTest(icFileName, cmdMode, compilationMode);	
 	    		}
 	    	} 
 	    }
-	    runRandomTests(mode);
+	    runRandomTests(cmdMode, compilationMode);
 	    
 		    
 	    System.out.println();
@@ -192,7 +222,13 @@ public class FinalTester
 		System.out.println("Total failed: " + failedNum); 
 	}
 	
-	enum TesterMode
+	enum CompilationMode
+	{
+		COMPILE_IN_ECLIPSE,
+		COMPILE_IN_NOVA
+	}
+	
+	enum CmdMode
 	{
 		MANUALY_CLOSE,
 		AUTO_CLOSE,
@@ -204,8 +240,8 @@ public class FinalTester
 		outputWriter = new PrintStream(new FileOutputStream(TESTER_OUTPUT_FILE_NAME));
 		//System.setOut(outputWriter);
 		
-		runSpecificTest("printPrimes", TesterMode.AUTO_CLOSE);
-	    //runAllTests(TesterMode.AUTO_CLOSE_MINIMIZE_CMD);
+		//runSpecificTest("printPrimes", CmdMode.AUTO_CLOSE_MINIMIZE_CMD, CompilationMode.COMPILE_IN_NOVA);
+	    runAllTests(CmdMode.AUTO_CLOSE_MINIMIZE_CMD, CompilationMode.COMPILE_IN_NOVA);
 	}
 	
 }
