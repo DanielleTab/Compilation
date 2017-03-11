@@ -1,0 +1,55 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+
+class Main
+{
+    PRINT p;
+
+    int square(int x) {
+        return x * x;
+    }
+
+    int f(int x, int y, int z) {
+        return square(x) + (2 * y) + (3 * square(z));
+    }
+
+    int factorial(int x) {
+        if (x <= 1) return 1;
+        return factorial(x - 1) * x;
+    }
+
+    void main(string[] args)
+    {
+    	Main obj = new Main();
+        obj.p = new PRINT();
+        
+        obj.p.printInt(obj.square(4));
+        obj.p.printInt(obj.square(obj.square(3)));
+        obj.p.printInt(obj.f(2, 3, 5));
+        obj.p.printInt(obj.factorial(6));
+        obj.p.printInt(obj.square(2) + obj.square(3));
+
+        int x;
+        obj.p.printInt(x);
+
+        {
+            int[] x = new int[4];
+            obj.p.printInt(x[0]);
+            obj.p.printInt(x[1]);
+            obj.p.printInt(x[2]);
+            obj.p.printInt(x[3]);
+            x[0] = 6;
+            x[2] = 7;
+            obj.p.printInt(x[0]);
+            obj.p.printInt(x[1]);
+            obj.p.printInt(x[2]);
+            obj.p.printInt(x[3]);
+        }
+
+    }
+
+}

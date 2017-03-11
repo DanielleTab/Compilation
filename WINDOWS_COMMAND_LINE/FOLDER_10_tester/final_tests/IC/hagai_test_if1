@@ -1,0 +1,23 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+
+class Main
+{
+    void main(string[] args)
+    {
+    	PRINT p = new PRINT();
+        
+        int a = 1;
+
+        if (a == 1) {
+        	p.printInt(1);
+        	return;
+        }
+        p.printInt(0);
+        return;
+    }
+}

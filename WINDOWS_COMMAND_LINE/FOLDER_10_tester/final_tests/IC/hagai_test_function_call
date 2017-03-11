@@ -1,0 +1,28 @@
+class A
+{
+	int a;
+	int b;
+	int c;
+}
+
+class MyClass
+{
+	int func(A a, int b)
+	{
+		return 7;
+	}
+
+	void main(string[] args)
+	{
+		MyClass obj = new MyClass();
+		A a = null;
+		int b = 3;
+		
+		int c = obj.func(a, b);
+
+	}
+
+}
+
+
+

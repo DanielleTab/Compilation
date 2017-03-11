@@ -1,0 +1,37 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+class A{
+    int x;
+}
+class Main
+{
+    PRINT p;
+
+    void main(string[] args)
+    {
+    	Main obj = new Main();
+        obj.p = new PRINT();
+        A[][] ass = new A[][3];
+        A[] as = new A[2];
+        as[0] = new A();
+        as[1] = new A();
+        as[0].x = 1;
+        as[1].x = 2;
+        ass[0] = as;
+        ass[1] = as;
+        obj.p.printInt(ass[0][0].x);
+        obj.p.printInt(ass[0][1].x);
+        obj.p.printInt(ass[1][0].x);
+        obj.p.printInt(ass[1][1].x);
+        if (ass[2] == null) {
+            obj.p.printInt(111);
+        }
+        ass[1][0].x = 3;
+        obj.p.printInt(ass[0][0].x);
+        obj.p.printInt(ass[0][1].x);
+    }
+}

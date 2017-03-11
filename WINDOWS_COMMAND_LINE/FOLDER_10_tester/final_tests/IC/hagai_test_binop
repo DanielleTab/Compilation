@@ -1,0 +1,69 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+
+class Main
+{
+    void main(string[] args)
+    {
+        PRINT p = new PRINT();
+        int a1;
+        int a2;
+        int a3;
+        int a4;
+        int a5;
+        int a6;
+        int a7;
+        int a8;
+        int a9;
+        int a10;
+        int a11;
+        int a12;
+        int a13;
+        int a14;
+        int a15;
+        int a16;
+        int a17;
+
+        a1 = 1 + 3;
+        a2 = 2 - 4;
+        a3 = 4*6;
+        //a4 = 9 / 2;
+        a5 = 3<3;
+        a6 = 3 < 2;
+        a7 = 2 < 3;
+        a8 = 3<=3;
+        a9 = 3 <= 2;
+        a10 = 2 <= 3;
+        a11 = 3>3;
+        a12 = 3 > 2;
+        a13 = 2 > 3;
+        a14 = 3 >= 3;
+        a15 = 3 >= 2;
+        a16 = 2 >= 3;
+        a17 = (((1+2)*3)*4) + (7-50);
+
+        if (a1 != 4)  {p.printInt(1); return;}
+        if (a2 != 0-2) {p.printInt(2); return;}
+        if (a3 != 24)  {p.printInt(3); return;}
+        //if (a4 != 4)  {p.printInt(4); return;}
+        if (a5 != 0)  {p.printInt(5); return;}
+        if (a6 != 0)  {p.printInt(6); return;}
+        if (a7 != 1)  {p.printInt(7); return;}
+        if (a8 != 1)  {p.printInt(8); return;}
+        if (a9 != 0)  {p.printInt(9); return;}
+        if (a10 != 1) {p.printInt(10); return;}
+        if (a11 != 0) {p.printInt(11); return;}
+        if (a12 != 1) {p.printInt(12); return;}
+        if (a13 != 0) {p.printInt(13); return;}
+        if (a14 != 1) {p.printInt(14); return;}
+        if (a15 != 1) {p.printInt(15); return;}
+        if (a16 != 0) {p.printInt(16); return;}
+        if (a17 != 0-7){p.printInt(17); return;}
+
+        p.printInt(0);
+    }
+}

@@ -1,0 +1,18 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+class A{
+    int x;
+}
+class Main
+{
+
+    void main(string[] args)
+    {
+        A a;
+        a.x = 5;
+    }
+}

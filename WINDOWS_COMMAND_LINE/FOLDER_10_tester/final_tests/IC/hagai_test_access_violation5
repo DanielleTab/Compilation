@@ -1,0 +1,15 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+class Main
+{
+
+    void main(string[] args)
+    {
+        int[] a;
+        int x = a[0];
+    }
+}

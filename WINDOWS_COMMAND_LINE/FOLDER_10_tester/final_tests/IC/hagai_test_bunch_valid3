@@ -1,0 +1,87 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+
+
+class Point
+{
+    int x, y;
+
+    void add(Point b) {
+        x = x + b.x;
+        y = y + b.y;
+    }
+
+    void sub(Point b) {
+        x = x - b.x;
+        y = y - b.y;
+    }
+}
+
+class Shape {
+    int area() {
+        return 0;
+    }
+}
+
+class Rectangle extends Shape {
+    Point topleft, botright;
+    int area() {
+        botright.sub(topleft);
+        int res = botright.x * botright.y;
+        botright.add(topleft);
+        return res;
+    }
+}
+
+class Circle extends Shape {
+    Point center;
+    int radius;
+    int area() {
+        //return (radius * 314) / 100;
+        return radius * 3;
+    }
+}
+
+
+class Main
+{
+    PRINT p;
+    
+    
+    void printArea(Shape shape) {
+        p.printInt(shape.area());
+    }
+
+    void main(string[] args)
+    {
+    	Main obj = new Main();
+        obj.p = new PRINT();
+        
+        {
+            Point a = new Point();
+            obj.p.printInt(a.x);
+            obj.p.printInt(a.y);
+            a.x = 1;
+            obj.p.printInt(a.x);
+            obj.p.printInt(a.y);
+
+            Rectangle rect = new Rectangle();
+            rect.topleft = new Point();
+            rect.botright = new Point();
+            rect.botright.x = 7;
+            rect.botright.y = 8;
+            Circle circle = new Circle();
+            circle.radius = 50;
+
+            obj.p.printInt(rect.area());
+            obj.p.printInt(circle.area());
+            obj.printArea(rect);
+            obj.printArea(circle);
+        }
+    }
+
+}

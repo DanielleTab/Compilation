@@ -1,0 +1,70 @@
+class PRINT
+{
+    void printInt(int i)
+    {
+    }
+}
+
+class Main
+{
+    PRINT p;
+
+    void main(string[] args)
+    {
+    	Main obj = new Main();
+        obj.p = new PRINT();
+        obj.p.printInt(123);
+        int a = 5 + 6;
+        obj.p.printInt(a);
+        a = (a * 2) - 3;
+        obj.p.printInt(a);
+        string b = "hello";
+        obj.p.printInt(10);
+        if (1) {
+            obj.p.printInt(100);
+        }
+        if (0) {
+            obj.p.printInt(10000);
+        }
+        if (1 < 2) {
+            obj.p.printInt(91);
+        }
+        if (1 > 2) {
+            obj.p.printInt(92);
+        }
+        if (1 == 2) {
+            obj.p.printInt(93);
+        }
+        if (1 != 2) {
+            obj.p.printInt(94);
+        }
+        if (1 >= 2) {
+            obj.p.printInt(95);
+        }
+        if (1 <= 2) {
+            obj.p.printInt(96);
+        }
+        if (b == b) {
+            obj.p.printInt(101);
+        }
+        if (b == "b") {
+            obj.p.printInt(102);
+        }
+        if (b != "b") {
+            obj.p.printInt(103);
+        }
+        if (b != null) {
+            obj.p.printInt(104);
+        }
+        if ("ttt" == "ttt") {
+            obj.p.printInt(105);
+        }
+        if ("ttt" != "ttt") {
+            obj.p.printInt(106);
+        }
+        b = b + (" world" + "");
+        obj.p.printInt(88);
+        b = b + b;
+        obj.p.printInt(99);
+    }
+}
